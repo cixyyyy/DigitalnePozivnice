@@ -28,3 +28,14 @@ wwwroot/fonts/
 ## OS
 Thumbs.db
 .DS_Store
+
+appsettings.Development.json
+appsettings.Placanje.json
+appsettings.Local.json
+secrets.json
+*.pfx
+.env
+wwwroot/uploads/
+wwwroot/mediji/
+App_Data/
+wwwroot/fonts/
