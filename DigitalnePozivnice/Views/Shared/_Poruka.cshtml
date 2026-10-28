@@ -1,0 +1,4 @@
+@if (TempData["Poruka"] is string poruka && !string.IsNullOrWhiteSpace(poruka))
+{
+    <div class="ap-msg" role="status">@poruka</div>
+}

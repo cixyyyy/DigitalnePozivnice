@@ -1,0 +1,222 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+}
+
+<main class="tpl tpl-alisa">
+
+    <header class="al-hero" aria-label="@glavno">
+        <div class="al-stage">
+<svg class="al-svg" viewBox="0 -48 360 640" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+<defs>
+  <filter id="alWob" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G"/></filter>
+  <filter id="alPaper" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="7"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .27  0 0 0 0 .2  0 0 0 .55 -.12"/></filter>
+  <linearGradient id="alSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cfe7e3"/><stop offset=".55" stop-color="#f3e4ee"/><stop offset="1" stop-color="#fbeedd"/></linearGradient>
+  <linearGradient id="alGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a7cf9b"/><stop offset="1" stop-color="#73a874"/></linearGradient>
+  <linearGradient id="alCloth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#ece4f2"/></linearGradient>
+</defs>
+<style>.o{stroke:#4a3836;stroke-width:1.5}.ol{stroke:#4a3836;stroke-width:1.5;fill:none}.th{stroke:#4a3836;stroke-width:1;fill:none}</style>
+<g filter="url(#alWob)" stroke-linejoin="round" stroke-linecap="round">
+<rect y="-60" width="360" height="700" fill="url(#alSky)"/></g>
+<!-- oblaci -->
+<g class="al-cloud al-c1" fill="#fff" opacity=".85"><ellipse cx="60" cy="214" rx="26" ry="9"/><ellipse cx="80" cy="208" rx="18" ry="9"/><ellipse cx="44" cy="209" rx="14" ry="7"/></g>
+<g class="al-cloud al-c2" fill="#fff" opacity=".8"><ellipse cx="230" cy="200" rx="22" ry="8"/><ellipse cx="248" cy="195" rx="14" ry="7"/></g>
+<g filter="url(#alWob)" stroke-linejoin="round" stroke-linecap="round">
+<!-- brda i živa ograda -->
+<path class="o" d="M-10 330 C40 290 90 292 140 318 C190 288 250 288 300 312 C330 300 350 304 372 318 L372 360 L-10 360Z" fill="#b6d9a8"/>
+<g class="o" fill="#86b783"><circle cx="20" cy="338" r="22"/><circle cx="58" cy="334" r="20"/><circle cx="96" cy="338" r="22"/><circle cx="136" cy="334" r="20"/><circle cx="176" cy="338" r="22"/><circle cx="216" cy="334" r="20"/><circle cx="256" cy="338" r="22"/><circle cx="296" cy="334" r="20"/><circle cx="336" cy="338" r="22"/></g>
+<g fill="#d64a5a" stroke="#4a3836" stroke-width="1"><circle cx="30" cy="330" r="4"/><circle cx="74" cy="340" r="4"/><circle cx="118" cy="328" r="4"/><circle cx="160" cy="342" r="4"/><circle cx="204" cy="330" r="4"/><circle cx="246" cy="342" r="4"/><circle cx="288" cy="330" r="4"/><circle cx="326" cy="342" r="4"/></g>
+<rect y="352" width="360" height="290" fill="url(#alGrass)"/>
+<path class="ol" d="M0 352 L360 352" opacity=".5"/>
+<!-- drvo -->
+<g>
+<path class="o" d="M296 360 C292 320 300 270 288 236 C300 236 316 238 322 250 C318 280 328 330 330 360Z" fill="#9c7a63"/>
+<path class="th" d="M300 330 C302 300 300 280 298 262 M314 330 C312 300 316 280 316 262"/>
+<path class="o" d="M290 238 C270 232 252 236 236 226" fill="none" stroke-width="7" stroke="#9c7a63"/>
+<g class="o" fill="#7fb386"><circle cx="262" cy="194" r="34"/><circle cx="300" cy="174" r="38"/><circle cx="338" cy="202" r="34"/><circle cx="300" cy="220" r="36"/><circle cx="256" cy="228" r="26"/></g>
+<g fill="#e9a3b5" stroke="#4a3836" stroke-width="1"><circle cx="270" cy="184" r="5"/><circle cx="318" cy="192" r="5"/><circle cx="296" cy="164" r="5"/><circle cx="330" cy="220" r="5"/></g>
+</g>
+<!-- gljive lijevo -->
+<g class="al-mush"><path class="o" d="M24 410 C20 380 30 360 34 346 L48 346 C52 362 60 382 56 410Z" fill="#f6ecd9"/><path class="o" d="M-6 350 C-4 312 70 304 84 350 C60 358 20 358 -6 350Z" fill="#c9a7e8"/><g fill="#fff" stroke="#4a3836" stroke-width="1"><circle cx="18" cy="334" r="5"/><circle cx="44" cy="326" r="6"/><circle cx="64" cy="340" r="4"/></g></g>
+<!-- LIKOVI iza stola -->
+<!-- Alisa -->
+<g class="al-alice" transform="translate(104 0)">
+ <path class="o" d="M-24 376 C-22 366 -12 364 0 364 C12 364 22 366 24 376 L28 412 L-28 412Z" fill="#b9a6e0"/>
+ <path class="o" d="M-12 368 L12 368 L14 412 L-14 412Z" fill="#fff"/>
+ <path class="th" d="M-4 372 L-4 392 M4 372 L4 392"/>
+ <path class="o" d="M-21 346 C-27 330 -21 312 0 311 C21 312 27 330 21 346 C27 368 22 388 14 396 L-14 396 C-22 388 -27 368 -21 346Z" fill="#efc866"/>
+ <g class="al-head"><ellipse class="o" cx="0" cy="341" rx="16" ry="18" fill="#f8dcc9"/>
+ <path class="o" d="M-17 336 C-14 322 -4 320 0 324 C6 320 15 322 17 336 C10 330 4 330 0 332 C-5 330 -11 330 -17 336Z" fill="#efc866"/>
+ <path class="o" d="M-16 326 C-8 318 8 318 16 326" fill="none" stroke="#5aa0c8" stroke-width="3"/>
+ <path class="o" d="M10 322 l8 -5 l0 10z M10 322 l-8 -5 l0 10z" fill="#5aa0c8" transform="translate(-4 -2)"/>
+ <path d="M-3 349 C-1 352 1 352 3 349" stroke="#c0546b" stroke-width="1.4" fill="none"/>
+ <circle cx="-10" cy="347" r="3" fill="#f2a5a5" opacity=".6"/><circle cx="10" cy="347" r="3" fill="#f2a5a5" opacity=".6"/></g>
+</g>
+<!-- Šeširdžija -->
+<g class="al-hatter" transform="translate(236 0)">
+ <path class="o" d="M-28 378 C-26 366 -14 364 0 364 C14 364 26 366 28 378 L32 412 L-32 412Z" fill="#e3a84a"/>
+ <path class="o" d="M-10 366 L0 384 L10 366Z" fill="#fff6dc"/>
+ <path class="o" d="M-12 372 l12 6 l-12 6z M12 372 l-12 6 l12 6z" fill="#6bbf9a"/><circle class="o" cx="0" cy="378" r="3" fill="#6bbf9a"/>
+ <path class="o" d="M-26 384 C-42 380 -52 372 -62 370" fill="none" stroke-width="8" stroke="#e3a84a"/>
+ <circle class="o" cx="-64" cy="369" r="5" fill="#f6d2b8"/>
+ <ellipse class="o" cx="0" cy="347" rx="15" ry="17" fill="#f6d2b8"/>
+ <path class="o" d="M-15 344 C-20 350 -18 358 -13 360 M15 344 C20 350 18 358 13 360" fill="none" stroke="#d9743a" stroke-width="5"/>
+ <path class="o" d="M-2 349 C-1 353 3 353 4 350" fill="#e8a79a" stroke-width="1.2"/>
+ <path class="o" d="M-7 354 C-3 360 5 360 8 354 C4 356 -3 356 -7 354Z" fill="#fff" stroke-width="1.2"/>
+ <circle cx="-9" cy="350" r="3" fill="#f2a5a5" opacity=".6"/><circle cx="9" cy="350" r="3" fill="#f2a5a5" opacity=".6"/>
+</g>
+<!-- STO -->
+<path class="o" d="M10 410 L350 410 L346 424 L14 424Z" fill="#fff"/>
+<path class="o" d="M14 424 L346 424 L340 456 C330 462 320 456 310 462 C300 468 290 460 280 464 C270 468 260 460 250 464 C240 468 230 460 220 464 C210 468 200 460 190 464 C180 468 170 460 160 464 C150 468 140 460 130 464 C120 468 110 460 100 464 C90 468 80 460 70 464 C60 468 50 460 40 464 C30 466 24 460 20 458Z" fill="url(#alCloth)"/>
+<path class="th" d="M30 430 L30 452 M60 430 L60 456 M90 430 L90 456 M120 430 L120 458 M150 430 L150 458 M180 430 L180 459 M210 430 L210 459 M240 430 L240 458 M270 430 L270 458 M300 430 L300 456 M330 430 L330 452" opacity=".25"/>
+<!-- stvari na stolu -->
+<g class="al-cakestand" transform="translate(300 0)"><path class="o" d="M-18 408 L18 408 L12 394 L-12 394Z" fill="#fff"/><path class="o" d="M0 394 L0 382" /><ellipse class="o" cx="0" cy="381" rx="20" ry="4" fill="#f6d2e0"/><path class="o" d="M-14 381 C-14 366 14 366 14 381Z" fill="#f4b7c8"/><circle class="o" cx="0" cy="364" r="3.5" fill="#d64a5a"/><path class="o" d="M-6 372 C-2 376 2 376 6 372" fill="none"/>
+<path class="o" d="M-40 412 L-40 400 L-14 400 L-14 412Z" fill="#fff6dc"/><path class="o" d="M-37 398 L-37 392 L-17 392 L-17 398" fill="#f6d2e0" stroke-width="1.2"/><text x="-37" y="408" font-size="6" fill="#8a5a9b" stroke="none" font-family="serif" font-weight="bold">EAT ME</text></g>
+<g transform="translate(176 0)"><path class="o" d="M-18 410 C-20 394 20 394 18 410Z" fill="#fff"/><path class="o" d="M18 400 C26 400 26 408 17 408" fill="none"/>
+<g class="al-mouse"><ellipse class="o" cx="0" cy="392" rx="8" ry="7" fill="#d8c3a8"/><circle class="o" cx="-6" cy="386" r="3.4" fill="#e9a3b5"/><circle class="o" cx="6" cy="386" r="3.4" fill="#e9a3b5"/><path d="M-4 392 L-2 392 M2 392 L4 392" stroke="#3b2d33" stroke-width="1.2"/><circle cx="0" cy="395" r="1.2" fill="#c0546b"/></g>
+<path class="o" d="M-18 402 C-8 398 8 398 18 402 C16 408 -16 408 -18 402Z" fill="#fff"/>
+</g>
+<g transform="translate(50 0)"><g class="o" fill="#fff"><path d="M-14 410 L-14 404 L14 404 L14 410Z"/><path d="M-12 404 L-12 398 L12 398 L12 404Z"/><path d="M-10 398 L-10 392 L10 392 L10 398Z"/></g><path class="o" d="M10 396 C16 396 16 402 10 402" fill="none"/></g>
+<g transform="translate(112 0)"><rect class="o" x="-8" y="396" width="16" height="14" rx="3" fill="#d64a5a"/><rect class="o" x="-9" y="392" width="18" height="5" rx="2" fill="#fff6dc"/></g>
+<g transform="translate(236 0)"><path class="o" d="M-12 410 C-14 398 14 398 12 410Z" fill="#fff"/><path class="o" d="M12 402 C18 402 18 408 11 408" fill="none"/></g>
+<!-- cvijeće u vazi -->
+<g transform="translate(206 0)"><path class="o" d="M-6 410 L-8 396 L8 396 L6 410Z" fill="#9fd0c8"/><path class="th" d="M-2 396 L-4 380 M2 396 L4 376 M0 396 L0 372"/><circle class="o" cx="-4" cy="379" r="5" fill="#d64a5a"/><circle class="o" cx="4" cy="375" r="5" fill="#fff"/><circle class="o" cx="0" cy="371" r="5" fill="#d64a5a"/></g>
+<!-- trava, cvijeće naprijed -->
+<g class="o"><path d="M-6 640 L-6 586 C20 560 50 566 70 586 L70 640Z" fill="#7fae7d" stroke="none"/></g>
+<g stroke="#4a3836" stroke-width="1.2" fill="none"><path d="M10 640 C12 626 8 616 14 606 M24 640 C22 628 28 618 24 608 M40 640 C44 626 38 618 46 608"/><path d="M300 640 C298 626 304 616 298 606 M316 640 C320 626 312 618 322 608 M336 640 C334 628 340 620 338 610"/></g>
+<g stroke="#4a3836" stroke-width="1" fill="#fff"><circle cx="90" cy="604" r="4"/><circle cx="260" cy="610" r="4"/><circle cx="150" cy="620" r="4" fill="#f3d37a"/><circle cx="210" cy="600" r="4" fill="#e9a3b5"/></g>
+<!-- ruže naprijed -->
+<g class="o" fill="#6fa36f"><circle cx="8" cy="566" r="28"/><circle cx="44" cy="552" r="24"/><circle cx="74" cy="574" r="22"/><circle cx="352" cy="568" r="28"/><circle cx="316" cy="554" r="24"/><circle cx="288" cy="578" r="20"/></g>
+<g stroke="#4a3836" stroke-width="1"><g fill="#d64a5a"><circle cx="14" cy="552" r="6"/><circle cx="50" cy="546" r="5.5"/><circle cx="70" cy="568" r="5.5"/><circle cx="32" cy="572" r="5"/><circle cx="346" cy="554" r="6"/><circle cx="312" cy="548" r="5.5"/><circle cx="292" cy="572" r="5"/><circle cx="332" cy="576" r="5.5"/></g><g fill="#fff"><circle cx="24" cy="560" r="5"/><circle cx="60" cy="560" r="4.5"/><circle cx="338" cy="566" r="5"/><circle cx="302" cy="562" r="4.5"/></g></g>
+<g class="th"><path d="M120 592 C121 580 119 572 122 566 M150 592 C148 582 152 574 150 568 M200 592 C202 582 198 576 201 568 M236 592 C234 582 238 576 236 570"/></g>
+<g stroke="#4a3836" stroke-width="1"><circle cx="122" cy="563" r="4" fill="#f3d37a"/><circle cx="150" cy="565" r="4" fill="#e9a3b5"/><circle cx="201" cy="565" r="4" fill="#fff"/><circle cx="236" cy="567" r="4" fill="#c9a7e8"/></g>
+<!-- Popij me -->
+<g class="al-drink" transform="translate(44 552)"><path class="o" d="M-9 8 C-12 -4 -5 -8 -4 -16 L4 -16 C5 -8 12 -4 9 8 C6 14 -6 14 -9 8Z" fill="#a9d6f0"/><rect class="o" x="-5" y="-22" width="10" height="7" fill="#e3a84a"/><rect class="o" x="-14" y="-4" width="28" height="10" fill="#fff6dc" stroke-width="1.2"/><text x="-12.5" y="3" font-size="5.2" fill="#8a5a9b" stroke="none" font-family="serif" font-weight="bold">DRINK ME</text></g>
+<!-- ključ i vrata -->
+<g transform="translate(318 566)"><path class="o" d="M-16 14 L-16 -14 C-16 -26 16 -26 16 -14 L16 14Z" fill="#c89a6c"/><path class="th" d="M-10 12 L-10 -12 C-10 -20 10 -20 10 -12 L10 12" /><circle cx="8" cy="2" r="1.8" fill="#e9b44c" stroke="#4a3836" stroke-width=".8"/></g>
+</g>
+<g stroke-linejoin="round" stroke-linecap="round">
+<!-- Češirski mačak -->
+<g class="al-cat" transform="translate(250 216)">
+ <g class="al-catbody">
+  <path class="o" d="M-8 6 C-32 12 -40 30 -30 42" fill="none" stroke-width="7" stroke="#b79ae0"/>
+  <ellipse class="o" cx="8" cy="4" rx="26" ry="12" fill="#c3a8e8"/>
+  <path class="th" d="M-8 -4 L-6 6 M2 -7 L4 11 M12 -7 L13 11 M22 -4 L22 8" stroke-width="2.2" stroke="#8f72bf"/>
+  <path class="o" d="M-6 -14 L-2 -32 L10 -20Z M20 -22 L32 -34 L34 -14Z" fill="#c3a8e8"/>
+  <path d="M-2 -26 L2 -20 M30 -28 L30 -20" stroke="#e9a3b5" stroke-width="2.5"/>
+  <ellipse class="o" cx="14" cy="-8" rx="24" ry="17" fill="#c3a8e8"/>
+  <path class="th" d="M6 -22 L8 -16 M14 -24 L15 -17 M22 -22 L21 -16" stroke-width="2.2" stroke="#8f72bf"/>
+  <g class="al-eyes"><ellipse class="o" cx="6" cy="-12" rx="5" ry="3.6" fill="#f2e86b"/><ellipse class="o" cx="23" cy="-12" rx="5" ry="3.6" fill="#f2e86b"/><ellipse cx="6.5" cy="-12" rx="1.4" ry="3.2" fill="#2d2330"/><ellipse cx="23.5" cy="-12" rx="1.4" ry="3.2" fill="#2d2330"/></g>
+  <path class="o" d="M12 -6 L18 -6 L15 -2Z" fill="#e9a3b5"/>
+ </g>
+ <g class="al-grin"><path class="o" d="M-2 -1 C6 12 24 12 32 -1 C24 3 6 3 -2 -1Z" fill="#fff"/><path class="th" d="M4 3 L4 8 M10 5 L10 10 M16 6 L16 10.5 M22 5 L22 10 M28 3 L28 8"/></g>
+</g>
+<!-- zastavice -->
+<g class="al-bunt">
+<path class="ol" d="M-4 214 C80 250 280 250 364 214" stroke-width="1.6"/>
+<g class="o"><path d="M24 226 l12 -2 l-5 16z" style="fill:var(--c-main,#8a5a9b)"/><path d="M62 236 l12 -1 l-6 16z" style="fill:var(--c-accent,#8bbf9c)"/><path d="M102 243 l12 0 l-6 16z" fill="#f3d37a"/><path d="M146 247 l12 1 l-6 16z" style="fill:var(--c-main,#8a5a9b)"/><path d="M190 248 l12 0 l-6 16z" style="fill:var(--c-accent,#8bbf9c)"/><path d="M232 245 l12 -1 l-6 16z" fill="#f3d37a"/><path d="M272 238 l12 -2 l-6 16z" style="fill:var(--c-main,#8a5a9b)"/><path d="M308 229 l12 -3 l-6 16z" style="fill:var(--c-accent,#8bbf9c)"/></g>
+</g>
+<g transform="translate(104 0)">
+ <g class="al-sip"><path class="o" d="M26 380 C36 390 38 400 30 404 L22 396" fill="#b9a6e0"/><g transform="translate(34 392)"><path class="o" d="M-7 -6 L7 -6 L5 4 L-5 4Z" fill="#fff"/><path class="o" d="M7 -4 C12 -4 12 1 6 1" fill="none"/></g></g>
+ <g class="al-blink"><circle cx="-6" cy="341" r="1.8" fill="#3b2d33"/><circle cx="6" cy="341" r="1.8" fill="#3b2d33"/></g>
+</g>
+<g transform="translate(236 0)">
+ <g class="al-hat"><path class="o" d="M-15 330 L-12 296 C-6 292 6 292 12 296 L15 330Z" fill="#6a5aa6"/>
+ <rect class="o" x="-15" y="320" width="30" height="7" fill="#e9b44c"/>
+ <path class="o" d="M4 318 l11 -2 l0 8 l-11 2z" fill="#fff6dc" stroke-width="1"/><text x="5.5" y="324" font-size="5" fill="#4a3836" stroke="none" font-family="serif">10/6</text>
+ <ellipse class="o" cx="0" cy="331" rx="26" ry="5" fill="#6a5aa6"/></g>
+ <g class="al-blink"><circle cx="-5.5" cy="346" r="1.8" fill="#3b2d33"/><circle cx="5.5" cy="346" r="1.8" fill="#3b2d33"/></g>
+ <!-- čajnik u ruci i mlaz -->
+ <g class="al-pour"><g transform="translate(-66 366)"><path class="o" d="M-12 -6 C-14 -16 12 -16 12 -6 C14 4 8 10 0 10 C-8 10 -14 4 -12 -6Z" fill="#9fd0c8"/><path class="o" d="M-12 -2 L-24 -9 L-22 -3 L-12 3" fill="#9fd0c8"/><path class="o" d="M-4 -15 L4 -15 L0 -19Z" fill="#e9b44c"/><path class="o" d="M12 -6 C20 -6 20 4 12 4" fill="none"/><path d="M-8 -2 C-4 4 4 4 8 -2" stroke="#fff" stroke-width="1.4" fill="none"/></g></g>
+</g>
+<path class="al-stream" d="M149 374 C148 381 141 385 139 391" fill="none" stroke="#b7803f" stroke-width="2.2" stroke-dasharray="3 3"/>
+<g transform="translate(50 0)"><g class="al-steam"><path class="th" d="M-2 388 C-6 382 2 378 -2 372" opacity=".5"/><path class="th" d="M4 388 C0 382 8 378 4 372" opacity=".5"/></g></g><g transform="translate(236 0)"><g class="al-steam al-st2"><path class="th" d="M-3 394 C-7 388 1 384 -3 378" opacity=".5"/><path class="th" d="M3 394 C-1 388 7 384 3 378" opacity=".5"/></g></g><g transform="translate(176 0)"><text class="al-z al-z1" x="14" y="380" font-size="8" fill="#8a5a9b" stroke="none" font-family="serif" font-weight="bold">z</text><text class="al-z al-z2" x="20" y="372" font-size="10" fill="#8a5a9b" stroke="none" font-family="serif" font-weight="bold">Z</text></g><g transform="translate(44 552)"><g class="al-bub"><circle cx="-2" cy="-26" r="2" fill="#fff" stroke="#4a3836" stroke-width=".8"/><circle cx="4" cy="-34" r="1.6" fill="#fff" stroke="#4a3836" stroke-width=".8"/></g></g>
+<!-- karte (lebde) -->
+<g class="al-cardsvg">
+<g class="al-card al-k1" transform="translate(30 0)"><g><rect class="o" x="-9" y="-13" width="18" height="26" rx="2.5" fill="#fff"/><text x="0" y="5" text-anchor="middle" font-size="14" fill="#c8323f" stroke="none">♥</text><text x="-6" y="-5" font-size="5" fill="#c8323f" stroke="none">A</text></g></g>
+<g class="al-card al-k2" transform="translate(330 0)"><g><rect class="o" x="-9" y="-13" width="18" height="26" rx="2.5" fill="#fff"/><text x="0" y="5" text-anchor="middle" font-size="14" fill="#3b2d33" stroke="none">♠</text><text x="-6" y="-5" font-size="5" fill="#3b2d33" stroke="none">K</text></g></g>
+<g class="al-card al-k3" transform="translate(70 0)"><g><rect class="o" x="-9" y="-13" width="18" height="26" rx="2.5" fill="#fff"/><text x="0" y="5" text-anchor="middle" font-size="14" fill="#c8323f" stroke="none">♦</text><text x="-6" y="-5" font-size="5" fill="#c8323f" stroke="none">Q</text></g></g>
+<g class="al-card al-k4" transform="translate(296 0)"><g><rect class="o" x="-9" y="-13" width="18" height="26" rx="2.5" fill="#fff"/><text x="0" y="5" text-anchor="middle" font-size="14" fill="#3b2d33" stroke="none">♣</text><text x="-6" y="-5" font-size="5" fill="#3b2d33" stroke="none">J</text></g></g>
+</g>
+<g transform="translate(0 540)">
+<g class="al-rabwrap"><g class="al-rab">
+ <g class="al-rhop">
+  <path class="o" d="M-14 -8 C-18 -30 -12 -50 -6 -48 C0 -46 -2 -26 0 -8Z" fill="#fff"/>
+  <path d="M-12 -12 C-14 -28 -10 -42 -7 -42" fill="none" stroke="#f2a5b8" stroke-width="3"/>
+  <path class="o al-ear2" d="M-2 -8 C-4 -30 2 -50 8 -46 C12 -42 6 -24 6 -8Z" fill="#fff"/>
+  <ellipse class="o" cx="2" cy="6" rx="22" ry="20" fill="#fff"/>
+  <path class="o" d="M-18 8 C-16 26 -4 30 6 30 C16 30 22 24 22 10Z" fill="#8a5a9b"/>
+  <path class="th" d="M-4 14 L-4 28 M8 14 L8 28" stroke="#fff"/>
+  <circle cx="-4" cy="16" r="1.6" fill="#e9b44c"/><circle cx="8" cy="16" r="1.6" fill="#e9b44c"/>
+  <ellipse class="o" cx="16" cy="-4" rx="12" ry="11" fill="#fff"/>
+  <circle cx="20" cy="-6" r="2" fill="#3b2d33"/><circle cx="26" cy="-1" r="2.6" fill="#f2a5b8"/>
+  <path d="M22 4 C24 6 27 5 28 3" stroke="#4a3836" stroke-width="1" fill="none"/>
+  <path class="o" d="M-22 12 C-30 10 -30 22 -22 22Z" fill="#fff"/>
+  <path class="o" d="M-6 28 L-12 40 L2 40Z M12 28 L18 40 L6 40Z" fill="#fff"/>
+  <path class="o" d="M14 14 C22 14 26 6 22 0" fill="none" stroke-width="5" stroke="#fff"/>
+  <g class="al-rwatch"><path class="th" d="M24 6 C28 14 24 22 20 26" /><circle class="o" cx="20" cy="30" r="6.5" fill="#f3d37a"/><circle cx="20" cy="30" r="4.6" fill="#fff6dc" stroke="#4a3836" stroke-width=".8"/><path d="M20 30 L20 27 M20 30 L22 31" stroke="#4a3836" stroke-width=".9"/></g>
+ </g>
+</g></g>
+</g>
+<!-- džepni sat -->
+<g class="al-watch" transform="translate(326 -6)"><path class="th" d="M0 0 L0 38" stroke-width="1.2"/><g transform="translate(0 46)"><circle class="o" r="9.5" fill="#f3d37a"/><circle r="7" fill="#fff6dc" stroke="#4a3836" stroke-width=".9"/><path class="al-hand" d="M0 0 L0 -5" stroke="#4a3836" stroke-width="1.2"/><path d="M0 0 L3 1.5" stroke="#4a3836" stroke-width="1.2"/><circle cx="0" cy="-11.5" r="1.8" fill="#e9b44c" stroke="#4a3836" stroke-width=".8"/></g></g>
+</g>
+<rect y="-60" width="360" height="700" filter="url(#alPaper)" opacity=".55" style="mix-blend-mode:multiply;pointer-events:none"/>
+</svg>
+
+            <div class="al-text">
+                <p class="al-kicker">@kicker</p>
+                <h1 class="al-names">@glavno</h1>
+                <p class="al-invite">@InvitationText.PozivLinija(Model)</p>
+                @if (prvi?.DatumVreme is DateTimeOffset d)
+                {
+                    <p class="al-date">@InvitationTheme.DatumKratko(d)</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(prvi?.NazivLokacije))
+                {
+                    <p class="al-venue">@prvi!.NazivLokacije</p>
+                }
+            </div>
+        </div>
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+    {
+        <section class="inv-section inv-reveal">
+            <p class="inv-message">@Model.UvodniTekst</p>
+        </section>
+    }
+
+    @if (prvi?.DatumVreme is DateTimeOffset cilj)
+    {
+        <section class="inv-section inv-reveal">
+            <h2 class="inv-section-title">Još samo</h2>
+            <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+        </section>
+    }
+
+    <section class="inv-section inv-reveal">
+        <h2 class="inv-section-title">Gdje i kada</h2>
+        <partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" />
+    </section>
+
+    <partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />
+
+    @if (imaRsvp)
+    {
+        <section class="inv-section inv-reveal" id="rsvp">
+            <h2 class="inv-section-title">Hoćete li biti s nama?</h2>
+            <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+        </section>
+    }
+
+    <footer class="tpl-footer inv-reveal">
+        <p class="tpl-footer-names">@glavno</p>
+        <p class="tpl-footer-note">Ne zakasnite na čaj!</p>
+    </footer>
+</main>

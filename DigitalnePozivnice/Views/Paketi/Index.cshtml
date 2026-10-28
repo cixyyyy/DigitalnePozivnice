@@ -1,0 +1,148 @@
+﻿@model IEnumerable<DigitalnePozivnice.Models.Generated.Paketi>
+
+@{
+    ViewData["Title"] = "Paketi i cene";
+}
+
+<section class="pricing-page">
+    <div class="pricing-heading">
+        <p class="eyebrow">JEDNOSTAVNO. ELEGANTNO. POSEBNO.</p>
+        <h1>Izaberite paket za svoju proslavu</h1>
+        <p class="pricing-intro">
+            Od elegantne animirane pozivnice do potpune evidencije gostiju
+            i organizacije sjedenja – pronađite opciju koja vam odgovara.
+        </p>
+    </div>
+
+    <div class="pricing-grid">
+        @foreach (var paket in Model)
+        {
+            var oznaka = (paket.Oznaka ?? "").Trim().ToLowerInvariant();
+
+            var osnovni = oznaka == "save-the-date" || oznaka == "osnovni";
+            var premium = oznaka == "interaktivna" || oznaka == "premium";
+            var exclusive = oznaka == "exclusive";
+
+            // Cijena se cuva u KM (BAM) i naplacuje u KM; prikazuje se u eurima (fiksni kurs 1 EUR = 1,95583 KM).
+            var cijenaKm = paket.Cena;
+            var cijenaEur = DigitalnePozivnice.Helpers.Cijene.Eur(cijenaKm);
+
+            <article class="pricing-card @(premium ? "pricing-featured" : "")">
+
+                <div class="pricing-card-topline">
+                    @if (premium)
+                    {
+                        <span class="pricing-ribbon">NAJPOPULARNIJI</span>
+                    }
+                </div>
+
+                <div class="pricing-card-icon">
+                    @if (osnovni)
+                    {
+                        <svg viewBox="0 0 48 48" aria-hidden="true">
+                            <rect x="5" y="10" width="38" height="28" rx="4"
+                                  fill="none" stroke="currentColor" stroke-width="2" />
+                            <path d="M7 13 L24 27 L41 13"
+                                  fill="none" stroke="currentColor"
+                                  stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round" />
+                        </svg>
+                    }
+                    else if (premium)
+                    {
+                        <svg viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M24 40 C20 36 6 26 6 16
+                            C6 7 18 4 24 14
+                            C30 4 42 7 42 16
+                            C42 26 28 36 24 40 Z"
+                                  fill="none" stroke="currentColor"
+                                  stroke-width="2.4" stroke-linecap="round"
+                                  stroke-linejoin="round" />
+                        </svg>
+                    }
+                    else if (exclusive)
+                    {
+                        <svg viewBox="0 0 48 48" aria-hidden="true">
+                            <path d="M7 15 L16 23 L24 8 L32 23 L41 15
+                            L37 36 L11 36 Z"
+                                  fill="none" stroke="currentColor"
+                                  stroke-width="2.2" stroke-linecap="round"
+                                  stroke-linejoin="round" />
+                            <path d="M11 41 H37"
+                                  fill="none" stroke="currentColor"
+                                  stroke-width="2.2" stroke-linecap="round" />
+                            <circle cx="7" cy="13" r="2" fill="currentColor" />
+                            <circle cx="24" cy="6" r="2" fill="currentColor" />
+                            <circle cx="41" cy="13" r="2" fill="currentColor" />
+                        </svg>
+                    }
+                    else
+                    {
+                        <span>✦</span>
+                    }
+                </div>
+
+                <h2>@paket.Naziv</h2>
+
+                <p class="pricing-description">
+                    @(paket.Opis ?? "Digitalna pozivnica za tvoju posebnu priliku.")
+                </p>
+
+                <div class="pricing-price">
+                    <span class="price-number">@cijenaEur.ToString("N2")</span>
+                    <span class="price-currency">€</span>
+                </div>
+                <p class="pricing-onetime"><span>plaća se jednom</span> · <span>naplata u KM:</span> <span>@cijenaKm.ToString("N2") KM</span></p>
+
+                <div class="pricing-divider"></div>
+
+                <ul class="pricing-features">
+                    @if (osnovni)
+                    {
+                        <li>✓ Animirana Save the date pozivnica</li>
+                        <li>✓ Izbor animacije: slot mašina, koverta, svitak, zavjesa</li>
+                        <li>✓ Poruka gostima i odbrojavanje do dana</li>
+                        <li>✓ Jedinstveni link za dijeljenje</li>
+                        <li class="feature-muted">— Bez programa dana i potvrda dolaska</li>
+                    }
+                    else if (premium)
+                    {
+                        <li>✓ Sve iz Save the date paketa</li>
+                        <li>✓ Svi dizajni pozivnica</li>
+                        <li>✓ Program dana (više događaja, mapa, kalendar)</li>
+                        <li>✓ Potvrde dolaska gostiju</li>
+                        <li>✓ Admin panel sa statistikom i izvozom liste</li>
+                    }
+                    else if (exclusive)
+                    {
+                        <li>✓ Sve iz Premium paketa</li>
+                        <li>✓ Raspored sjedenja po stolovima</li>
+                        <li>✓ Interaktivni plan sale (2D i 3D pregled)</li>
+                        <li>✓ Automatsko raspoređivanje gostiju</li>
+                        <li>✓ Prioritetna podrška</li>
+                    }
+                    else
+                    {
+                        <li>✓ Digitalna pozivnica</li>
+                        <li>✓ Izbor dizajna</li>
+                        <li>✓ Link za dijeljenje</li>
+                    }
+                    <li class="feature-unlimited">✓ Neograničen broj pozivnica</li>
+                </ul>
+
+                <a class="pricing-button @(premium ? "pricing-button-primary" : "")"
+                   asp-controller="Sabloni"
+                   asp-action="Index"
+                   asp-route-paket="@paket.Oznaka">
+                    Izaberite paket <span>→</span>
+                </a>
+
+            </article>
+        }
+    </div>
+
+    <p class="pricing-note">
+        Svaka proslava je posebna. Izaberite paket, a zatim pronađite dizajn
+        koji odgovara vašem događaju. Cijena se plaća jednom, a slanje gostima je neograničeno.
+    </p>
+</section>

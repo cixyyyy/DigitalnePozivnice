@@ -1,0 +1,22 @@
+/* Početna: živi prikazi najboljih dizajna u telefonima */
+.hs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(22px, 3vw, 40px); max-width: 1180px; margin: 0 auto; }
+.hs-card { display: flex; flex-direction: column; align-items: center; text-align: center; min-width: 0; }
+.hs-link { position: relative; display: block; width: 100%; padding: 34px 20px 0; border-radius: 32px; text-decoration: none; overflow: hidden;
+    background: radial-gradient(260px 180px at 25% 8%, rgba(255,255,255,.75), transparent 70%), linear-gradient(160deg, #f6ecdb, #e9e2d0);
+    border: 1px solid #e6dec8; transition: transform .6s cubic-bezier(.22, 1, .36, 1), box-shadow .6s; }
+.hs-card:nth-child(2) .hs-link { background: radial-gradient(260px 180px at 25% 8%, rgba(255,255,255,.75), transparent 70%), linear-gradient(160deg, #f6e4e4, #ead9dc); }
+.hs-card:nth-child(3) .hs-link { background: radial-gradient(260px 180px at 25% 8%, rgba(255,255,255,.75), transparent 70%), linear-gradient(160deg, #eef0e0, #dde6d3); }
+.hs-link:hover { transform: translateY(-8px); box-shadow: 0 50px 80px -46px rgba(48, 56, 47, .6); }
+.hs-num { position: absolute; top: 14px; left: 20px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 20px; color: #8b7355; letter-spacing: .1em; }
+.hs-phone { position: relative; width: min(100%, 262px); margin: 0 auto; padding: 9px 9px 0; border-radius: 38px 38px 0 0;
+    background: linear-gradient(145deg, #34382f, #0f110e); box-shadow: 0 30px 50px -20px rgba(0,0,0,.55), inset 0 0 0 1.5px #4a4d44; }
+.hs-notch { position: absolute; z-index: 4; top: 16px; left: 50%; width: 70px; height: 18px; margin-left: -35px; border-radius: 10px; background: #050605; }
+.hs-screen { height: 440px; border-radius: 30px 30px 0 0; }
+.hs-live { position: absolute; left: 50%; bottom: 20px; z-index: 5; translate: -50% 16px; opacity: 0; padding: 10px 18px; border-radius: 12px; background: #fffefa; color: #30382f; font-size: 13px;
+    box-shadow: 0 16px 30px -12px rgba(0,0,0,.4); transition: opacity .4s, translate .5s cubic-bezier(.22, 1, .36, 1); }
+.hs-link:hover .hs-live, .hs-link:focus-visible .hs-live { opacity: 1; translate: -50% 0; }
+@media (hover: none) { .hs-live { opacity: 1; translate: -50% 0; } }
+.hs-info { padding: 22px 8px 0; }
+.hs-tag { display: inline-block; padding: 5px 12px; border-radius: 10px; background: #f3ead6; color: #8b7355; font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.hs-info h3 { margin: 12px 0 6px; font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; font-weight: 600; color: #30382f; }
+.hs-info p { margin: 0 auto; max-width: 300px; color: #6b6d62; font-size: 15px; line-height: 1.6; }

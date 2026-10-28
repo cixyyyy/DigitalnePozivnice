@@ -1,0 +1,75 @@
+@model DigitalnePozivnice.Models.ViewModels.AdminNarudzbeViewModel
+@using DigitalnePozivnice.Models.Generated
+@{
+    ViewData["Title"] = "Narudžbe";
+    ViewData["Aktivno"] = "narudzbe";
+    string Chip(string? s) => (Model.Status ?? "") == (s ?? "") ? "is-on" : "";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz pz-wide">
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">ADMIN</span>
+            <h1>Narudžbe</h1>
+            <p>Potvrdite prijem uplate, pa korisnik može objaviti pozivnicu.</p>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <div class="ap-bar">
+        <div class="ap-chips">
+            <a class="ap-chip @Chip(null)" asp-action="Narudzbe" asp-route-q="@Model.Q">Sve</a>
+            <a class="ap-chip @Chip(NarudzbaStatus.CekaUplatu)" asp-action="Narudzbe" asp-route-status="@NarudzbaStatus.CekaUplatu" asp-route-q="@Model.Q">Čeka uplatu (@Model.CekaUplatu)</a>
+            <a class="ap-chip @Chip(NarudzbaStatus.Placeno)" asp-action="Narudzbe" asp-route-status="@NarudzbaStatus.Placeno" asp-route-q="@Model.Q">Plaćeno (@Model.Placeno)</a>
+            <a class="ap-chip @Chip(NarudzbaStatus.Otkazano)" asp-action="Narudzbe" asp-route-status="@NarudzbaStatus.Otkazano" asp-route-q="@Model.Q">Otkazano (@Model.Otkazano)</a>
+        </div>
+        <form class="ap-search" method="get" asp-action="Narudzbe">
+            <input type="hidden" name="status" value="@Model.Status" />
+            <input type="search" name="q" value="@Model.Q" placeholder="Broj, email, imena, naslov…" />
+            <button type="submit" class="ui-btn ui-btn-solid ui-btn-sm">Traži</button>
+        </form>
+    </div>
+
+    @if (!Model.Narudzbe.Any())
+    {
+        <div class="ap-table-wrap"><div class="ap-empty">Nema narudžbi za ovaj filter.</div></div>
+    }
+    else
+    {
+        <div class="ap-table-wrap">
+            <table class="ap-table">
+                <thead><tr><th>Broj</th><th>Korisnik</th><th>Pozivnica</th><th>Paket</th><th class="ap-num">Iznos</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var n in Model.Narudzbe)
+                {
+                    <tr>
+                        <td>#@n.PozivNaBroj<span class="ap-sub">@n.DatumKreiranja.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span></td>
+                        <td>@(Model.Emailovi.TryGetValue(n.KorisnikId, out var em) ? em : "?")</td>
+                        <td>@n.Pozivnica.Naslov<span class="ap-sub">@n.Pozivnica.ImenaDomacina</span></td>
+                        <td>@n.Paket.Naziv<span class="ap-sub">@n.NacinPlacanja</span></td>
+                        <td class="ap-num">@n.Iznos.ToString("N2") KM</td>
+                        <td><span class="ap-st @NarudzbaStatus.Css(n.Status)">@NarudzbaStatus.Naziv(n.Status)</span></td>
+                        <td>
+                            <div class="ap-act">
+                                <a class="ui-btn ui-btn-ghost ui-btn-sm" asp-action="NarudzbaDetalji" asp-route-id="@n.NarudzbaId">Otvori</a>
+                                @if (n.Status == NarudzbaStatus.CekaUplatu)
+                                {
+                                    <form asp-action="PotvrdiUplatu" asp-route-id="@n.NarudzbaId" method="post" onsubmit="return confirm('Potvrditi prijem uplate za narudžbu #@n.PozivNaBroj?');">
+                                        <button type="submit" class="ui-btn ui-btn-gold ui-btn-sm">Potvrdi uplatu</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <partial name="_Pager" model="Model.Str" />
+    }
+</section>

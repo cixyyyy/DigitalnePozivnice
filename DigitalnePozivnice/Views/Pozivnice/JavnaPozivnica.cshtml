@@ -1,0 +1,92 @@
+@using DigitalnePozivnice.Helpers
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment Env
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    Layout = "_InvitationLayout";
+
+    // Pozivnica se prikazuje na jeziku koji je domaćin izabrao
+    Context.Items["lang"] = Loc.Normalize(Model.Jezik);
+
+    var kljuc = InvitationTheme.NormalizeKey(Model.Sablon?.Kljuc);
+    var osnovne = InvitationTheme.DefaultColors(kljuc);
+
+    var glavna = InvitationTheme.Color(Model.OsnovnaBoja, osnovne.Main);
+    var dodatna = InvitationTheme.Color(Model.DodatnaBoja, osnovne.Accent);
+    var pozadina = InvitationTheme.Color(Model.BojaPozadine, osnovne.Bg);
+    var tekst = InvitationTheme.TextColor(pozadina);
+    var font = InvitationTheme.FontStack(Model.NazivFonta);
+
+    var imaRsvp = InvitationTheme.ImaRsvp(Model.Paket?.Oznaka);
+
+    // Ilustracije i muzika dizajna (wwwroot/templates/{kljuc}/)
+    var assets = TemplateAssets.Resolve(Env, kljuc);
+    var intro = ViewBag.NoIntro == true ? "none" : InvitationTheme.IntroZa(kljuc);
+
+    // Muzika: Premium/Exclusive biraju sami, Save the date koristi muziku dizajna
+    var muzikaDizajna = assets.TryGetValue("music", out var md) ? md.Url : null;
+    ViewData["MuzikaUrl"] = MuzikaBiblioteka.Razrijesi(Model, imaRsvp, muzikaDizajna, ViewBag.JeDemo == true);
+
+    ViewData["Assets"] = assets;
+    ViewData["PetalUrl"] = assets.TryGetValue("petal", out var petal) ? petal.Url : null;
+    ViewData["ImaRsvp"] = imaRsvp;
+    ViewData["BezProgram"] = InvitationTheme.JeSaveTheDate(Model.Paket?.Oznaka);
+    ViewData["Title"] = Model.Naslov;
+
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var opis = Model.Naslov;
+    if (prvi?.DatumVreme is DateTimeOffset datum)
+    {
+        opis = $"{Model.Naslov} · {InvitationTheme.DatumKratko(datum)}";
+    }
+    ViewData["OgDescription"] = opis;
+
+    var preview = ViewBag.Preview == true;
+    var nazadUrl = (string?)ViewBag.PreviewBackUrl;
+    var sablonPartial = InvitationTheme.TemplatePartial(kljuc);
+
+    var paperStyle = assets.TryGetValue("paper", out var paper) ? $"--paper:url('{paper.Url}');" : "";
+    // Dizajni sa ilustrovanom scenom: boja zavjese (Zavjesa) i ton zida (Dzez vece) prate izabrane boje
+    var hue = kljuc == "zavesa" ? InvitationTheme.PomakNijanse(dodatna, osnovne.Accent) : "0";
+    var zvFilter = $"hue-rotate({hue}deg)";
+    var zvUnfilter = $"hue-rotate({(hue.StartsWith("-") ? hue.Substring(1) : "-" + hue)}deg)";
+    var jzTint = InvitationTheme.IstaBoja(pozadina, osnovne.Bg) ? "0" : ".6";
+    var sceneStyle = $"--zv-filter:{zvFilter};--zv-unfilter:{zvUnfilter};--jz-tint:{jzTint};";
+
+    var klase = "inv"
+        + (preview && ViewBag.HideBar != true ? " has-preview-bar" : "")
+        + (paperStyle != "" ? " has-paper" : "")
+        + " bgs-" + InvitationTheme.StilPozadineOk(Model.StilPozadine)
+        + (tekst == "#F6F1E7" ? " inv-dark" : " inv-light")
+        + (intro != "none" ? " has-intro" : "");
+}
+
+<div class="@klase"
+     style="--c-main:@glavna;--c-accent:@dodatna;--c-bg:@pozadina;--c-text:@tekst;--font-body:@font;@(paperStyle + sceneStyle)">
+
+    @if (preview && ViewBag.HideBar != true)
+    {
+        <div class="inv-preview-bar">
+            @if (!string.IsNullOrEmpty(nazadUrl))
+            {
+                <a class="inv-preview-back" href="@nazadUrl">← Nazad</a>
+            }
+            else
+            {
+                <span></span>
+            }
+            <span class="inv-preview-text">@((string?)ViewBag.PreviewText)</span>
+            <span></span>
+        </div>
+    }
+
+    @if (intro == "koverta")
+    {
+        <partial name="~/Views/Pozivnice/_IntroKoverta.cshtml" model="Model" />
+    }
+
+    <partial name="~/Views/Pozivnice/_Muzika.cshtml" />
+
+    <partial name="@sablonPartial" model="Model" />
+</div>

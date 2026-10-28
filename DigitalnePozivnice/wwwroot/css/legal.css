@@ -1,0 +1,25 @@
+/* Pravne stranice i podnožje */
+.lg { max-width: 780px; margin: 0 auto; padding: clamp(28px, 5vw, 64px) clamp(18px, 4vw, 32px) 90px; color: #30382f; line-height: 1.75; font-size: 16px; }
+.lg h1 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 500; font-size: clamp(36px, 6vw, 54px); line-height: 1.1; margin: 0 0 6px; }
+.lg h2 { font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; font-size: 26px; margin: 38px 0 8px; }
+.lg p, .lg li { color: #4a4f44; }
+.lg ul { padding-left: 22px; }
+.lg li { margin: 4px 0; }
+.lg a { color: #8b7355; text-underline-offset: 3px; }
+.lg-date { color: #8a8c80; font-size: 14px; margin-bottom: 26px; }
+.lg-note { margin: 0 0 22px; padding: 12px 16px; background: #f6ecd2; border-radius: 12px; color: #6e5a22 !important; font-size: 14px; line-height: 1.5; }
+.lg-ops { list-style: none; padding: 16px 20px !important; background: #faf6e9; border: 1px solid #e6dec8; border-radius: 16px; }
+.lg-table { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; }
+.lg-table th, .lg-table td { padding: 10px 12px; border-bottom: 1px solid #e6dec8; text-align: left; vertical-align: top; }
+.lg-table th { background: #faf6e9; font-weight: 600; }
+.lg-table code { font-size: 12.5px; word-break: break-all; }
+.lg-links { margin-top: 36px; }
+
+.site-footer .footer-legal { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 18px; margin: 10px 0 4px; font-size: 13px; }
+.site-footer .footer-legal a { color: inherit; opacity: .8; text-decoration: none; }
+.site-footer .footer-legal a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
+
+.rg-consent { display: flex; gap: 10px; align-items: flex-start; margin: 4px 0 14px; font-size: 14px; line-height: 1.5; color: #5d6055; }
+.rg-consent input { margin-top: 3px; flex: none; }
+.rg-consent a { color: #8b7355; }
+.inv-privacy-note { margin: 10px 0 0; font-size: 12.5px; line-height: 1.5; opacity: .72; text-align: center; }

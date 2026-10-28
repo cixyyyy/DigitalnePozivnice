@@ -1,0 +1,184 @@
+/* =========================================================
+   SVITAK (save the date): ružičasti svitak sa zlatnim kićankama.
+   Zatvoren valjak -> dodir -> list se odmotava, a na njemu je luk
+   sa fenjerima, imenima i datumom.
+   Boje: --c-main = valjak i imena, --c-accent = zlato, --c-bg = papir.
+   ========================================================= */
+
+.svt-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+.svt-stage {
+    --w: min(88vw, 400px, calc((100svh - 190px) / 1.62));
+    --cw: calc(var(--w) * .77);
+    --gold: var(--c-accent);
+    --ink: color-mix(in srgb, var(--c-main) 38%, #2a1a1c);
+    gap: 0;
+    padding: 34px 12px 36px;
+    background:
+        radial-gradient(120% 70% at 50% 8%, color-mix(in srgb, var(--c-bg) 60%, #fff) 0%, transparent 60%),
+        var(--c-bg);
+}
+.svt-stage::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background: url('/img/paper/grain.png'); opacity: .55; mix-blend-mode: multiply;
+}
+.tpl-svitak .svt-stage > .art { opacity: .9; }
+
+/* ---------- natpisi ---------- */
+.svt-hello, .svt-tap {
+    font-family: "Great Vibes", "Cormorant Garamond", cursive; font-weight: 400;
+    color: var(--ink); text-align: center; position: relative; z-index: 4;
+}
+.svt-hello { font-size: calc(var(--w) * .105); margin: 0 0 calc(var(--w) * .1); line-height: 1.1; }
+.svt-tap {
+    font-size: calc(var(--w) * .062); margin: calc(var(--w) * .02) 0 0; opacity: .75;
+    cursor: pointer; background: none; border: 0; padding: 6px 14px;
+    animation: svt-pulse 2.4s ease-in-out infinite;
+}
+@keyframes svt-pulse { 0%, 100% { opacity: .4; transform: translateY(0); } 50% { opacity: .95; transform: translateY(-3px); } }
+
+/* ---------- svitak ---------- */
+.svt {
+    position: relative; width: var(--w);
+    filter: drop-shadow(0 18px 18px rgba(60, 24, 20, .22));
+    animation: svt-bob 4.2s ease-in-out infinite;
+}
+.svt.is-open { animation: none; }
+@keyframes svt-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+.svt-rod { position: relative; z-index: 3; pointer-events: none; }
+.svt-rod svg { display: block; width: 100%; height: auto; overflow: visible; }
+
+/* zatvoreno: donji valjak lezi preko gornjeg */
+.svt-rod-bot {
+    margin-top: calc(var(--w) * -.115);
+    margin-bottom: calc(var(--w) * .21);
+    transition: margin-top 2.2s cubic-bezier(.45, .05, .25, 1);
+}
+.svt.is-open .svt-rod-bot { margin-top: 0; }
+
+.svt-sw { animation: svt-sway 2.8s ease-in-out infinite alternate; }
+.svt-sw2 { animation-duration: 3.4s; animation-delay: -1.4s; }
+@keyframes svt-sway { from { transform: rotate(-4.5deg); } to { transform: rotate(4.5deg); } }
+
+/* ---------- list ---------- */
+.svt-sheet {
+    position: relative; z-index: 1; margin: 0 11.5%;
+    height: 0; transition: height 2.2s cubic-bezier(.45, .05, .25, 1);
+}
+.svt.is-open .svt-sheet { height: calc(var(--cw) / .63); }
+.svt-sheet-in { position: relative; height: 100%; overflow: hidden; }
+.svt-sheet-in::before, .svt-sheet-in::after {
+    content: ""; position: absolute; left: 0; right: 0; height: calc(var(--w) * .06); z-index: 3; pointer-events: none;
+}
+.svt-sheet-in::before { top: 0; background: linear-gradient(rgba(70, 30, 20, .34), transparent); }
+.svt-sheet-in::after { bottom: 0; background: linear-gradient(transparent, rgba(70, 30, 20, .3)); }
+
+.svt-card {
+    position: relative; width: 100%; aspect-ratio: .63;
+    display: flex; padding: calc(var(--cw) * .09) calc(var(--cw) * .09) calc(var(--cw) * .07);
+    background: color-mix(in srgb, var(--c-bg) 50%, #fffaf0);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--gold) 55%, transparent);
+}
+/* zlatna mreza (kao na papiru sa snimka) */
+.svt-lattice {
+    position: absolute; inset: calc(var(--cw) * .02); opacity: .5; pointer-events: none;
+    background: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 12 12 0 24 12 12 24Z' fill='none' stroke='%23000' stroke-width='1'/%3E%3Cpath d='M12 5 19 12 12 19 5 12Z' fill='none' stroke='%23000' stroke-width='.6'/%3E%3Ccircle cx='12' cy='12' r='1.7'/%3E%3Ccircle cx='0' cy='0' r='1.5'/%3E%3Ccircle cx='24' cy='0' r='1.5'/%3E%3Ccircle cx='0' cy='24' r='1.5'/%3E%3Ccircle cx='24' cy='24' r='1.5'/%3E%3C/svg%3E") 0 0 / calc(var(--cw) * .075) calc(var(--cw) * .075);
+            mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M0 12 12 0 24 12 12 24Z' fill='none' stroke='%23000' stroke-width='1'/%3E%3Cpath d='M12 5 19 12 12 19 5 12Z' fill='none' stroke='%23000' stroke-width='.6'/%3E%3Ccircle cx='12' cy='12' r='1.7'/%3E%3Ccircle cx='0' cy='0' r='1.5'/%3E%3Ccircle cx='24' cy='0' r='1.5'/%3E%3Ccircle cx='0' cy='24' r='1.5'/%3E%3Ccircle cx='24' cy='24' r='1.5'/%3E%3C/svg%3E") 0 0 / calc(var(--cw) * .075) calc(var(--cw) * .075);
+}
+
+/* luk */
+.svt-arch {
+    position: relative; width: 100%; overflow: hidden; isolation: isolate;
+    display: flex; flex-direction: column; align-items: center;
+    border-radius: 999px 999px 0 0;
+    background:
+        radial-gradient(90% 55% at 50% 38%, color-mix(in srgb, var(--c-bg) 40%, #fff) 0%, transparent 75%),
+        color-mix(in srgb, var(--c-bg) 72%, #fff8ea);
+    border: 1.5px solid color-mix(in srgb, var(--gold) 85%, #000);
+    box-shadow: 0 0 0 calc(var(--cw) * .012) color-mix(in srgb, var(--c-bg) 60%, #fff), 0 0 0 calc(var(--cw) * .018) color-mix(in srgb, var(--gold) 65%, transparent);
+}
+
+.svt-lan { position: absolute; z-index: 1; width: calc(var(--cw) * .06); height: auto; overflow: visible; transform-origin: 50% 0; animation: svt-lan 3.6s ease-in-out infinite alternate; }
+.svt-lan-a { left: 13%; top: calc(var(--cw) * .125); }
+.svt-lan-b { left: 25%; top: calc(var(--cw) * .04); animation-delay: -1.2s; }
+.svt-lan-c { right: 13%; top: calc(var(--cw) * .125); animation-delay: -2.2s; }
+.svt-lan-d { right: 25%; top: calc(var(--cw) * .04); animation-delay: -.6s; }
+@keyframes svt-lan { from { transform: rotate(-3deg); } to { transform: rotate(3deg); } }
+.svt-flame { animation: svt-flame 1.6s ease-in-out infinite alternate; transform-origin: 0 36px; }
+@keyframes svt-flame { from { opacity: .75; transform: scale(.9); } to { opacity: 1; transform: scale(1.12); } }
+
+/* tekst na listu */
+.svt-copy {
+    position: relative; z-index: 2; flex: 1; width: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    padding: calc(var(--cw) * .27) calc(var(--cw) * .06) calc(var(--cw) * .2);
+    color: var(--ink);
+}
+.svt-kicker {
+    font-family: "Jost", "Cormorant Garamond", sans-serif; font-size: max(9px, calc(var(--cw) * .036));
+    letter-spacing: .3em; text-transform: uppercase; margin: 0 0 calc(var(--cw) * .02);
+    color: color-mix(in srgb, var(--gold) 75%, #3a2606);
+}
+.svt-names {
+    font-family: "Great Vibes", "Cormorant Garamond", cursive; font-weight: 400;
+    font-size: calc(var(--cw) * .165); line-height: 1.04; margin: 0; overflow-wrap: anywhere;
+    color: color-mix(in srgb, var(--c-main) 72%, #4a1220);
+}
+.svt-orn {
+    display: block; width: 46%; height: 9px; margin: calc(var(--cw) * .03) auto calc(var(--cw) * .025); position: relative;
+    background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold) 70%, transparent) center / 100% 1px no-repeat;
+}
+.svt-orn::after {
+    content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; translate: -50% -50%; rotate: 45deg;
+    background: var(--c-bg); border: 1px solid var(--gold);
+}
+.svt-invite {
+    font-family: "Cormorant Garamond", Georgia, serif; font-style: italic;
+    font-size: max(11px, calc(var(--cw) * .05)); line-height: 1.34; margin: 0; max-width: 92%;
+}
+.svt-date {
+    font-family: "Cormorant Garamond", Georgia, serif; font-weight: 600; text-transform: uppercase;
+    font-size: max(12px, calc(var(--cw) * .056)); white-space: nowrap; letter-spacing: .08em;
+    margin: calc(var(--cw) * .06) 0 0; padding: calc(var(--cw) * .016) calc(var(--cw) * .05);
+    border-top: 1px solid var(--gold); border-bottom: 1px solid var(--gold); color: var(--ink);
+}
+.svt-venue {
+    font-family: "Jost", sans-serif; font-size: max(10px, calc(var(--cw) * .04)); letter-spacing: .16em;
+    text-transform: uppercase; margin: calc(var(--cw) * .03) 0 0; opacity: .85;
+}
+
+.svt-garden { position: absolute; z-index: 1; left: 0; bottom: 0; width: 100%; height: auto; display: block; }
+
+/* postepeno pojavljivanje teksta kad se list odmota */
+.js .svt-r { opacity: 0; transform: translateY(9px); }
+.js .svt.is-open .svt-r { animation: svt-in 1.1s cubic-bezier(.22, 1, .36, 1) forwards; animation-delay: calc(1.1s + var(--k, 0) * .42s); }
+@keyframes svt-in { to { opacity: 1; transform: none; } }
+
+/* dugme koje pokriva svitak dok je zatvoren */
+.svt-hit { position: absolute; inset: -14px -10px; z-index: 6; border: 0; background: transparent; cursor: pointer; border-radius: 12px; -webkit-tap-highlight-color: transparent; }
+.svt-hit:focus-visible { outline: 2px solid var(--c-main); outline-offset: 2px; }
+.svt.is-open .svt-hit { display: none; }
+
+/* zvjezdice oko svitka, kad se otvori */
+.svt-star {
+    position: absolute; width: 14px; height: 14px; pointer-events: none; opacity: 0;
+    background: color-mix(in srgb, var(--gold) 80%, #fff);
+    clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%);
+}
+.svt-s1 { left: 9%; top: 22%; } .svt-s2 { right: 8%; top: 31%; width: 10px; height: 10px; }
+.svt-s3 { left: 6%; top: 58%; width: 10px; height: 10px; } .svt-s4 { right: 10%; top: 64%; }
+.svt-s5 { left: 46%; top: 9%; width: 9px; height: 9px; }
+.svt-stage.is-open .svt-star { animation: svt-twinkle 3.2s ease-in-out infinite; animation-delay: calc(1.6s + var(--n, 0) * .5s); }
+.svt-s2 { --n: 1; } .svt-s3 { --n: 2; } .svt-s4 { --n: 3; } .svt-s5 { --n: 4; }
+@keyframes svt-twinkle { 0%, 100% { opacity: 0; transform: scale(.4) rotate(0); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+
+/* ---------- bez JavaScript-a / smanjeno kretanje ---------- */
+html:not(.js) .svt-sheet { height: calc(var(--cw) / .63); }
+html:not(.js) .svt-rod-bot { margin-top: 0; }
+html:not(.js) .svt-hit, html:not(.js) .svt-tap { display: none; }
+html.reduce-motion .svt, html.reduce-motion .svt-tap, html.reduce-motion .svt-sw, html.reduce-motion .svt-lan, html.reduce-motion .svt-flame { animation: none; }
+html.reduce-motion .svt-sheet, html.reduce-motion .svt-rod-bot { transition: none; }
+html.reduce-motion .js .svt-r, html.reduce-motion.js .svt-r { opacity: 1; transform: none; animation: none; }
+html.reduce-motion .svt-star { display: none; }

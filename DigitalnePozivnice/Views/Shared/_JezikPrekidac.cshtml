@@ -1,0 +1,41 @@
+﻿@using DigitalnePozivnice.Localization
+@model string?
+@{
+    var footer = Model == "footer";
+    var trenutni = Loc.Lang;
+    var povratak = Context.Request.Path + Context.Request.QueryString;
+}
+
+@if (footer)
+{
+    <nav class="lang-footer" aria-label="Jezik">
+        @foreach (var j in Loc.Jezici)
+        {
+            <a href="@Url.Action("Postavi", "Jezik", new { kod = j.Code, povratak })"
+               lang="@j.Code" hreflang="@j.Code" translate="no"
+               class="@(j.Code == trenutni ? "is-active" : null)">@j.Native</a>
+        }
+    </nav>
+}
+else
+{
+    <details class="lang-switch" translate="no">
+        <summary aria-label="Jezik">
+            <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></svg>
+            <span>@trenutni.ToUpperInvariant()</span>
+            <i aria-hidden="true">▾</i>
+        </summary>
+        <ul class="lang-menu">
+            @foreach (var j in Loc.Jezici)
+            {
+                <li>
+                    <a href="@Url.Action("Postavi", "Jezik", new { kod = j.Code, povratak })"
+                       lang="@j.Code" hreflang="@j.Code"
+                       class="@(j.Code == trenutni ? "is-active" : null)">
+                        <b>@j.Code.ToUpperInvariant()</b> @j.Native
+                    </a>
+                </li>
+            }
+        </ul>
+    </details>
+}

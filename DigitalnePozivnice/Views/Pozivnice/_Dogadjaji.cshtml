@@ -1,0 +1,56 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    // Jedan datum, vise stavki programa (grupisano po danu, za starije pozivnice)
+    var dani = Model.DogadjajiPozivnices
+        .Where(d => d.DatumVreme.HasValue)
+        .OrderBy(d => d.DatumVreme)
+        .GroupBy(d => d.DatumVreme!.Value.Date)
+        .ToList();
+}
+
+<div class="inv-days">
+    @foreach (var dan in dani)
+    {
+        var stavke = dan.ToList();
+        var kalendar = InvitationTheme.CalendarUrlDan(stavke, Model.Naslov);
+
+        <div class="inv-day-block">
+            <p class="inv-day">@InvitationTheme.DatumDugo(stavke[0].DatumVreme!.Value)</p>
+
+            <ol class="inv-timeline">
+                @foreach (var d in stavke)
+                {
+                    var mapa = InvitationTheme.MapsUrl(d);
+
+                    <li class="inv-tl-item">
+                        <span class="inv-tl-time">@InvitationTheme.Vreme(d.DatumVreme!.Value)</span>
+                        <span class="inv-tl-dot" aria-hidden="true"></span>
+                        <h3 class="inv-tl-title">@d.Naziv</h3>
+
+                        @if (!string.IsNullOrWhiteSpace(d.NazivLokacije))
+                        {
+                            <p class="inv-tl-place">@d.NazivLokacije</p>
+                        }
+                        @if (!string.IsNullOrWhiteSpace(d.Adresa))
+                        {
+                            <p class="inv-tl-address">@d.Adresa</p>
+                        }
+                        @if (mapa != null)
+                        {
+                            <a class="inv-link" href="@mapa" target="_blank" rel="noopener noreferrer">Prikaži na mapi</a>
+                        }
+                    </li>
+                }
+            </ol>
+
+            @if (kalendar != null)
+            {
+                <div class="inv-day-actions">
+                    <a class="inv-link" href="@kalendar" target="_blank" rel="noopener noreferrer">Dodaj u kalendar</a>
+                </div>
+            }
+        </div>
+    }
+</div>

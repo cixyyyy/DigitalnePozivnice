@@ -1,0 +1,165 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+    const string img = "/img/jazz/";
+}
+
+<main class="tpl tpl-jazz">
+
+    <header class="jz-hero" aria-label="@glavno">
+        <div class="jz-stage">
+            <div class="jz-wall" aria-hidden="true"></div>
+            <span class="jz-spot" aria-hidden="true"></span>
+            <div class="jz-props" aria-hidden="true"></div>
+
+            @* ljudi i grupe koje prolaze pored konobara (kreću se zajedno sa pozadinom); jz-head = sloj glave koji se posebno naginje *@
+            <div class="jz-grp jz-g-couple" style="--d:2s;--sx:-190" aria-hidden="true">
+                <div class="jz-fig jz-cfig"><img src="@(img)c-body.webp" alt="" />
+                    <img class="jz-head" src="@(img)c-body.webp" alt="" style="--ct:7%;--cr:58%;--cb:77%;--cl:22%;--ox:32%;--oy:23%;--a:3deg;--t:3.2s;--dl:0s" />
+                    <img class="jz-head" src="@(img)c-body.webp" alt="" style="--ct:5%;--cr:22%;--cb:75%;--cl:54%;--ox:66%;--oy:25%;--a:-3deg;--t:3.2s;--dl:0s" />
+                </div>
+                <span class="jz-heart jz-h1">♥</span><span class="jz-heart jz-h2">♥</span><span class="jz-heart jz-h3">♥</span>
+            </div>
+            <div class="jz-grp jz-g-ph" style="--d:20s;--sx:-150" aria-hidden="true">
+                <div class="jz-fig jz-phfig"><img src="@(img)ph-body.webp" alt="" />
+                    <img class="jz-head" src="@(img)ph-body.webp" alt="" style="--ct:4%;--cr:33%;--cb:77%;--cl:33%;--ox:50%;--oy:23%;--a:3deg;--t:2.6s;--dl:0s" />
+                </div>
+                <span class="jz-flash">✦</span>
+            </div>
+            <div class="jz-grp jz-g-el" style="--d:-9s;--sx:-190" aria-hidden="true">
+                <div class="jz-fig jz-elm"><img class="jz-elb" src="@(img)el-body.webp" alt="" />
+                    <img class="jz-head" src="@(img)el-body.webp" alt="" style="--ct:9%;--cr:65%;--cb:73%;--cl:16%;--ox:25%;--oy:27%;--a:5deg;--t:1.6s;--dl:0s" />
+                </div>
+                <div class="jz-fig jz-elw"><img class="jz-elb" src="@(img)el-body.webp" alt="" />
+                    <img class="jz-head" src="@(img)el-body.webp" alt="" style="--ct:9%;--cr:16%;--cb:72%;--cl:62%;--ox:73%;--oy:28%;--a:-5deg;--t:1.9s;--dl:0s" />
+                </div>
+            </div>
+            <div class="jz-grp jz-g-to" style="--d:26s;--sx:-190" aria-hidden="true">
+                <div class="jz-fig jz-tofig"><img src="@(img)to-body.webp" alt="" />
+                    <img class="jz-head" src="@(img)to-body.webp" alt="" style="--ct:3%;--cr:60%;--cb:78%;--cl:17%;--ox:29%;--oy:22%;--a:3deg;--t:2.8s;--dl:0s" />
+                    <img class="jz-head" src="@(img)to-body.webp" alt="" style="--ct:4%;--cr:26%;--cb:73%;--cl:54%;--ox:64%;--oy:27%;--a:-3deg;--t:2.8s;--dl:0s" />
+                    <img src="@(img)to-act.webp" alt="" />
+                    <img class="jz-glassl" src="@(img)to-glassl.webp" alt="" />
+                    <img class="jz-glassr" src="@(img)to-glassr.webp" alt="" />
+                    <span class="jz-ching">✦</span>
+                </div>
+            </div>
+            <div class="jz-grp jz-g-gi" style="--d:38s;--sx:-150" aria-hidden="true">
+                <div class="jz-fig jz-hop"><img src="@(img)gi-body.webp" alt="" />
+                    <img class="jz-head" src="@(img)gi-body.webp" alt="" style="--ct:27%;--cr:38%;--cb:59%;--cl:33%;--ox:48%;--oy:41%;--a:4deg;--t:1.4s;--dl:0s" />
+                </div>
+                <img class="jz-ball" src="@(img)gi-balloons.webp" alt="" />
+            </div>
+
+            @* plesači (prolaze zajedno sa pozadinom) *@
+            <div class="jz-grp jz-dancers" style="--d:14s;--sx:-200" aria-hidden="true">
+            <div class="jz-dancer jz-dancer-f">
+                <img class="jz-arm jz-fl" src="@(img)f-armL.webp" alt="" />
+                <img class="jz-arm jz-fr" src="@(img)f-armR.webp" alt="" />
+                <img class="jz-body" src="@(img)f-body.webp" alt="" />
+                <img class="jz-head" src="@(img)f-body.webp" alt="" style="--ct:2%;--cr:34%;--cb:81%;--cl:34%;--ox:50%;--oy:19%;--a:5deg;--t:0.9s;--dl:0s" />
+            </div>
+            <div class="jz-dancer jz-dancer-m">
+                <img class="jz-arm jz-ml" src="@(img)m-armL.webp" alt="" />
+                <img class="jz-arm jz-mr" src="@(img)m-armR.webp" alt="" />
+                <img class="jz-body" src="@(img)m-body.webp" alt="" />
+                <img class="jz-head" src="@(img)m-body.webp" alt="" style="--ct:5%;--cr:34%;--cb:80%;--cl:35%;--ox:50%;--oy:20%;--a:-5deg;--t:0.9s;--dl:0s" />
+            </div>
+            </div>
+            <div class="jz-floor" aria-hidden="true"></div>
+
+            @* bend na podijumu (prolazi zajedno sa pozadinom) *@
+            <div class="jz-grp jz-band" style="--d:8s;--sx:-300" aria-hidden="true">
+                <div class="jz-band-in">
+                    <img class="jz-band-body" src="@(img)band-band.webp" alt="" />
+                    <img class="jz-head" src="@(img)band-band.webp" alt="" style="--ct:14%;--cr:58%;--cb:73%;--cl:30%;--ox:35.5%;--oy:27%;--a:3deg;--t:1.8s;--dl:0s" />
+                    <img class="jz-head" src="@(img)band-band.webp" alt="" style="--ct:14%;--cr:39%;--cb:73%;--cl:49%;--ox:54.5%;--oy:27%;--a:-3deg;--t:1.8s;--dl:0s" />
+                    <img class="jz-head" src="@(img)band-band.webp" alt="" style="--ct:26%;--cr:11%;--cb:61%;--cl:73%;--ox:81%;--oy:39%;--a:3deg;--t:0.9s;--dl:0s" />
+                    <img class="jz-chand" src="@(img)band-chand.webp" alt="" />
+                    <img class="jz-lhand" src="@(img)band-lhand.webp" alt="" />
+                    <img class="jz-rhand" src="@(img)band-rhand.webp" alt="" />
+                    <img class="jz-stick" src="@(img)band-stick.webp" alt="" />
+                    <img class="jz-tpt" src="@(img)band-tpt.webp" alt="" />
+                    <span class="jz-note jz-n1">♪</span><span class="jz-note jz-n2">♫</span><span class="jz-note jz-n3">♪</span>
+                    <span class="jz-cym">✦</span>
+                </div>
+            </div>
+
+            @* golub sa srcem *@
+            <div class="jz-dove" aria-hidden="true">
+                <img class="jz-wa" src="@(img)d-wingA.webp" alt="" />
+                <img class="jz-wb" src="@(img)d-wingB.webp" alt="" />
+                <img class="jz-db" src="@(img)d-body.webp" alt="" />
+            </div>
+
+            @* konobar + sjena na zidu *@
+            <div class="jz-waiter" aria-hidden="true">
+                <div class="jz-wshadow">
+                    <img src="@(img)waiter2-nohead.webp" alt="" />
+                    <img src="@(img)waiter2-head.webp" alt="" />
+                    <img class="jz-warm" src="@(img)waiter2-arm.webp" alt="" />
+                </div>
+                <div class="jz-wfig">
+                    <img src="@(img)waiter2-nohead.webp" alt="" />
+                    <img class="jz-whead" src="@(img)waiter2-head.webp" alt="" />
+
+                    <img class="jz-warm" src="@(img)waiter2-arm.webp" alt="" />
+                </div>
+            </div>
+
+            <div class="jz-text">
+                <p class="jz-kicker">@kicker</p>
+                <h1 class="jz-names">@glavno</h1>
+                <p class="jz-invite">@InvitationText.PozivLinija(Model)</p>
+                @if (prvi?.DatumVreme is DateTimeOffset d)
+                {
+                    <p class="jz-date">@InvitationTheme.DatumKratko(d)</p>
+                }
+                @if (!string.IsNullOrWhiteSpace(prvi?.NazivLokacije))
+                {
+                    <p class="jz-venue">@prvi!.NazivLokacije</p>
+                }
+            </div>
+        </div>
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+    {
+        <section class="inv-section inv-reveal">
+            <p class="inv-message">@Model.UvodniTekst</p>
+        </section>
+    }
+
+    @if (prvi?.DatumVreme is DateTimeOffset cilj)
+    {
+        <section class="inv-section inv-reveal">
+            <h2 class="inv-section-title">Još samo</h2>
+            <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+        </section>
+    }
+
+    <section class="inv-section inv-reveal">
+        <h2 class="inv-section-title">Gdje i kada</h2>
+        <partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" />
+    </section>
+
+    <partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />
+
+    @if (imaRsvp)
+    {
+        <section class="inv-section inv-reveal" id="rsvp">
+            <h2 class="inv-section-title">Hoćete li biti s nama?</h2>
+            <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+        </section>
+    }
+
+    <footer class="tpl-footer inv-reveal">
+        <p class="tpl-footer-names">@glavno</p>
+        <p class="tpl-footer-note">Vidimo se uz džez ♪</p>
+    </footer>
+</main>

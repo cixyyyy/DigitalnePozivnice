@@ -1,0 +1,92 @@
+@model DigitalnePozivnice.Models.Generated.Narudzba
+@using DigitalnePozivnice.Models.Generated
+@using DigitalnePozivnice.Helpers
+@using Microsoft.Extensions.Options
+@inject IOptions<PlacanjeOptions> PlacanjeOpt
+@{
+    ViewData["Title"] = "Narudžba #" + Model.PozivNaBroj;
+    var o = PlacanjeOpt.Value;
+    var rok = Model.DatumKreiranja.AddDays(o.RokUplateDana).ToLocalTime();
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <a class="pz-back" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">← Nazad na pozivnicu</a>
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">NARUDŽBA</span>
+            <h1>#@Model.PozivNaBroj <span class="ap-st @NarudzbaStatus.Css(Model.Status)" style="font-size:14px;vertical-align:middle">@NarudzbaStatus.Naziv(Model.Status)</span></h1>
+            <p>@Model.Paket.Naziv · @Model.Pozivnica.Naslov</p>
+        </div>
+    </header>
+
+    <partial name="_Poruka" />
+
+    @if (Model.Status == NarudzbaStatus.Placeno)
+    {
+        <article class="pz-card">
+            <h2>Uplata je potvrđena</h2>
+            <p class="pz-muted">Hvala! Pozivnicu sada možete objaviti i podijeliti sa gostima.</p>
+            <a class="ui-btn ui-btn-gold" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">Idi na pozivnicu i objavi →</a>
+        </article>
+    }
+    else if (Model.Status == NarudzbaStatus.Ponisteno)
+    {
+        <article class="pz-card">
+            <h2>Narudžba je otkazana</h2>
+            <p class="pz-muted">Narudžbu je otkazao administrator, pa objava ove pozivnice nije moguća. Za više informacija nas kontaktirajte.</p>
+        </article>
+    }
+    else if (Model.Status == NarudzbaStatus.Otkazano)
+    {
+        <article class="pz-card">
+            <h2>Narudžba je otkazana</h2>
+            <p class="pz-muted">Ako i dalje želite da objavite pozivnicu, napravite novu narudžbu.</p>
+            <a class="ui-btn ui-btn-solid" asp-controller="Narudzbe" asp-action="Placanje" asp-route-pozivnicaId="@Model.PozivnicaId">Nova narudžba</a>
+        </article>
+    }
+    else
+    {
+        <div class="ap-grid2">
+            <article class="pz-card">
+                <h2>Podaci za uplatu</h2>
+                <div class="ap-slip">
+                    <dl class="ap-kv" style="margin-top:0">
+                        <dt>Primalac</dt><dd>@o.Primalac @if (!string.IsNullOrWhiteSpace(o.Adresa)) { <span class="ap-sub">@o.Adresa</span> }</dd>
+                        <dt>Račun</dt><dd><span class="ap-copy">@o.Racun</span> @if (!string.IsNullOrWhiteSpace(o.Banka)) { <span class="ap-sub">@o.Banka</span> }</dd>
+                        <dt>Iznos</dt><dd class="is-big">@Model.Iznos.ToString("N2") KM</dd>
+                        <dt>Svrha uplate</dt><dd translate="no">Digitalna pozivnica – narudžba #@Model.PozivNaBroj</dd>
+                        <dt>Poziv na broj</dt><dd><span class="ap-copy">@Model.PozivNaBroj</span></dd>
+                        <dt>Rok uplate</dt><dd>@rok.ToString("dd.MM.yyyy")</dd>
+                    </dl>
+                </div>
+                <p class="ap-note">
+                    <span>Obavezno navedite poziv na broj (broj narudžbe) u svrsi uplate, da bismo je prepoznali.</span>
+                    <span>Uplatu potvrđujemo ručno, obično u roku od 1–2 radna dana, a zatim možete objaviti pozivnicu.</span>
+                    @if (!string.IsNullOrWhiteSpace(o.KontaktEmail))
+                    {
+                        <span>Pitanja:</span> <a href="mailto:@o.KontaktEmail">@o.KontaktEmail</a>
+                    }
+                </p>
+            </article>
+
+            <article class="pz-card">
+                <h2>Šta dalje?</h2>
+                <ol class="pz-muted" style="padding-left:18px;margin:12px 0 18px">
+                    <li>Uplatite iznos na navedeni račun.</li>
+                    <li>Mi potvrdimo prijem uplate.</li>
+                    <li>Pozivnicu objavite jednim klikom i podijelite link.</li>
+                </ol>
+                <div class="ap-row-actions">
+                    <a class="ui-btn ui-btn-solid" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">Nastavi uređivanje pozivnice</a>
+                    <form asp-action="Otkazi" asp-route-id="@Model.NarudzbaId" method="post" onsubmit="return confirm('Otkazati narudžbu?');">
+                        <button type="submit" class="ui-btn ui-btn-danger">Otkaži narudžbu</button>
+                    </form>
+                </div>
+            </article>
+        </div>
+    }
+</section>

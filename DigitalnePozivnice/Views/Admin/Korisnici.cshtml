@@ -1,0 +1,69 @@
+@model List<DigitalnePozivnice.Models.ViewModels.AdminKorisnikRed>
+@{
+    ViewData["Title"] = "Korisnici";
+    ViewData["Aktivno"] = "korisnici";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz pz-wide">
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">ADMIN</span>
+            <h1>Korisnici</h1>
+            <p>Zaključan nalog se ne može prijaviti, a njegove pozivnice ostaju kakve jesu.</p>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <div class="ap-bar">
+        <form class="ap-search" method="get" asp-action="Korisnici">
+            <input type="search" name="q" value="@ViewBag.Q" placeholder="Email ili ime…" />
+            <button type="submit" class="ui-btn ui-btn-solid ui-btn-sm">Traži</button>
+        </form>
+    </div>
+
+    @if (!Model.Any())
+    {
+        <div class="ap-table-wrap"><div class="ap-empty">Nema korisnika.</div></div>
+    }
+    else
+    {
+        <div class="ap-table-wrap">
+            <table class="ap-table">
+                <thead><tr><th>Korisnik</th><th class="ap-num">Pozivnica</th><th class="ap-num">Narudžbi</th><th>Nalog</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var k in Model)
+                {
+                    <tr>
+                        <td>@k.Email<span class="ap-sub">@k.ImePrezime@(k.JeAdmin ? " · admin" : "")</span></td>
+                        <td class="ap-num">@k.Pozivnica</td>
+                        <td class="ap-num">@k.Narudzbi</td>
+                        <td><span class="ap-st @(k.Zakljucan ? "ap-st-otkazano" : "ap-st-placeno")">@(k.Zakljucan ? "Zaključan" : "Aktivan")</span></td>
+                        <td>
+                            <div class="ap-act">
+                                @if (k.Zakljucan)
+                                {
+                                    <form asp-action="Otkljucaj" asp-route-id="@k.Id" method="post">
+                                        <button type="submit" class="ui-btn ui-btn-ghost ui-btn-sm">Otključaj</button>
+                                    </form>
+                                }
+                                else if (!k.JeAdmin)
+                                {
+                                    <form asp-action="Zakljucaj" asp-route-id="@k.Id" method="post" onsubmit="return confirm('Zaključati ovaj nalog?');">
+                                        <button type="submit" class="ui-btn ui-btn-danger ui-btn-sm">Zaključaj</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <partial name="_Pager" model="(DigitalnePozivnice.Models.ViewModels.Stranicenje)ViewBag.Str" />
+    }
+</section>

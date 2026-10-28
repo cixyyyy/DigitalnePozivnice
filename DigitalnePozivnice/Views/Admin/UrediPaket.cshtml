@@ -1,0 +1,48 @@
+@model DigitalnePozivnice.Models.ViewModels.AdminPaketForma
+@{
+    ViewData["Title"] = "Uredi paket";
+    ViewData["Aktivno"] = "paketi";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <a class="pz-back" asp-action="PaketiLista">← Paketi</a>
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">ADMIN</span>
+            <h1>Uredi paket: @Model.Oznaka</h1>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <article class="pz-card">
+        <form asp-action="UrediPaket" asp-route-id="@Model.PaketId" method="post" class="ap-form">
+            <div class="ap-field">
+                <label asp-for="Naziv">Naziv</label>
+                <input asp-for="Naziv" type="text" maxlength="100" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="ap-field">
+                <label asp-for="Opis">Opis</label>
+                <textarea asp-for="Opis" maxlength="400"></textarea>
+            </div>
+            <div class="ap-field">
+                <label asp-for="CenaUnos">Cijena (KM)</label>
+                <input asp-for="CenaUnos" type="text" inputmode="decimal" maxlength="10" />
+                <div class="ap-hint">Nova cijena važi za buduće narudžbe. Već kreirane narudžbe zadržavaju svoj iznos.</div>
+                <span asp-validation-for="CenaUnos" class="text-danger"></span>
+            </div>
+            <label class="ap-check">
+                <input asp-for="Aktivan" type="checkbox" /> Paket je dostupan na stranici paketa
+            </label>
+            <div class="ap-row-actions">
+                <button type="submit" class="ui-btn ui-btn-solid">Sačuvaj</button>
+                <a class="ui-btn ui-btn-ghost" asp-action="PaketiLista">Odustani</a>
+            </div>
+        </form>
+    </article>
+</section>

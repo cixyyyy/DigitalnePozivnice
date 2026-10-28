@@ -1,0 +1,30 @@
+## .NET / Visual Studio
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.log
+*.pidb
+TestResults/
+publish/
+
+## Tajne i lokalna konfiguracija (ne objavljivati!)
+appsettings.Development.json
+appsettings.Placanje.json
+appsettings.Local.json
+secrets.json
+*.pfx
+.env
+
+## Korisnicki upload-i
+wwwroot/uploads/
+wwwroot/mediji/
+App_Data/
+
+## Preuzeti fontovi (skida ih skini-fontove.ps1)
+wwwroot/fonts/
+
+## OS
+Thumbs.db
+.DS_Store

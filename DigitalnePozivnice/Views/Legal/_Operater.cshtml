@@ -1,0 +1,14 @@
+@inject Microsoft.Extensions.Configuration.IConfiguration Config
+@{
+    // Podaci o operateru: appsettings.json -> "Firma": { "Naziv", "Adresa", "Maticni", "Email" }
+    var naziv = Config["Firma:Naziv"] ?? "[NAZIV FIRME / IME I PREZIME]";
+    var adresa = Config["Firma:Adresa"] ?? "[ADRESA]";
+    var maticni = Config["Firma:Maticni"] ?? "[MATIČNI BROJ / PIB]";
+    var email = Config["Firma:Email"] ?? Config["Kontakt:Email"] ?? "[EMAIL]";
+}
+<ul class="lg-ops">
+    <li><b>Naziv:</b> <span translate="no">@naziv</span></li>
+    <li><b>Adresa:</b> <span translate="no">@adresa</span></li>
+    <li><b>Matični broj / PIB:</b> <span translate="no">@maticni</span></li>
+    <li><b>E-pošta:</b> <a href="mailto:@email" translate="no">@email</a></li>
+</ul>

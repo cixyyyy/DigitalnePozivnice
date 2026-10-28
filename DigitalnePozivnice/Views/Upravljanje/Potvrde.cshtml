@@ -1,0 +1,148 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.ViewModels.PotvrdeAdminViewModel
+
+@{
+    ViewData["Title"] = "Potvrde dolaska";
+
+    var naziv = string.IsNullOrWhiteSpace(Model.Imena) ? Model.Naslov : Model.Imena;
+    var ukupnoGostiju = Model.GostijuDolazi + Model.GostijuNeDolazi;
+    var procenatDolazi = ukupnoGostiju == 0 ? 0 : (int)Math.Round(100.0 * Model.GostijuDolazi / ukupnoGostiju);
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+}
+
+<section class="pz">
+    <a class="pz-back" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">← @naziv</a>
+
+    <header class="pz-head" data-rv>
+        <div>
+            <span class="eyebrow">ADMIN PANEL</span>
+            <h1>Potvrde dolaska</h1>
+            <p>@naziv · paket @Model.PaketNaziv</p>
+        </div>
+
+        <div class="pz-head-actions">
+            <a class="ui-btn ui-btn-ghost" asp-controller="Upravljanje" asp-action="Izvoz" asp-route-id="@Model.PozivnicaId">Izvezi listu (CSV) ↓</a>
+            @if (Model.Exclusive)
+            {
+                <a class="ui-btn ui-btn-solid" asp-controller="Upravljanje" asp-action="Raspored" asp-route-id="@Model.PozivnicaId">Raspored sjedenja →</a>
+            }
+            else
+            {
+                <a class="ui-btn ui-btn-gold" asp-controller="Paketi" asp-action="Index">Raspored sjedenja u Exclusive paketu</a>
+            }
+        </div>
+    </header>
+
+    <div class="pt-stats">
+        <div class="pt-stat is-ok" data-rv data-rv-delay="0">
+            <b data-count="@Model.OsobaDolazi">@Model.OsobaDolazi</b>
+            <span>Osoba dolazi</span>
+            <small>@(Model.Pratnja > 0 ? $"uključujući {Model.Pratnja} u pratnji" : "gosti i pratnja")</small>
+        </div>
+        <div class="pt-stat" data-rv data-rv-delay="0.08">
+            <b data-count="@Model.GostijuDolazi">@Model.GostijuDolazi</b>
+            <span>Gostiju potvrdilo</span>
+            <small>potvrdili dolazak</small>
+        </div>
+        <div class="pt-stat is-no" data-rv data-rv-delay="0.16">
+            <b data-count="@Model.GostijuNeDolazi">@Model.GostijuNeDolazi</b>
+            <span>Ne dolaze</span>
+            <small>odbili poziv</small>
+        </div>
+        <div class="pt-stat" data-rv data-rv-delay="0.24">
+            <b data-count="@Model.Ukupno">@Model.Ukupno</b>
+            <span>Odgovora ukupno</span>
+            <small>od svih gostiju</small>
+        </div>
+    </div>
+
+    @if (ukupnoGostiju > 0)
+    {
+        <div class="pz-card pt-bar" data-rv>
+            <div class="pt-bar-head">
+                <b>Odnos odgovora</b>
+                <span>@procenatDolazi% dolazi</span>
+            </div>
+            <div class="pt-meter" role="img" aria-label="@Model.GostijuDolazi dolazi, @Model.GostijuNeDolazi ne dolazi">
+                <span class="is-ok" style="--w:@procenatDolazi%"></span>
+            </div>
+            <div class="pt-legend">
+                <span><i class="is-ok"></i> Dolaze (@Model.GostijuDolazi)</span>
+                <span><i class="is-no"></i> Ne dolaze (@Model.GostijuNeDolazi)</span>
+            </div>
+        </div>
+    }
+
+    <div class="pz-card pt-list" data-rv>
+        <div class="pt-tools">
+            <div class="pt-tabs" role="tablist">
+                <button type="button" class="is-active" data-filter="all">Svi <em>@Model.Ukupno</em></button>
+                <button type="button" data-filter="yes">Dolaze <em>@Model.GostijuDolazi</em></button>
+                <button type="button" data-filter="no">Ne dolaze <em>@Model.GostijuNeDolazi</em></button>
+            </div>
+            <input type="search" id="ptSearch" class="pt-search" placeholder="Pretraži goste…" aria-label="Pretraži goste" />
+        </div>
+
+        @if (Model.Ukupno == 0)
+        {
+            <div class="pt-empty">
+                <span>✉</span>
+                <h3>Još nema odgovora</h3>
+                @if (Model.Objavljena)
+                {
+                    <p>Podijelite link sa gostima i njihovi odgovori će se pojaviti ovdje.</p>
+                    <div class="pz-copy">
+                        <input id="javniLink" type="text" value="@Model.JavniLink" readonly aria-label="Link za goste" />
+                        <button type="button" class="ui-btn ui-btn-solid" data-copy="#javniLink">Kopiraj</button>
+                    </div>
+                    <span class="pz-copy-msg" id="copyMsg" aria-live="polite"></span>
+                }
+                else
+                {
+                    <p>Pozivnica još nije objavljena. Objavite je da bi gosti mogli odgovarati.</p>
+                    <a class="ui-btn ui-btn-gold" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">Idi na objavu</a>
+                }
+            </div>
+        }
+        else
+        {
+            <ul class="pt-rows" id="ptRows">
+                @{ var n = 0; }
+                @foreach (var g in Model.Gosti)
+                {
+                    <li class="pt-row" data-status="@(g.Dolazi ? "yes" : "no")" data-name="@g.Ime.ToLowerInvariant()" style="--i:@(n++)">
+                        <span class="av a@(g.GostId % 5 + 1)">@(g.Ime.Length > 0 ? g.Ime.Substring(0, 1).ToUpperInvariant() : "?")</span>
+
+                        <div class="pt-who">
+                            <b>@g.Ime</b>
+                            <small>
+                                @g.DatumOdgovora.ToString("dd.MM.yyyy. HH:mm")
+                                @if (!string.IsNullOrWhiteSpace(g.Sto)) { <text> · @g.Sto</text> }
+                            </small>
+                            @if (!string.IsNullOrWhiteSpace(g.Poruka))
+                            {
+                                <p class="pt-msg">„@g.Poruka“</p>
+                            }
+                        </div>
+
+                        <div class="pt-meta">
+                            @if (g.Dolazi)
+                            {
+                                <span class="pt-pers">@g.Osoba @(g.Osoba == 1 ? "osoba" : "osobe")</span>
+                            }
+                            <span class="pz-chip @(g.Dolazi ? "is-ok" : "is-no")">@(g.Dolazi ? "Dolazi" : "Ne dolazi")</span>
+                        </div>
+                    </li>
+                }
+            </ul>
+            <p class="pt-none" id="ptNone" hidden>Nema gostiju koji odgovaraju pretrazi.</p>
+        }
+    </div>
+</section>

@@ -1,0 +1,99 @@
+@{
+    ViewData["Title"] = "Registracija";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <h2 class="text-center mb-2">Napravi nalog</h2>
+                    <p class="text-center text-muted mb-4">
+                        Kreiraj svoj nalog i napravi digitalnu pozivnicu.
+                    </p>
+
+                    @if (!string.IsNullOrEmpty(ViewData["ReturnUrl"] as string))
+                    {
+                        <div class="alert alert-warning py-2 small text-center" role="status">
+                            Da biste napravili pozivnicu, prvo napravite nalog. Traje manje od minuta.
+                        </div>
+                    }
+
+                    <form asp-controller="Account"
+                          asp-action="Register"
+                          method="post">
+
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="returnUrl" value="@(ViewData["ReturnUrl"] as string)" />
+
+                        <div asp-validation-summary="All"
+                             class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label for="imePrezime" class="form-label">
+                                Ime i prezime
+                            </label>
+                            <input id="imePrezime"
+                                   name="imePrezime"
+                                   class="form-control"
+                                   autocomplete="name"
+                                   required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                Email adresa
+                            </label>
+                            <input id="email"
+                                   name="email"
+                                   type="email"
+                                   class="form-control"
+                                   autocomplete="email"
+                                   required />
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="lozinka" class="form-label">
+                                Lozinka
+                            </label>
+                            <input id="lozinka"
+                                   name="lozinka"
+                                   type="password"
+                                   class="form-control"
+                                   autocomplete="new-password"
+                                   minlength="8"
+                                   required />
+                            <small class="text-muted">
+                                Najmanje 8 znakova.
+                            </small>
+                        </div>
+
+                        <label class="rg-consent">
+                            <input type="checkbox" name="prihvatam" value="true" required />
+                            <span>
+                                Prihvatam:
+                                <a asp-controller="Legal" asp-action="Uslovi" target="_blank">Uslove korištenja</a> ·
+                                <a asp-controller="Legal" asp-action="Privatnost" target="_blank">Politiku privatnosti</a>
+                            </span>
+                        </label>
+
+                        <button type="submit"
+                                class="btn btn-dark w-100 mt-2">
+                            Registruj se
+                        </button>
+                    </form>
+
+                    <p class="text-center mt-4 mb-0">
+                        Već imaš nalog?
+                        <a asp-controller="Account"
+                           asp-action="Login"
+                           asp-route-returnUrl="@(ViewData["ReturnUrl"] as string)">
+                            Prijavi se
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

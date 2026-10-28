@@ -1,0 +1,35 @@
+@using DigitalnePozivnice.Helpers
+@model (DigitalnePozivnice.Models.Generated.SabloniPozivnica Sablon, string? Paket, int Index, string Vrsta)
+
+@{
+    var kljuc = InvitationTheme.NormalizeKey(Model.Sablon.Kljuc);
+    var demoUrl = Url.Action("Demo", "Sabloni", new { kljuc, paket = Model.Paket });
+    var miniUrl = Url.Action("Demo", "Sabloni", new { kljuc, mini = true, paket = Model.Paket });
+}
+
+<article class="sg-card" data-rv data-rv-delay="@((Model.Index % 3) switch { 0 => "0", 1 => "0.12", _ => "0.24" })">
+    <a class="sg-preview" href="@demoUrl" target="_blank" rel="noopener" aria-label="Pogledaj demo: @Model.Sablon.Naziv">
+        <span class="sg-badge">@Model.Vrsta</span>
+        <div class="sg-phone">
+            <div class="sg-screen" data-src="@miniUrl" data-kljuc="@kljuc">
+                <div class="sg-skeleton" aria-hidden="true"></div>
+                <iframe title="Pregled: @Model.Sablon.Naziv" tabindex="-1" scrolling="no"></iframe>
+            </div>
+        </div>
+        <span class="sg-open">Pogledaj demo <b>↗</b></span>
+    </a>
+
+    <div class="sg-body">
+        <h3>@Model.Sablon.Naziv</h3>
+        <p>@InvitationTheme.OpisSablona(kljuc)</p>
+
+        <div class="sg-actions">
+            <a class="ui-btn ui-btn-ghost" href="@demoUrl" target="_blank" rel="noopener">Pogledaj demo</a>
+            <a class="ui-btn ui-btn-solid"
+               asp-controller="Pozivnice" asp-action="Create"
+               asp-route-paket="@Model.Paket" asp-route-sablonId="@Model.Sablon.SablonId">
+                Izaberi <span aria-hidden="true">→</span>
+            </a>
+        </div>
+    </div>
+</article>

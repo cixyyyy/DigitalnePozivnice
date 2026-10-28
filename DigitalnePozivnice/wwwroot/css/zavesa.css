@@ -1,0 +1,118 @@
+/* =========================================================
+   ZAVJESA (save the date): tamnocrveni baršun, draperija sa ružama,
+   luster i zlatni svijećnjaci. Slike: /img/zavesa/*.webp
+   ========================================================= */
+.tpl-zavesa .zv-stage {
+    --col: min(100vw, 560px, calc(100svh * .5));
+    --vh: calc(var(--col) * .5);          /* visina draperije */
+    --gold: var(--c-main);
+    min-height: max(100svh, calc(var(--col) * 2.1));
+    padding: calc(var(--vh) * 1.0) 18px calc(var(--col) * .3 + 16px);
+    justify-content: flex-start; gap: 0;
+    background: #12040a; overflow: hidden;
+}
+.tpl-zavesa .zv-stage > * { position: absolute; }
+.tpl-zavesa .zv-stage > .zv-copy { position: relative; }
+
+.zv-land {
+    inset: 0; z-index: 0; background: url('/img/zavesa/scena.webp') center calc(100% + 9vh) / cover;
+    transform-origin: 50% 80%;
+}
+.zv-land::after {   /* tamniji vrh i ivice da se zlatni tekst cita */
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(rgba(14, 6, 24, .78), rgba(14, 6, 24, .5) 38%, transparent 62%), radial-gradient(120% 90% at 50% 55%, transparent 55%, rgba(10, 4, 14, .55));
+}
+.zv-is-open .zv-land, .zv-stage.is-open .zv-land { animation: zv-drift 28s ease-in-out infinite alternate; }
+@keyframes zv-drift { from { transform: scale(1); } to { transform: scale(1.07); } }
+
+.zv-couple {
+    left: 50%; bottom: calc(var(--col) * .02); z-index: 2; height: calc(var(--col) * 1.0); width: auto; translate: -50% 0;
+    filter: drop-shadow(0 0 22px rgba(255, 170, 90, .28));
+}
+.js .zv-stage:not(.is-open) .zv-couple { opacity: 0; }
+.zv-stage.is-open .zv-couple { animation: zv-rise 2.4s cubic-bezier(.22, 1, .36, 1) 1.1s both; }
+@keyframes zv-rise { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+
+.zv-flowers {
+    left: 0; right: 0; bottom: 0; height: calc(var(--col) * .5); z-index: 3; pointer-events: none;
+    background: url('/img/zavesa/flowers.webp') center bottom / auto 100% repeat-x;
+}
+
+/* tekst */
+.tpl-zavesa .zv-copy::before {
+    content: ""; position: absolute; z-index: -1; inset: -34px -40px -26px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(12, 4, 22, .66), rgba(12, 4, 22, .38) 62%, transparent);
+}
+.tpl-zavesa .zv-copy { z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 10px; width: calc(var(--col) * .76); }
+.tpl-zavesa .std-kicker { color: var(--gold); letter-spacing: .5em; font-size: 11px; text-shadow: 0 0 12px rgba(0,0,0,.8); }
+.tpl-zavesa .std-title {
+    text-transform: uppercase; letter-spacing: .07em; font-weight: 500; line-height: 1.04;
+    font-size: calc(var(--col) * .092); text-shadow: 0 2px 18px rgba(0, 0, 0, .75);
+}
+.tpl-zavesa .std-invite { color: #f3e3c4; max-width: 28ch; font-size: max(12px, calc(var(--col) * .036)); letter-spacing: .06em; text-shadow: 0 1px 10px rgba(0,0,0,.9); }
+.tpl-zavesa .std-line { background: linear-gradient(90deg, transparent, var(--gold), transparent); width: 160px; }
+.tpl-zavesa .std-big-date { color: var(--gold); font-size: calc(var(--col) * .07); text-shadow: 0 2px 14px rgba(0,0,0,.8); }
+.zv-venue { color: #f3e3c4; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(0,0,0,.9); }
+
+.js .zv-in { opacity: 0; transform: translateY(10px); }
+.js .is-open .zv-in { animation: zv-in 1.3s cubic-bezier(.22, 1, .36, 1) forwards; animation-delay: calc(1.8s + var(--k, 0) * .5s); }
+@keyframes zv-in { to { opacity: 1; transform: none; } }
+
+/* zavjese: pravi baršun, otvaraju se i skupljaju uz ivice */
+.tpl-zavesa .std-curtain {
+    z-index: 5; top: 0; bottom: 0; width: 50.4%; background: url('/img/zavesa/panel.webp') center / 100% 100%;
+    box-shadow: 0 0 60px rgba(0, 0, 0, .75); transition: transform 3.2s cubic-bezier(.55, .02, .2, 1);
+}
+.tpl-zavesa .std-curtain-l { left: 0; transform-origin: left center; }
+.tpl-zavesa .std-curtain-r { right: 0; transform-origin: right center; background: none; }
+.tpl-zavesa .std-curtain-r::before { content: ""; position: absolute; inset: 0; background: url('/img/zavesa/panel.webp') center / 100% 100%; transform: scaleX(-1); }
+.tpl-zavesa .is-open .std-curtain-l { transform: scaleX(.17); }
+.tpl-zavesa .is-open .std-curtain-r { transform: scaleX(.17); }
+.tpl-zavesa .std-curtain::after {      /* sjena na unutrasnjoj ivici */
+    content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 14%; background: linear-gradient(90deg, transparent, rgba(0,0,0,.55));
+}
+.tpl-zavesa .std-curtain-r::after { right: auto; left: 0; background: linear-gradient(270deg, transparent, rgba(0,0,0,.55)); }
+
+.zv-valance {
+    left: 0; right: 0; top: 0; height: var(--vh); z-index: 7; pointer-events: none;
+    filter: var(--zv-filter, hue-rotate(0deg)) drop-shadow(0 12px 14px rgba(0, 0, 0, .65));
+}
+.zv-band {
+    position: absolute; left: 0; right: 0; top: 0; height: calc(var(--vh) * .1714); z-index: 2;
+    background: url('/img/zavesa/band.webp') center top / auto 100% repeat-x;
+}
+.zv-swags {
+    position: absolute; top: calc(var(--vh) * .1714 - 1px); left: 50%; translate: -50% 0; height: calc(var(--vh) * .8286);
+    display: flex; flex-wrap: nowrap;
+}
+.zv-swags i { position: relative; flex: none; width: calc(var(--vh) * 1.1429); height: 100%; background: no-repeat 0 0 / 100% 100%; }
+.zv-swags i.v0 { background-image: url('/img/zavesa/swag0.webp'); }
+.zv-swags i.v1 { background-image: url('/img/zavesa/swag1.webp'); }
+.zv-swags i.v2 { background-image: url('/img/zavesa/swag2.webp'); }
+.zv-swags i.v3 { background-image: url('/img/zavesa/swag3.webp'); }
+/* zlatna rozeta i kicanka na spoju draperija */
+.zv-swags i::before {
+    content: ""; position: absolute; z-index: 3; left: calc(var(--vh) * -.05); top: calc(var(--vh) * .06); width: calc(var(--vh) * .1); height: calc(var(--vh) * .1); border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff1b8 0 12%, #e0b04e 30%, #a8761e 70%, #6e4a10);
+    box-shadow: 0 2px 6px rgba(0,0,0,.6), inset 0 0 0 calc(var(--vh) * .012) rgba(120, 78, 14, .55);
+}
+.zv-swags i::after {
+    content: ""; position: absolute; z-index: 2; left: calc(var(--vh) * -.018); top: calc(var(--vh) * .14); width: calc(var(--vh) * .036); height: calc(var(--vh) * .17);
+    background: linear-gradient(#e0b04e, #b88428 55%, transparent 56%), repeating-linear-gradient(90deg, #d9a640 0 2px, #8a5e14 2px 3px);
+    clip-path: polygon(30% 0, 70% 0, 70% 38%, 100% 100%, 0 100%, 30% 38%); opacity: .95;
+}
+
+.tpl-zavesa .std-curtain-btn {
+    z-index: 9; bottom: calc(var(--col) * .38); background: rgba(20, 4, 8, .6); color: var(--gold);
+    border: 1px solid var(--gold); box-shadow: 0 0 24px rgba(0,0,0,.6); letter-spacing: .22em; white-space: nowrap; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
+.tpl-zavesa .is-open .std-curtain-btn { bottom: calc(var(--col) * .035); opacity: .7; scale: .8; }
+
+html.reduce-motion .zv-land, html.reduce-motion .zv-couple { animation: none; opacity: 1; }
+html.reduce-motion .tpl-zavesa .std-curtain { transition: none; }
+html.reduce-motion.js .zv-in { opacity: 1; transform: none; animation: none; }
+
+/* Boja zavjese (Dodatna boja): nijansa baršuna prati izabranu boju; --zv-filter postavlja JavnaPozivnica.
+   Zlatne rozete i kićanke vraćaju se na izvornu boju suprotnim filterom. */
+.tpl-zavesa .std-curtain-l, .tpl-zavesa .std-curtain-r { filter: var(--zv-filter, hue-rotate(0deg)); }
+.tpl-zavesa .zv-swags i::before, .tpl-zavesa .zv-swags i::after { filter: var(--zv-unfilter, hue-rotate(0deg)); }

@@ -1,0 +1,50 @@
+/* Plutajuće prozirne ikonice u pozadini (sajt + pozivnice) */
+.fl-layer {
+    position: fixed; inset: 0; overflow: hidden;
+    pointer-events: none; z-index: 0;
+    contain: strict;
+}
+.fl-site { z-index: 5; }
+
+.fl {
+    position: absolute; top: 0; display: block;
+    opacity: 0; will-change: transform, opacity;
+    animation: fl-rise var(--dur, 36s) linear infinite;
+    animation-delay: var(--delay, 0s);
+}
+.fl-down { animation-name: fl-fall; }
+
+.fl-i {
+    display: block; width: 100%; height: 100%;
+    animation: fl-sway var(--sway, 7s) ease-in-out infinite alternate;
+    animation-delay: var(--sd, 0s);
+}
+.fl svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.fl img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
+@keyframes fl-rise {
+    0%   { transform: translate3d(0, 108vh, 0); opacity: 0; }
+    8%   { opacity: var(--o, .2); }
+    88%  { opacity: var(--o, .2); }
+    100% { transform: translate3d(0, -20vh, 0); opacity: 0; }
+}
+@keyframes fl-fall {
+    0%   { transform: translate3d(0, -14vh, 0); opacity: 0; }
+    8%   { opacity: var(--o, .2); }
+    88%  { opacity: var(--o, .2); }
+    100% { transform: translate3d(0, 112vh, 0); opacity: 0; }
+}
+@keyframes fl-sway {
+    from { transform: translate3d(calc(var(--amp, 24px) * -1), 0, 0) rotate(calc(var(--rot, 18deg) * -1)); }
+    to   { transform: translate3d(var(--amp, 24px), 0, 0) rotate(var(--rot, 18deg)); }
+}
+
+/* Konfeti / eksplozija ikonica */
+.fl-burst { position: fixed; inset: 0; pointer-events: none; z-index: 9999; overflow: hidden; }
+.fl-burst span { position: absolute; display: block; }
+.fl-burst svg { width: 100%; height: 100%; display: block; }
+
+/* "Smanji pokrete": klasa se postavlja u <head> (vidi ?motion=1) */
+html.reduce-motion .fl-layer,
+html.reduce-motion .fl-burst { display: none; }
+

@@ -1,0 +1,50 @@
+@model List<DigitalnePozivnice.Models.Generated.Narudzba>
+@using DigitalnePozivnice.Models.Generated
+@{
+    ViewData["Title"] = "Moje narudžbe";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">VAŠ PROSTOR</span>
+            <h1>Moje narudžbe</h1>
+            <p>Pregled plaćanja za vaše pozivnice.</p>
+        </div>
+        <div class="pz-head-actions">
+            <a class="ui-btn ui-btn-ghost" asp-controller="MojePozivnice" asp-action="Index">Moje pozivnice</a>
+        </div>
+    </header>
+
+    <partial name="_Poruka" />
+
+    @if (!Model.Any())
+    {
+        <div class="ap-table-wrap"><div class="ap-empty">Još nemate narudžbi. Narudžba se kreira kad odlučite da objavite pozivnicu.</div></div>
+    }
+    else
+    {
+        <div class="ap-table-wrap">
+            <table class="ap-table">
+                <thead><tr><th>Broj</th><th>Pozivnica</th><th>Paket</th><th class="ap-num">Iznos</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var n in Model)
+                {
+                    <tr>
+                        <td>#@n.PozivNaBroj<span class="ap-sub">@n.DatumKreiranja.ToLocalTime().ToString("dd.MM.yyyy")</span></td>
+                        <td>@n.Pozivnica.Naslov</td>
+                        <td>@n.Paket.Naziv</td>
+                        <td class="ap-num">@n.Iznos.ToString("N2") KM</td>
+                        <td><span class="ap-st @NarudzbaStatus.Css(n.Status)">@NarudzbaStatus.Naziv(n.Status)</span></td>
+                        <td class="ap-num"><a class="ui-btn ui-btn-ghost ui-btn-sm" asp-action="Detalji" asp-route-id="@n.NarudzbaId">Otvori</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

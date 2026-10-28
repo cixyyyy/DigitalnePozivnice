@@ -1,0 +1,13 @@
+@{
+    // Muzika se ne pušta u malom pregledu (okvir u Details)
+    var url = ViewData["MuzikaUrl"] as string;
+    var sakrij = ViewBag.HideBar == true;
+}
+
+@if (!string.IsNullOrEmpty(url) && !sakrij)
+{
+    <audio id="inv-music" src="@url" loop preload="auto"></audio>
+    <button type="button" class="inv-music" data-music-toggle aria-label="Uključi muziku" aria-pressed="false">
+        <span class="inv-music-bars" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+}

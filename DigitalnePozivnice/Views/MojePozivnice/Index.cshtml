@@ -1,0 +1,87 @@
+@using DigitalnePozivnice.Helpers
+@model IEnumerable<DigitalnePozivnice.Models.Generated.Pozivnice>
+
+@{
+    ViewData["Title"] = "Moje pozivnice";
+    var otkazane = ViewBag.Otkazane as HashSet<int> ?? new HashSet<int>();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <header class="pz-head" data-rv>
+        <div>
+            <span class="eyebrow">VAŠ PROSTOR</span>
+            <h1>Moje pozivnice</h1>
+            <p>Izaberite pozivnicu da je uredite, objavite ili pratite odgovore gostiju.</p>
+        </div>
+        <div class="pz-head-actions">
+            <a class="ui-btn ui-btn-solid" asp-controller="Paketi" asp-action="Index">+ Nova pozivnica</a>
+        </div>
+    </header>
+
+    <partial name="_Poruka" />
+
+    @if (!Model.Any())
+    {
+        <div class="mp-empty" data-rv>
+            <span class="mp-empty-ico">♡</span>
+            <h2>Vrijeme je za nešto posebno</h2>
+            <p>Još nemate nijednu pozivnicu. Napravite prvu za nekoliko minuta.</p>
+            <a class="ui-btn ui-btn-gold" asp-controller="Paketi" asp-action="Index">Napravi pozivnicu</a>
+        </div>
+    }
+    else
+    {
+        <div class="mp-grid">
+            @{ var i = 0; }
+            @foreach (var p in Model)
+            {
+                var prvi = InvitationTheme.PrviDogadjaj(p);
+                var naziv = string.IsNullOrWhiteSpace(p.ImenaDomacina) ? p.Naslov : p.ImenaDomacina;
+                var kasnjenje = (i++ % 3) switch { 0 => "0", 1 => "0.1", _ => "0.2" };
+
+                if (otkazane.Contains(p.PozivnicaId))
+                {
+                    <div class="mp-card is-cancelled" data-rv data-rv-delay="@kasnjenje" aria-disabled="true">
+                        <div class="mp-top">
+                            <span class="pz-status is-cancelled">Otkazana</span>
+                            <span class="mp-pack">@p.Paket?.Naziv</span>
+                        </div>
+
+                        <h2>@naziv</h2>
+                        <p class="mp-meta">@p.Naslov</p>
+                        <p class="mp-design">Dizajn: <b>@p.Sablon?.Naziv</b></p>
+                        <span class="mp-go">Otkazano od strane administratora</span>
+                    </div>
+                    continue;
+                }
+
+                <a class="mp-card" data-rv data-rv-delay="@kasnjenje"
+                   asp-controller="Pozivnice" asp-action="Details" asp-route-id="@p.PozivnicaId"
+                   aria-label="Otvori pozivnicu: @naziv">
+
+                    <div class="mp-top">
+                        <span class="pz-status @(p.Objavljena ? "is-live" : "is-draft")">@(p.Objavljena ? "Objavljena" : "U pripremi")</span>
+                        <span class="mp-pack">@p.Paket?.Naziv</span>
+                    </div>
+
+                    <h2>@naziv</h2>
+                    <p class="mp-meta">
+                        @p.Naslov
+                        @if (prvi?.DatumVreme is DateTimeOffset d)
+                        {
+                            <text> · @InvitationTheme.DatumKratko(d)</text>
+                        }
+                    </p>
+
+                    <p class="mp-design">Dizajn: <b>@p.Sablon?.Naziv</b></p>
+
+                    <span class="mp-go">Otvori <i aria-hidden="true">→</i></span>
+                </a>
+            }
+        </div>
+    }
+</section>

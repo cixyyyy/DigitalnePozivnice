@@ -1,0 +1,79 @@
+﻿
+@model DigitalnePozivnice.Models.ViewModels.PregledPotvrdaViewModel
+
+@{
+    ViewData["Title"] = "Pregled potvrda";
+}
+
+<h1>Pregled potvrda dolaska</h1>
+<h2>@Model.Naslov</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card p-3 h-100">
+            <h5>Gosti koji dolaze</h5>
+            <h2>@Model.BrojGostijuDolazi</h2>
+            <p>Potvrdili dolazak</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 h-100">
+            <h5>Ukupno osoba koje dolaze</h5>
+            <h2>@Model.BrojOsobaKojeDolaze</h2>
+            <p>Uključujući pratnju</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 h-100">
+            <h5>Gosti koji ne dolaze</h5>
+            <h2>@Model.BrojGostijuNeDolazi</h2>
+            <p>Odbili dolazak</p>
+        </div>
+    </div>
+</div>
+
+<h3>Odgovori gostiju</h3>
+
+@if (!Model.Potvrde.Any())
+{
+    <p>Još nema odgovora gostiju.</p>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Ime i prezime</th>
+                    <th>Status</th>
+                    <th>Osobe u pratnji</th>
+                    <th>Poruka</th>
+                    <th>Datum odgovora</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var gost in Model.Potvrde)
+                {
+                    <tr>
+                        <td>@gost.ImePrezime</td>
+                        <td>@gost.StatusDolaska</td>
+                        <td>@gost.BrojOsobaPratnje</td>
+                        <td>@(string.IsNullOrWhiteSpace(gost.Poruka)
+                            ? "—"
+                            : gost.Poruka)</td>
+                        <td>@gost.DatumOdgovora.ToString("dd.MM.yyyy. HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+<a asp-controller="Pozivnice"
+   asp-action="Details"
+   asp-route-id="@Model.PozivnicaId"
+   class="btn btn-secondary">
+    Nazad na pozivnicu
+</a>

@@ -1,0 +1,70 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+}
+
+<main class="tpl tpl-romanticni" data-float="petal,heart,flower,petal,sparkle" data-float-dir="mixed" data-float-count="16" data-float-img="@ViewData["PetalUrl"]">
+
+    <header class="tpl-hero">
+        <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
+        <span class="tpl-blob tpl-blob-1" aria-hidden="true"></span>
+        <span class="tpl-blob tpl-blob-2" aria-hidden="true"></span>
+        <span class="tpl-blob tpl-blob-3" aria-hidden="true"></span>
+
+        <div class="tpl-hero-inner">
+            <p class="tpl-kicker rise" style="--i:0">@kicker</p>
+            <h1 class="tpl-title" data-split>@glavno</h1>
+            <p class="tpl-invite rise" style="--i:4">@InvitationText.PozivLinija(Model)</p>
+
+            @if (prvi?.DatumVreme is DateTimeOffset d)
+            {
+                <p class="rise" style="--i:4"><span class="tpl-date-pill">@InvitationTheme.DatumKratko(d)</span></p>
+            }
+
+            <span class="tpl-heart rise" style="--i:6" aria-hidden="true">♡</span>
+        </div>
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+    {
+        <section class="inv-section inv-reveal">
+            <p class="inv-message">@Model.UvodniTekst</p>
+        </section>
+    }
+
+    @if (prvi?.DatumVreme is DateTimeOffset cilj)
+    {
+        <section class="inv-section inv-reveal">
+            <h2 class="inv-section-title">Još samo</h2>
+            <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+            <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+        </section>
+    }
+
+    <partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />
+
+    <section class="inv-section inv-reveal">
+        <h2 class="inv-section-title">Gdje i kada</h2>
+            <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+        <partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" />
+    </section>
+
+    @if (imaRsvp)
+    {
+        <section class="inv-section inv-reveal" id="rsvp">
+            <h2 class="inv-section-title">Hoćete li biti s nama?</h2>
+            <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+            <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+        </section>
+    }
+
+    <footer class="tpl-footer inv-reveal">
+        <p class="tpl-footer-names">@glavno</p>
+        <p class="tpl-footer-note">S ljubavlju ♥</p>
+    </footer>
+</main>

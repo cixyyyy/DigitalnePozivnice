@@ -1,0 +1,133 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    ViewData["Title"] = "Fotografije i muzika";
+
+    var naziv = string.IsNullOrWhiteSpace(Model.ImenaDomacina) ? Model.Naslov : Model.ImenaDomacina;
+    var foto = Model.MedijiPozivnices.Where(m => m.Opis == MuzikaBiblioteka.OpisFoto).OrderBy(m => m.Redosled).ToList();
+    var moja = Model.MedijiPozivnices.FirstOrDefault(m => m.Opis == MuzikaBiblioteka.OpisMuzika);
+    var izbor = Model.Muzika ?? "default";
+    var baza = $"/moje-pozivnice/{Model.PozivnicaId}/mediji";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/media.js" asp-append-version="true"></script>
+}
+
+<section class="pz" id="pzMedia" data-base="@baza" data-max="8">
+    <a class="pz-back" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">← Nazad na pozivnicu</a>
+
+    <header class="pz-head" data-rv>
+        <div>
+            <h1>Fotografije i muzika</h1>
+            <p>@naziv</p>
+        </div>
+    </header>
+
+    @Html.AntiForgeryToken()
+
+    <div class="pz-main">
+
+        @* ---------- Fotografije ---------- *@
+        <article class="pz-card" data-rv>
+            <h2>Fotografije</h2>
+            <p class="pz-muted">
+                Dodajte do 8 fotografija – prikazaće se kao galerija na pozivnici. Velike slike se
+                automatski smanjuju. JPG, PNG ili WEBP.
+            </p>
+
+            <div class="pz-photos" id="pzPhotos">
+                @foreach (var f in foto)
+                {
+                    <figure class="pz-photo" data-id="@f.MedijId">
+                        <img src="@MuzikaBiblioteka.MedijUrl(f)" alt="" loading="lazy" />
+                        <button type="button" class="pz-photo-del" data-del="@f.MedijId" aria-label="Obriši fotografiju">×</button>
+                    </figure>
+                }
+            </div>
+
+            <div class="pz-upload-row">
+                <label class="ui-btn ui-btn-solid pz-file">
+                    <input type="file" id="pzFotoInput" accept="image/jpeg,image/png,image/webp" multiple hidden />
+                    + Dodaj fotografije
+                </label>
+                <span class="pz-muted pz-counter"><span id="pzFotoCount">@foto.Count</span> / 8</span>
+            </div>
+            <span class="pz-copy-msg" id="pzFotoMsg" aria-live="polite"></span>
+        </article>
+
+        @* ---------- Muzika ---------- *@
+        <article class="pz-card" data-rv data-rv-delay="0.05">
+            <h2>Muzika</h2>
+            <p class="pz-muted">
+                Muzika krene tiho nekoliko trenutaka nakon uvodne animacije, a gost je uvijek može isključiti.
+            </p>
+
+            <div class="pz-tracks" id="pzTracks">
+                <label class="pz-track">
+                    <input type="radio" name="muzika" value="default" @(izbor == "default" ? "checked" : "") />
+                    <span class="pz-track-body">
+                        <b>Podrazumijevana</b>
+                        <small>Vedra, razigrana melodija za slavlje</small>
+                    </span>
+                    <button type="button" class="pz-play" data-src="@MuzikaBiblioteka.Url(MuzikaBiblioteka.Nadji(MuzikaBiblioteka.Podrazumijevana)!)" aria-label="Preslušaj">▶</button>
+                </label>
+
+                @foreach (var pj in MuzikaBiblioteka.Sve)
+                {
+                    var v = "lib:" + pj.Kljuc;
+                    <label class="pz-track">
+                        <input type="radio" name="muzika" value="@v" @(izbor == v ? "checked" : "") />
+                        <span class="pz-track-body">
+                            <b>@pj.Naziv</b>
+                            <small>@pj.Opis</small>
+                        </span>
+                        <button type="button" class="pz-play" data-src="@MuzikaBiblioteka.Url(pj)" aria-label="Preslušaj">▶</button>
+                    </label>
+                }
+
+                <label class="pz-track" id="pzMojaRed" @(moja == null ? "hidden" : "")>
+                    <input type="radio" name="muzika" value="moja" @(izbor == "moja" ? "checked" : "") />
+                    <span class="pz-track-body">
+                        <b>Moja pjesma</b>
+                        <small>Pjesma koju ste sami otpremili</small>
+                    </span>
+                    <button type="button" class="pz-play" id="pzMojaPlay" data-src="@(moja != null ? MuzikaBiblioteka.MedijUrl(moja) : "")" aria-label="Preslušaj">▶</button>
+                </label>
+
+                <label class="pz-track">
+                    <input type="radio" name="muzika" value="none" @(izbor == "none" ? "checked" : "") />
+                    <span class="pz-track-body">
+                        <b>Bez muzike</b>
+                        <small>Pozivnica ostaje tiha</small>
+                    </span>
+                </label>
+            </div>
+            <span class="pz-copy-msg" id="pzMuzMsg" aria-live="polite"></span>
+
+            <h3 class="pz-sub">Vlastita pjesma</h3>
+            <p class="pz-muted">
+                Možete otpremiti svoj MP3 (do 10 MB). Pjesme poznatih izvođača su zaštićene autorskim pravima –
+                otpremite samo pjesmu za koju imate pravo korištenja (vaša, ili besplatna/licencirana za javno puštanje).
+            </p>
+
+            <label class="pz-check">
+                <input type="checkbox" id="pzPrava" />
+                <span>Potvrđujem da imam pravo da koristim ovu pjesmu i da snosim odgovornost za nju. <a asp-controller="Legal" asp-action="Uslovi" target="_blank">Uslovi korištenja</a></span>
+            </label>
+
+            <div class="pz-upload-row">
+                <label class="ui-btn ui-btn-ghost pz-file">
+                    <input type="file" id="pzMuzInput" accept="audio/mpeg,.mp3" hidden />
+                    Otpremi MP3
+                </label>
+                <button type="button" class="ui-btn ui-btn-ghost ui-btn-sm" id="pzMojaUkloni" @(moja == null ? "hidden" : "")>Ukloni moju pjesmu</button>
+            </div>
+        </article>
+    </div>
+</section>

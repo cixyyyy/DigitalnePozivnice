@@ -1,0 +1,29 @@
+@model DigitalnePozivnice.Models.ViewModels.Stranicenje
+@using Microsoft.AspNetCore.WebUtilities
+@{
+    string Link(int s)
+    {
+        var d = new Dictionary<string, string?>();
+        foreach (var kv in Context.Request.Query)
+            if (!string.Equals(kv.Key, "str", StringComparison.OrdinalIgnoreCase)) d[kv.Key] = kv.Value.ToString();
+        if (s > 1) d["str"] = s.ToString();
+        return QueryHelpers.AddQueryString(Context.Request.Path, d);
+    }
+    var ukupno = Model.UkupnoStranica;
+    var od = Math.Max(1, Model.Stranica - 2);
+    var zadnja = Math.Min(ukupno, Model.Stranica + 2);
+}
+@if (ukupno > 1)
+{
+    <nav class="ap-pager" aria-label="Stranice">
+        @if (Model.Stranica > 1) { <a href="@Link(Model.Stranica - 1)">‹ Prethodna</a> }
+        @if (od > 1) { <a href="@Link(1)">1</a> @if (od > 2) { <span>…</span> } }
+        @for (var i = od; i <= zadnja; i++)
+        {
+            if (i == Model.Stranica) { <span class="is-on">@i</span> } else { <a href="@Link(i)">@i</a> }
+        }
+        @if (zadnja < ukupno) { @if (zadnja < ukupno - 1) { <span>…</span> } <a href="@Link(ukupno)">@ukupno</a> }
+        @if (Model.Stranica < ukupno) { <a href="@Link(Model.Stranica + 1)">Sljedeća ›</a> }
+        <small>@Model.Ukupno ukupno</small>
+    </nav>
+}

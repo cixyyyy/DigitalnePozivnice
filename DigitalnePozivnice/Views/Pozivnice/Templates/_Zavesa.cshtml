@@ -1,0 +1,53 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+}
+
+<main class="tpl tpl-zavesa" data-float="sparkle,dot,star" data-float-count="12" data-float-img="@ViewData["PetalUrl"]">
+    <header class="std-stage std-curtain-stage zv-stage" data-anim="curtain">
+        <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
+
+        @* Scena iza zavjese: zalazak sunca nad jezerom, mladenci s leđa i cvijeće *@
+        <div class="zv-land" aria-hidden="true"></div>
+        <img class="zv-couple" src="/img/zavesa/mladenci.webp" alt="" aria-hidden="true" />
+        <div class="zv-flowers" aria-hidden="true"></div>
+
+        <div class="std-curtain-content zv-copy">
+            <p class="std-kicker zv-in" style="--k:0">@kicker</p>
+            <h1 class="std-title zv-in" style="--k:1" data-split>@glavno</h1>
+            <p class="std-invite zv-in" style="--k:2">@InvitationText.PozivLinija(Model)</p>
+            <div class="std-line zv-in" style="--k:3" aria-hidden="true"></div>
+            @if (prvi?.DatumVreme is DateTimeOffset d)
+            {
+                <p class="std-big-date zv-in" style="--k:4">@InvitationTheme.DatumKratko(d)</p>
+            }
+            else
+            {
+                <p class="std-big-date zv-in" style="--k:4">@Loc.T("Datum uskoro")</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(prvi?.NazivLokacije))
+            {
+                <p class="zv-venue zv-in" style="--k:5">@prvi!.NazivLokacije</p>
+            }
+        </div>
+
+        <div class="std-curtain std-curtain-l" aria-hidden="true"></div>
+        <div class="std-curtain std-curtain-r" aria-hidden="true"></div>
+        <div class="zv-valance" aria-hidden="true">
+            <div class="zv-band"></div>
+            <div class="zv-swags">
+                @for (var i = 0; i < 11; i++)
+                {
+                    <i class="v@((i + 3) % 4)"></i>
+                }
+            </div>
+        </div>
+
+        <button type="button" class="std-btn std-curtain-btn" data-curtain-toggle>@Loc.T("Otvori zavesu")</button>
+    </header>
+
+    <partial name="~/Views/Pozivnice/_SaveTheDateDetalji.cshtml" model="Model" />
+</main>

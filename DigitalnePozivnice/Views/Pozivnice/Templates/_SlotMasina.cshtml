@@ -1,0 +1,106 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+}
+
+<main class="tpl tpl-slot" data-float="star,sparkle,diamond,dot" data-float-count="16" data-float-img="@ViewData["PetalUrl"]">
+    <header class="std-stage">
+        <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
+        <div class="std-rays" aria-hidden="true"></div>
+
+        <p class="std-kicker rise" style="--i:0">@kicker</p>
+        <h1 class="std-title" data-split>@glavno</h1>
+        <p class="std-invite rise" style="--i:3">@InvitationText.PozivLinija(Model)</p>
+
+        @if (prvi?.DatumVreme is DateTimeOffset d)
+        {
+            <div class="std-slot rise"
+                 style="--i:4"
+                 data-anim="slot"
+                 data-day="@d.Day"
+                 data-month="@d.Month"
+                 data-year="@d.Year">
+
+                <div class="std-slot-machine sm">
+                    <div class="sm-cab">
+                        <span class="sm-knob" aria-hidden="true"></span>
+
+                        <div class="sm-lights" aria-hidden="true">
+                            @* 0-12 luk, 13-17 desna strana, 18-22 lijeva strana (redoslijed paljenja) *@
+                            @for (var b = 0; b < 13; b++)
+                            {
+                                <i class="sm-b sm-arc" style="--n:@b; --a:@(-84 + b * 14)deg"></i>
+                            }
+                            @for (var b = 0; b < 5; b++)
+                            {
+                                <i class="sm-b sm-side is-r" style="--n:@(13 + b); --k:@b"></i>
+                            }
+                            @for (var b = 0; b < 5; b++)
+                            {
+                                <i class="sm-b sm-side is-l" style="--n:@(18 + b); --k:@(4 - b)"></i>
+                            }
+                        </div>
+
+                        <div class="sm-arch" aria-hidden="true">
+                            <span class="sm-flower f1"></span><span class="sm-flower f2"></span>
+                            <span class="sm-heart"><svg viewBox="0 0 32 30" aria-hidden="true"><path d="M16 28.5C6 21 1.5 15.6 1.5 9.6C1.5 5 5 1.8 9 1.8C12 1.8 14.3 3.5 16 6C17.7 3.5 20 1.8 23 1.8C27 1.8 30.5 5 30.5 9.6C30.5 15.6 26 21 16 28.5Z"/></svg></span>
+                            <span class="sm-title">SAČUVAJTE DATUM</span>
+                        </div>
+
+                        <div class="sm-ledge" aria-hidden="true"></div>
+
+                        <div class="sm-window">
+                            <div class="std-reels">
+                                <div class="std-reel">
+                                    <div class="std-reel-window"><div class="std-reel-strip" data-reel="day"><span>?</span></div></div>
+                                    <span class="std-reel-label">dan</span>
+                                </div>
+                                <div class="std-reel">
+                                    <div class="std-reel-window"><div class="std-reel-strip" data-reel="month"><span>?</span></div></div>
+                                    <span class="std-reel-label">mjesec</span>
+                                </div>
+                                <div class="std-reel">
+                                    <div class="std-reel-window"><div class="std-reel-strip" data-reel="year"><span>?</span></div></div>
+                                    <span class="std-reel-label">godina</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="sm-coins" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+                        <div class="sm-panel" aria-hidden="true">
+                            <span class="sm-flower f3"></span><span class="sm-flower f4"></span>
+                            <span class="sm-flower f5"></span><span class="sm-flower f6"></span>
+                            <span class="sm-heart is-big"><svg viewBox="0 0 32 30" aria-hidden="true"><path d="M16 28.5C6 21 1.5 15.6 1.5 9.6C1.5 5 5 1.8 9 1.8C12 1.8 14.3 3.5 16 6C17.7 3.5 20 1.8 23 1.8C27 1.8 30.5 5 30.5 9.6C30.5 15.6 26 21 16 28.5Z"/></svg></span>
+                        </div>
+
+                        <div class="sm-base" aria-hidden="true"></div>
+                    </div>
+
+                    <button type="button" class="std-lever" data-slot-lever aria-label="Povuci ručicu">
+                        <span class="lv-rod"></span><span class="lv-ball"></span>
+                    </button>
+                </div>
+
+                <div class="std-win" aria-hidden="true">✦ Datum je otkriven ✦</div>
+
+                <button type="button" class="std-btn" data-slot-spin>Povuci ručicu ♥</button>
+
+                <p class="std-reveal-text" aria-live="polite">
+                    @InvitationTheme.DatumDugo(d)
+                </p>
+            </div>
+        }
+        else
+        {
+            <p class="std-reveal-text is-static">Datum uskoro</p>
+        }
+
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    <partial name="~/Views/Pozivnice/_SaveTheDateDetalji.cshtml" model="Model" />
+</main>

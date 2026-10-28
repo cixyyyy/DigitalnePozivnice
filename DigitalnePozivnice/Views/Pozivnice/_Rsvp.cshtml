@@ -1,0 +1,91 @@
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var preview = ViewBag.Preview == true;
+    var vecOdgovorio = ViewBag.VecOdgovorio == true;
+    var dolazi = (ViewBag.MojOdgovor as string) == "Dolazim";
+    int pratnja = ViewBag.MojaPratnja is int p ? p : 0;
+}
+
+<div class="inv-rsvp inv-card">
+    @if (vecOdgovorio)
+    {
+        <div class="inv-rsvp-done" role="status">
+            <span class="inv-rsvp-check" aria-hidden="true">✓</span>
+            <p class="inv-rsvp-ok">
+                @(ViewBag.Potvrdjeno == true ? "Hvala vam! Vaš odgovor je sačuvan." : "Već ste poslali odgovor.")
+            </p>
+            <p class="inv-rsvp-sum">
+                @if (dolazi)
+                {
+                    <text>@(pratnja > 0 ? "Ukupno vas dolazi: " + (1 + pratnja) : "Dolazite").</text>
+                }
+                else
+                {
+                    <text>Javili ste da ne možete doći.</text>
+                }
+            </p>
+            <p class="inv-form-note">Ako želite da promijenite odgovor, javite se domaćinima.</p>
+        </div>
+    }
+    else
+    {
+        <p class="inv-rsvp-intro">Molimo vas da potvrdite svoj dolazak.</p>
+
+        <form class="inv-form"
+              asp-controller="Pozivnice"
+              asp-action="PotvrdiDolazak"
+              asp-route-adresa="@Model.AdresaPozivnice"
+              method="post">
+
+            <fieldset disabled="@preview">
+                <div class="inv-field">
+                    <label for="ImePrezime">Ime i prezime</label>
+                    <input type="text" id="ImePrezime" name="ImePrezime" maxlength="200" required autocomplete="name" />
+                </div>
+
+                <div class="inv-field">
+                    <label id="status-label">Da li dolazite?</label>
+                    <div class="inv-seg" role="radiogroup" aria-labelledby="status-label">
+                        <input type="radio" id="st-da" name="StatusDolaska" value="Dolazim" checked />
+                        <label for="st-da">Dolazim</label>
+                        <input type="radio" id="st-ne" name="StatusDolaska" value="Ne dolazim" />
+                        <label for="st-ne">Ne dolazim</label>
+                    </div>
+                </div>
+
+                <div class="inv-field" data-plus-one>
+                    <label for="BrojOsobaPratnje">Koliko osoba dolazi sa vama?</label>
+                    <small class="inv-field-hint">Ne računajući vas. Ostavite 0 ako dolazite sami.</small>
+                    <div class="inv-step">
+                        <button type="button" data-step="-1" aria-label="Manje osoba">−</button>
+                        <input id="BrojOsobaPratnje" name="BrojOsobaPratnje" type="number"
+                               min="0" max="10" value="0" inputmode="numeric" />
+                        <button type="button" data-step="1" aria-label="Više osoba">+</button>
+                    </div>
+                </div>
+
+                <div class="inv-field">
+                    <label for="Poruka">Poruka domaćinima (opciono)</label>
+                    <textarea id="Poruka" name="Poruka" maxlength="1000" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="inv-button">Pošalji odgovor <span aria-hidden="true">♥</span></button>
+            </fieldset>
+
+            <p class="inv-privacy-note">Vaše ime i odgovor vidi samo domaćin pozivnice. <a href="/privatnost" target="_blank" rel="noopener">Privatnost</a></p>
+
+            @if (preview)
+            {
+                @if (ViewBag.JeDemo == true)
+                {
+                    <p class="inv-form-note">U demo pregledu se odgovori ne mogu slati.</p>
+                }
+                else
+                {
+                    <p class="inv-form-note">U pregledu se odgovori ne mogu slati.</p>
+                }
+            }
+        </form>
+    }
+</div>

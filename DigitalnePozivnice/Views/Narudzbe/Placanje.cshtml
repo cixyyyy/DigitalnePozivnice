@@ -1,0 +1,57 @@
+@model DigitalnePozivnice.Models.ViewModels.PlacanjeViewModel
+@{
+    ViewData["Title"] = "Plaćanje";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <a class="pz-back" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.Pozivnica.PozivnicaId">← Nazad na pozivnicu</a>
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">PLAĆANJE</span>
+            <h1>Objava pozivnice</h1>
+            <p>Pozivnicu možete uređivati bez ograničenja. Za objavu i slanje gostima potrebno je platiti paket.</p>
+        </div>
+    </header>
+
+    <partial name="_Poruka" />
+
+    <div class="ap-grid2">
+        <article class="pz-card">
+            <h2>Pregled narudžbe</h2>
+            <dl class="ap-kv">
+                <dt>Pozivnica</dt><dd>@Model.Pozivnica.Naslov <span class="ap-sub">@Model.Pozivnica.ImenaDomacina</span></dd>
+                <dt>Paket</dt><dd>@Model.Paket.Naziv</dd>
+                <dt>Za uplatu</dt><dd class="is-big">@Model.Eur.ToString("N2") € <span class="ap-sub">@Model.Iznos.ToString("N2") KM</span><span class="ap-sub">naplata u KM</span><span class="ap-sub">plaća se jednom, slanje gostima je neograničeno</span></dd>
+            </dl>
+        </article>
+
+        <article class="pz-card">
+            <h2>Način plaćanja</h2>
+            <form asp-action="Kreiraj" asp-route-pozivnicaId="@Model.Pozivnica.PozivnicaId" method="post">
+                <div class="ap-pay">
+                    <div class="ap-pay-opt is-on">
+                        <i></i>
+                        <div>
+                            <strong>Uplata na račun (uplatnica / virman)</strong>
+                            <span>Dobićete podatke za uplatu. Kad uplatu primimo i potvrdimo, možete objaviti pozivnicu.</span>
+                        </div>
+                    </div>
+                    <div class="ap-pay-opt is-off">
+                        <i></i>
+                        <div>
+                            <strong>Platna kartica</strong>
+                            <span>Uskoro.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="ap-row-actions">
+                    <button type="submit" class="ui-btn ui-btn-gold">Nastavi na uplatu →</button>
+                </div>
+            </form>
+        </article>
+    </div>
+</section>

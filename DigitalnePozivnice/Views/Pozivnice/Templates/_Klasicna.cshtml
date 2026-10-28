@@ -1,0 +1,66 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+}
+
+<main class="tpl tpl-klasicna" data-float="sparkle,diamond,dot,star" data-float-count="14" data-float-img="@ViewData["PetalUrl"]">
+
+    <header class="tpl-hero">
+        <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
+        <div class="tpl-hero-inner">
+            <div class="tpl-monogram rise" style="--i:0" aria-hidden="true">@InvitationTheme.Monogram(Model.ImenaDomacina)</div>
+            <p class="tpl-kicker rise" style="--i:1">@kicker</p>
+            <h1 class="tpl-title" data-split>@glavno</h1>
+            <p class="tpl-invite rise" style="--i:4">@InvitationText.PozivLinija(Model)</p>
+            <div class="tpl-ornament rise" style="--i:5" aria-hidden="true"></div>
+
+            @if (prvi?.DatumVreme is DateTimeOffset d)
+            {
+                <p class="tpl-date rise" style="--i:6">@InvitationTheme.DatumKratko(d)</p>
+            }
+        </div>
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+    {
+        <section class="inv-section inv-reveal">
+            <p class="inv-message">@Model.UvodniTekst</p>
+        </section>
+    }
+
+    @if (prvi?.DatumVreme is DateTimeOffset cilj)
+    {
+        <section class="inv-section inv-reveal">
+            <h2 class="inv-section-title">Do velikog dana</h2>
+            <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+            <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+        </section>
+    }
+
+    <partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />
+
+    <section class="inv-section inv-reveal">
+        <h2 class="inv-section-title">Program</h2>
+            <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+        <partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" />
+    </section>
+
+    @if (imaRsvp)
+    {
+        <section class="inv-section inv-reveal" id="rsvp">
+            <h2 class="inv-section-title">Potvrda dolaska</h2>
+            <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+            <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+        </section>
+    }
+
+    <footer class="tpl-footer inv-reveal">
+        <p class="tpl-footer-names">@glavno</p>
+        <p class="tpl-footer-note">Radujemo se zajedničkom slavlju</p>
+    </footer>
+</main>

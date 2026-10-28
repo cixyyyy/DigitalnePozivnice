@@ -1,0 +1,130 @@
+/* Fizička pozivnica: svaki dio je poseban "papir" sa okvirom, ukrasnim uglovima i sjenom.
+   Važi za sve dizajne; boje dolaze iz --c-main / --c-bg / --c-text. */
+.inv{
+  --paper: color-mix(in srgb, var(--c-bg) 42%, #fffdf7);
+  --paper-ink: #2f2a25;
+  --paper-line: color-mix(in srgb, var(--c-main) 60%, transparent);
+  --paper-shadow: rgba(38,24,8,.5);
+  --pad: clamp(22px, 6vw, 44px);
+}
+.inv.inv-dark{
+  --paper: color-mix(in srgb, var(--c-bg) 84%, #fff);
+  --paper-ink: var(--c-text);
+  --paper-shadow: rgba(0,0,0,.75);
+}
+.inv .inv-section{
+  --m:56px;
+  position:relative; isolation:isolate;
+  width:calc(100% - 28px); max-width:620px; margin:clamp(20px,5vw,34px) auto;
+  padding:clamp(44px,9vw,60px) var(--pad) clamp(40px,8vw,54px);
+  color:var(--paper-ink);
+  background:url('/img/paper/grain.png') var(--paper);
+  border-radius:3px;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.55),
+    0 1px 2px rgba(0,0,0,.14),
+    0 12px 22px -12px var(--paper-shadow),
+    0 38px 70px -40px var(--paper-shadow);
+}
+/* dvostruki okvir */
+.inv .inv-section::before{
+  content:""; position:absolute; inset:12px; z-index:-1; pointer-events:none;
+  border:1px solid var(--paper-line); border-radius:1px;
+  box-shadow:inset 0 0 0 4px color-mix(in srgb,var(--paper) 100%,transparent), inset 0 0 0 5px color-mix(in srgb,var(--c-main) 22%,transparent);
+}
+/* ukrasni uglovi */
+.inv .inv-section::after{
+  content:""; position:absolute; inset:5px; z-index:-1; pointer-events:none;
+  background:var(--c-main); opacity:.8;
+  -webkit-mask:url('/img/paper/c-tl.svg') top left/var(--m) var(--m) no-repeat,
+               url('/img/paper/c-tr.svg') top right/var(--m) var(--m) no-repeat,
+               url('/img/paper/c-bl.svg') bottom left/var(--m) var(--m) no-repeat,
+               url('/img/paper/c-br.svg') bottom right/var(--m) var(--m) no-repeat;
+          mask:url('/img/paper/c-tl.svg') top left/var(--m) var(--m) no-repeat,
+               url('/img/paper/c-tr.svg') top right/var(--m) var(--m) no-repeat,
+               url('/img/paper/c-bl.svg') bottom left/var(--m) var(--m) no-repeat,
+               url('/img/paper/c-br.svg') bottom right/var(--m) var(--m) no-repeat;
+}
+/* naslov sekcije + ukras ispod */
+.inv .inv-section-title{margin-bottom:clamp(30px,6vw,42px);flex-wrap:wrap;justify-content:center;position:relative;padding-bottom:26px}
+.inv .inv-section-title::before,.inv .inv-section-title::after{display:none}
+.inv .inv-section-title::after{
+  display:block; content:""; position:absolute; left:50%; bottom:0; width:120px; height:16px; translate:-50% 0;
+  background:var(--c-main); opacity:.75;
+  -webkit-mask:url('/img/paper/orn.svg') center/contain no-repeat; mask:url('/img/paper/orn.svg') center/contain no-repeat;
+}
+/* uvodna poruka kao pismo */
+.inv .inv-section > .inv-message:only-child{position:relative;padding-top:34px}
+.inv .inv-section > .inv-message:only-child::before{
+  content:"\201C"; position:absolute; top:-6px; left:50%; translate:-50% 0;
+  font:400 78px/1 "Cormorant Garamond",Georgia,serif; color:var(--c-main); opacity:.55;
+}
+.inv .inv-message{max-width:none}
+
+/* odbrojavanje: pločice kao okretni kalendar */
+.inv .inv-countdown{max-width:none;gap:clamp(6px,2vw,12px)}
+.inv .inv-countdown-item{
+  position:relative; border-radius:3px; padding:clamp(18px,3.4vw,26px) 4px clamp(14px,3vw,20px);
+  background:linear-gradient(color-mix(in srgb,var(--paper) 88%,#fff),color-mix(in srgb,var(--paper) 96%,var(--c-main)));
+  border:1px solid var(--paper-line);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 12px -8px var(--paper-shadow);
+  -webkit-backdrop-filter:none; backdrop-filter:none;
+}
+.inv .inv-countdown-item::before{content:"";position:absolute;left:0;right:0;top:calc(50% - 8px);height:1px;background:color-mix(in srgb,var(--c-main) 30%,transparent)}
+.inv .inv-countdown-item::after{content:"";position:absolute;top:calc(50% - 11px);width:5px;height:7px;background:var(--c-main);opacity:.5;left:-1px;border-radius:0 3px 3px 0}
+.inv .inv-countdown-item strong{font-size:clamp(28px,8vw,44px)}
+.inv .inv-countdown-item span{font-size:10px;letter-spacing:.22em;opacity:.75}
+
+/* program: karte sa perforacijom */
+.inv .inv-days{gap:44px}
+.inv .inv-day{
+  display:flex; align-items:center; gap:14px; justify-content:center;
+  font-size:13px; font-style:normal; letter-spacing:.26em; text-transform:uppercase; margin-bottom:32px; color:var(--c-main);
+}
+.inv .inv-day::before,.inv .inv-day::after{content:"";flex:1;height:1px;background:var(--paper-line)}
+.inv .inv-timeline{max-width:none}
+.inv .inv-tl-item{padding:0 0 38px;margin-bottom:38px}
+.inv .inv-tl-item:last-child{padding-bottom:0;margin-bottom:0}
+.inv .inv-tl-item:not(:last-child){border-bottom:1px dashed var(--paper-line)}
+.inv .inv-tl-item:not(:last-child)::after{
+  left:calc(var(--pad) * -1); right:calc(var(--pad) * -1); bottom:-10px; width:auto; height:20px; opacity:1;
+  background:radial-gradient(circle at 0 50%,var(--c-bg) 9px,transparent 10px),radial-gradient(circle at 100% 50%,var(--c-bg) 9px,transparent 10px);
+  transform:none;
+}
+.inv .inv-tl-time{font-family:"Cormorant Garamond",Georgia,serif;letter-spacing:.02em}
+.inv .inv-tl-dot{width:9px;height:9px;border-radius:0;rotate:45deg;margin:12px 0 10px;box-shadow:0 0 0 4px color-mix(in srgb,var(--c-main) 16%,transparent)}
+.inv .inv-tl-title{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic}
+.inv .inv-tl-place{letter-spacing:.04em}
+
+/* dugmad kao graviran pečat */
+.inv .inv-link{
+  border-radius:2px; text-transform:uppercase; letter-spacing:.16em; font-size:11px; padding:12px 22px;
+  box-shadow:inset 0 0 0 3px var(--paper),inset 0 0 0 4px var(--paper-line);
+}
+.inv .inv-link:hover{box-shadow:inset 0 0 0 3px var(--c-main),inset 0 0 0 4px color-mix(in srgb,var(--c-bg) 60%,transparent)}
+
+/* RSVP: obrazac kao na papiru */
+.inv .inv-rsvp{max-width:none;padding:0}
+.inv .inv-field input[type="text"],.inv .inv-field input:not([type]),.inv .inv-field textarea{
+  background:transparent; color:var(--paper-ink); border:0; border-bottom:1px solid var(--paper-line); border-radius:0; padding:12px 4px;
+}
+.inv .inv-field input:focus,.inv .inv-field textarea:focus{box-shadow:none;border-bottom-color:var(--c-main);background:color-mix(in srgb,var(--c-main) 6%,transparent)}
+.inv .inv-field textarea{border:1px solid var(--paper-line);padding:12px}
+.inv .inv-seg{border-radius:2px;background:transparent}
+.inv .inv-seg label{border-radius:1px;color:var(--paper-ink)}
+.inv .inv-step button{border-radius:2px}
+.inv .inv-button{border-radius:2px;letter-spacing:.2em;font-size:13px;
+  box-shadow:inset 0 0 0 3px color-mix(in srgb,var(--c-main) 100%,transparent),inset 0 0 0 4px color-mix(in srgb,var(--c-bg) 50%,transparent),0 16px 30px -16px var(--paper-shadow)}
+
+/* galerija: fotografije kao uramljeni printovi */
+.inv .inv-gal{gap:14px;margin-top:0}
+.inv .inv-gal-item{background:#fffdf8;padding:7px 7px 7px;border:0;border-radius:1px;box-shadow:0 1px 2px rgba(0,0,0,.2),0 10px 18px -10px var(--paper-shadow);cursor:zoom-in}
+.inv .inv-gal-item:nth-child(3n+1){rotate:-1.2deg}.inv .inv-gal-item:nth-child(3n+2){rotate:.9deg}.inv .inv-gal-item:nth-child(3n){rotate:-.4deg}
+.inv .inv-gal-item img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* podnožje kao potpis */
+.inv .tpl-footer{position:relative;padding-top:clamp(34px,7vw,52px)}
+.inv .tpl-footer::before{content:"";display:block;width:120px;height:16px;margin:0 auto 18px;background:var(--c-main);opacity:.7;
+  -webkit-mask:url('/img/paper/orn.svg') center/contain no-repeat;mask:url('/img/paper/orn.svg') center/contain no-repeat}
+@media (max-width:420px){.inv .inv-section{--m:44px;width:calc(100% - 20px)}.inv .inv-section::before{inset:10px}}
+html.reduce-motion .inv .inv-gal-item{rotate:none}

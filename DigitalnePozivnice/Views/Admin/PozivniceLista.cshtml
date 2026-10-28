@@ -1,0 +1,77 @@
+@model DigitalnePozivnice.Models.ViewModels.AdminPozivniceViewModel
+@{
+    ViewData["Title"] = "Pozivnice (admin)";
+    ViewData["Aktivno"] = "pozivnice";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz pz-wide">
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">ADMIN</span>
+            <h1>Pozivnice</h1>
+            <p>Sve pozivnice korisnika. Objavu možete ručno uključiti ili isključiti.</p>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <div class="ap-bar">
+        <form class="ap-search" method="get" asp-action="PozivniceLista">
+            <input type="search" name="q" value="@Model.Q" placeholder="Email, naslov, imena, adresa…" />
+            <button type="submit" class="ui-btn ui-btn-solid ui-btn-sm">Traži</button>
+        </form>
+    </div>
+
+    @if (!Model.Redovi.Any())
+    {
+        <div class="ap-table-wrap"><div class="ap-empty">Nema pozivnica.</div></div>
+    }
+    else
+    {
+        <div class="ap-table-wrap">
+            <table class="ap-table">
+                <thead><tr><th>Pozivnica</th><th>Vlasnik</th><th>Paket / dizajn</th><th>Plaćanje</th><th>Objava</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var r in Model.Redovi)
+                {
+                    var p = r.Pozivnica;
+                    <tr>
+                        <td>@p.Naslov<span class="ap-sub">@p.ImenaDomacina · @p.DatumKreiranja.ToLocalTime().ToString("dd.MM.yyyy")</span></td>
+                        <td>@r.Vlasnik</td>
+                        <td>@p.Paket.Naziv<span class="ap-sub">@p.Sablon.Naziv</span></td>
+                        <td>
+                            @if (r.Placena) { <span class="ap-st ap-st-placeno">Plaćeno</span> }
+                            else if (r.OtvorenaNarudzba != null) { <span class="ap-st ap-st-ceka">Čeka uplatu #@r.OtvorenaNarudzba</span> }
+                            else if (p.Paket.Cena <= 0) { <span class="ap-st ap-st-off">Besplatno</span> }
+                            else { <span class="ap-st ap-st-off">Bez narudžbe</span> }
+                        </td>
+                        <td><span class="pz-status @(p.Objavljena ? "is-live" : "is-draft")">@(p.Objavljena ? "Objavljena" : "U pripremi")</span></td>
+                        <td>
+                            <div class="ap-act">
+                                @if (p.Objavljena)
+                                {
+                                    <a class="ui-btn ui-btn-ghost ui-btn-sm" href="/pozivnica/@p.AdresaPozivnice" target="_blank" rel="noopener">Otvori</a>
+                                }
+                                <form asp-action="PreklopiObjavu" asp-route-id="@p.PozivnicaId" method="post">
+                                    <button type="submit" class="ui-btn ui-btn-ghost ui-btn-sm">@(p.Objavljena ? "Skini sa objave" : "Objavi")</button>
+                                </form>
+                                @if (!r.Placena && p.Paket.Cena > 0)
+                                {
+                                    <form asp-action="RucnaUplata" asp-route-id="@p.PozivnicaId" method="post" onsubmit="return confirm('Evidentirati uplatu za ovu pozivnicu?');">
+                                        <button type="submit" class="ui-btn ui-btn-gold ui-btn-sm">Evidentiraj uplatu</button>
+                                    </form>
+                                }
+                            </div>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <partial name="_Pager" model="Model.Str" />
+    }
+</section>

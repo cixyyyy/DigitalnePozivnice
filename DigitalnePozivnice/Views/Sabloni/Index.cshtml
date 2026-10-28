@@ -1,0 +1,68 @@
+@using DigitalnePozivnice.Helpers
+@model IEnumerable<DigitalnePozivnice.Models.Generated.SabloniPozivnica>
+
+@{
+    ViewData["Title"] = "Izbor dizajna";
+
+    var paket = (string?)ViewBag.Paket;
+    var jeSaveTheDate = (bool)ViewBag.JeSaveTheDate;
+
+    var animacije = Model.Where(s => InvitationTheme.GrupaSablona(s.Kljuc) == InvitationTheme.GrupaSaveTheDate).ToList();
+    var dizajni = Model.Where(s => InvitationTheme.GrupaSablona(s.Kljuc) == InvitationTheme.GrupaPremium).ToList();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/sabloni.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script src="~/js/sabloni.js" asp-append-version="true"></script>
+}
+
+
+<section class="sg">
+    <header class="sg-head" data-rv>
+        <span class="eyebrow">PAKET @((string)ViewBag.PaketNaziv)</span>
+        <h1>@(jeSaveTheDate ? "Izaberite animaciju" : "Izaberite dizajn pozivnice")</h1>
+        <p>
+            @(jeSaveTheDate
+                ? "Vaši gosti će datum otkriti uz efektnu animaciju. Svaku možete pogledati u demo prikazu."
+                : "U vašem paketu su svi dizajni i sve animacije. Kliknite na demo da vidite kako izgleda.")
+        </p>
+    </header>
+
+    @if (animacije.Any())
+    {
+        <div class="sg-group" data-rv>
+            <h2>Animacije</h2>
+            <span>Pozivnica koja se otkriva uz efekat</span>
+        </div>
+
+        <div class="sg-grid">
+            @for (var i = 0; i < animacije.Count; i++)
+            {
+                @await Html.PartialAsync("~/Views/Sabloni/_Kartica.cshtml", (animacije[i], paket, i, "Animacija"))
+            }
+        </div>
+    }
+
+    @if (dizajni.Any())
+    {
+        <div class="sg-group" data-rv>
+            <h2>Dizajni</h2>
+            <span>Cijela pozivnica sa programom i potvrdama dolaska</span>
+        </div>
+
+        <div class="sg-grid">
+            @for (var i = 0; i < dizajni.Count; i++)
+            {
+                @await Html.PartialAsync("~/Views/Sabloni/_Kartica.cshtml", (dizajni[i], paket, i, "Dizajn"))
+            }
+        </div>
+    }
+
+    @if (!Model.Any())
+    {
+        <p class="sg-empty">Trenutno nema dostupnih dizajna za ovaj paket.</p>
+    }
+</section>

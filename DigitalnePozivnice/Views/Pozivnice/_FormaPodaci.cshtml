@@ -1,0 +1,35 @@
+@using DigitalnePozivnice.Helpers
+@using DigitalnePozivnice.Localization
+@model DigitalnePozivnice.Models.ViewModels.KreirajPozivnicuViewModel
+
+@{
+    // Predlozi za svaki jezik: {sr: [...], hr: [...], ...}
+    var jezici = Loc.Codes.ToDictionary(
+        kod => kod,
+        kod => InvitationText.Vrste.Select(v => new
+        {
+            naziv = v.Naziv,
+            label = Loc.T(v.ImenaLabel, kod),
+            primjer = Loc.T(v.ImenaPrimjer, kod),
+            program = InvitationText.Program(v.Naziv, kod).Select(p => new { naziv = p.Naziv, vrijeme = p.Vrijeme }),
+            poruke = InvitationText.Poruke(v.Naziv, kod)
+        }).ToList());
+
+    var podaci = new
+    {
+        jezik = Loc.Normalize(Model.Jezik),
+        jezici,
+        predlog = Loc.Codes.ToDictionary(kod => kod, kod => Loc.T("Predlog", kod)),
+        dogadjaji = Model.Dogadjaji.Select(d => new
+        {
+            naziv = d.Naziv,
+            vrijeme = d.Vrijeme?.ToString("HH:mm"),
+            lokacija = d.NazivLokacije,
+            adresa = d.Adresa
+        }),
+        previewUrl = Url.Action("PreviewLive", "Pozivnice"),
+        dirty = Context.Request.Method == "POST" || Model.PozivnicaId.HasValue
+    };
+}
+
+<script type="application/json" id="cf-data">@Html.Raw(System.Text.Json.JsonSerializer.Serialize(podaci))</script>

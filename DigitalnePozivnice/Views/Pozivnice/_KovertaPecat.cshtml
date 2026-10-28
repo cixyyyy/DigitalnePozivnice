@@ -1,0 +1,25 @@
+@* Zajednički dio koverte: pečat od voska sa monogramom i komadićima voska. Model: monogram (string). *@
+@using DigitalnePozivnice.Helpers
+@model string
+@{
+    var assets = ViewData["Assets"] as Dictionary<string, TemplateAssets.Asset>;
+    var pecat = assets != null && assets.TryGetValue("seal", out var s) ? s.Url : null;
+}
+
+@if (pecat != null)
+{
+    <span class="env-seal env-seal-img" style="background-image:url('@pecat')" aria-hidden="true"><b>@Model</b></span>
+}
+else
+{
+    <span class="env-seal" aria-hidden="true">
+        <partial name="~/Views/Pozivnice/_VoskPecat.cshtml" />
+        <b>@Model</b>
+        <i class="env-crumb" style="--dx:-120%;--dy:-90%"></i>
+        <i class="env-crumb" style="--dx:110%;--dy:-70%"></i>
+        <i class="env-crumb" style="--dx:-90%;--dy:100%"></i>
+        <i class="env-crumb" style="--dx:130%;--dy:90%"></i>
+        <i class="env-crumb" style="--dx:10%;--dy:-130%"></i>
+        <i class="env-crumb" style="--dx:-20%;--dy:130%"></i>
+    </span>
+}

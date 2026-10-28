@@ -1,0 +1,64 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var monogram = InvitationTheme.Monogram(Model.ImenaDomacina).Replace(" ", "");
+}
+
+<partial name="~/Views/Pozivnice/_KovertaDefs.cshtml" />
+
+<main class="tpl tpl-koverta" data-float="heart,envelope,sparkle,heart" data-float-count="16" data-float-img="@ViewData["PetalUrl"]">
+    <header class="std-stage">
+        <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
+
+        <p class="std-kicker rise" style="--i:0">@kicker</p>
+
+        <div class="std-envelope env-root rise"
+             style="--i:2"
+             data-anim="envelope"
+             role="button"
+             tabindex="0"
+             aria-label="Otvori kovertu"
+             aria-expanded="false">
+            <partial name="~/Views/Pozivnice/_KovertaTijelo.cshtml" />
+
+            <div class="env-card">
+                <partial name="~/Views/Pozivnice/_KovertaKartaOkvir.cshtml" />
+                <span class="env-card-kicker">@InvitationText.Poziv(Model).Kicker</span>
+                <svg class="env-card-div" viewBox="0 0 240 24" aria-hidden="true" focusable="false"><use href="#kv-divider" /></svg>
+                <span class="env-card-invite">@InvitationText.Poziv(Model).Linija</span>
+                <h1 class="env-card-title">@glavno</h1>
+                <span class="env-card-line" aria-hidden="true"></span>
+                @if (prvi?.DatumVreme is DateTimeOffset d)
+                {
+                    <span class="env-card-date">@InvitationTheme.DatumKratko(d)</span>
+                }
+                else
+                {
+                    <span class="env-card-date">Datum uskoro</span>
+                }
+            </div>
+
+            <partial name="~/Views/Pozivnice/_KovertaPrednja.cshtml" />
+            <partial name="~/Views/Pozivnice/_KovertaPecat.cshtml" model="monogram" />
+        </div>
+
+        <p class="std-hint rise" style="--i:3" data-envelope-hint>Dodirnite pečat da otvorite kovertu</p>
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    @* Pozivnica kao pravi papir: ukrasni okvir, tekstura i ukrasi u uglovima *@
+    <div class="kv-sheet-wrap">
+        <div class="kv-sheet">
+            <svg class="kv-c kv-c-tl" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><use href="#kv-corner" /></svg>
+            <svg class="kv-c kv-c-tr" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><use href="#kv-corner" /></svg>
+            <svg class="kv-c kv-c-bl" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><use href="#kv-corner" /></svg>
+            <svg class="kv-c kv-c-br" viewBox="0 0 120 120" aria-hidden="true" focusable="false"><use href="#kv-corner" /></svg>
+            <div class="kv-sheet-in">
+                <partial name="~/Views/Pozivnice/_SaveTheDateDetalji.cshtml" model="Model" />
+            </div>
+        </div>
+    </div>
+</main>

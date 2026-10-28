@@ -1,0 +1,239 @@
+
+@inject Microsoft.Extensions.Configuration.IConfiguration Config
+@inject DigitalnePozivnice.Helpers.AdminProvjera AdminProv
+@{
+    // Kontakt email: promijeni u appsettings.json -> "Kontakt": { "Email": "..." }
+    var kontaktEmail = Config["Kontakt:Email"] ?? "info@digitalnepozivnice.com";
+}
+<!DOCTYPE html>
+<html lang="@Loc.HtmlLang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Digitalne Pozivnice</title>
+
+    <script>
+        window.__i18n = @Html.Raw(Loc.JsJson());
+        window.tr = function (s) {
+            var t = window.__i18n && window.__i18n.t && window.__i18n.t[s];
+            return t || s;
+        };
+    </script>
+
+    @* "js" klasa se postavlja odmah (bez bljeska). Ako glavni skript ne proradi
+       u roku od 4 s, klasa se uklanja i sav sadrzaj postaje vidljiv. *@
+    <script>
+        var de = document.documentElement;
+        de.classList.add("js");
+        (function () {
+            // Animacije su podrazumijevano UKLJUCENE (bez ikakvih dozvola).
+            // Gase se samo ako ih korisnik sam iskljuci: dodaj ?motion=0 na adresu
+            // (vraca se sa ?motion=1).
+            var reduce = false;
+            try {
+                if (/[?&]motion=0/.test(location.search)) localStorage.setItem("noMotion", "1");
+                if (/[?&]motion=1/.test(location.search)) localStorage.removeItem("noMotion");
+                reduce = localStorage.getItem("noMotion") === "1";
+            } catch (e) { }
+            if (reduce) de.classList.add("reduce-motion");
+        })();
+        setTimeout(function () {
+            if (!document.documentElement.classList.contains("js-ready")) {
+                document.documentElement.classList.remove("js");
+            }
+        }, 4000);
+    </script>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet"
+          href="~/css/fonts.css"
+          asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/DigitalnePozivnice.styles.css"
+          asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/css/floaters.css"
+          asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/css/site-polish.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/ui-soft.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/lang.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/site-extras.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/legal.css"
+          asp-append-version="true" />
+
+    @await RenderSectionAsync("Styles", required: false)
+</head>
+
+<body>
+    <div class="fl-layer fl-site" aria-hidden="true"></div>
+
+    <header class="site-header">
+        <div class="site-header-inner">
+
+            <a class="brand-logo"
+               asp-controller="Home"
+               asp-action="Index">
+                <span class="brand-symbol">D<span>P</span></span>
+                <span class="brand-name">
+                    DIGITALNE
+                    <span>POZIVNICE</span>
+                </span>
+            </a>
+
+            <button class="mobile-menu-toggle"
+                    type="button"
+                    aria-label="Otvori meni"
+                    aria-expanded="false"
+                    aria-controls="main-navigation"
+                    onclick="toggleWeddingMenu(this)">
+                <span></span>
+                <span></span>
+            </button>
+
+            
+            <nav class="main-navigation" id="main-navigation">
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   asp-fragment="sabloni"
+                   class="nav-link-elegant">
+                    Paketi
+                </a>
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   asp-fragment="kako-funkcionise"
+                   class="nav-link-elegant">
+                    Kako funkcioniše
+                </a>
+
+                @await Html.PartialAsync("_JezikPrekidac", "header")
+
+                <div class="nav-account">
+                    @if (User.Identity?.IsAuthenticated == true)
+                    {
+                        <a asp-controller="MojePozivnice"
+                           asp-action="Index"
+                           class="nav-link-elegant">
+                            Moje pozivnice
+                        </a>
+
+                        <a asp-controller="Narudzbe"
+                           asp-action="Moje"
+                           class="nav-link-elegant">
+                            Narudžbe
+                        </a>
+
+                        @if (AdminProv.JeAdmin(User))
+                        {
+                            <a asp-controller="Admin"
+                               asp-action="Index"
+                               class="nav-link-elegant">
+                                Admin
+                            </a>
+                        }
+
+                        <form asp-controller="Account"
+                              asp-action="Logout"
+                              method="post"
+                              class="nav-logout-form">
+                            @Html.AntiForgeryToken()
+
+                            <button type="submit" class="nav-create-button">
+                                Odjavi se
+                            </button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Account"
+                           asp-action="Login"
+                           class="nav-login">
+                            Prijava
+                        </a>
+                    }
+
+                    <a asp-controller="Paketi"
+                       asp-action="Index"
+                       class="nav-create-button">
+                        Kreiraj pozivnicu <span>↗</span>
+                    </a>
+                </div>
+
+            </nav>
+
+        </div>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <a asp-controller="Home"
+           asp-action="Index"
+           class="footer-brand">
+            DIGITALNE POZIVNICE
+        </a>
+
+        <p>Vaša priča. Vaš dan. Vaša pozivnica.</p>
+
+        <p class="footer-contact">
+            <span>Kontakt</span>
+            <a href="mailto:@kontaktEmail" translate="no">@kontaktEmail</a>
+        </p>
+
+        <nav class="footer-legal" aria-label="Pravne informacije">
+            <a asp-controller="Legal" asp-action="Uslovi">Uslovi korištenja</a>
+            <a asp-controller="Legal" asp-action="Privatnost">Privatnost i kolačići</a>
+        </nav>
+
+        @await Html.PartialAsync("_JezikPrekidac", "footer")
+
+        <span>© @DateTime.Now.Year Digitalne Pozivnice</span>
+    </footer>
+
+    <button type="button" class="to-top" id="to-top" aria-label="Na vrh stranice" title="Na vrh">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M5.5 11.5L12 5l6.5 6.5"/></svg>
+    </button>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/floaters.js" asp-append-version="true"></script>
+    <script src="~/js/site-motion.js" asp-append-version="true"></script>
+    <script src="~/js/debug.js" asp-append-version="true"></script>
+    <script src="~/js/lang.js" asp-append-version="true"></script>
+    <script src="~/js/site-extras.js" asp-append-version="true"></script>
+
+    <script>
+            function toggleWeddingMenu(button) {
+                const navigation = document.getElementById("main-navigation");
+                const isOpen = navigation.classList.toggle("is-open");
+
+                button.setAttribute("aria-expanded", isOpen.toString());
+                button.setAttribute(
+                    "aria-label",
+                    isOpen ? tr("Zatvori meni") : tr("Otvori meni")
+                );
+            }
+    </script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

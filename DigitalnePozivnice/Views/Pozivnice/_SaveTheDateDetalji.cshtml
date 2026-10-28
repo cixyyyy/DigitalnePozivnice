@@ -1,0 +1,49 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (_, glavno) = InvitationTheme.Glavno(Model);
+
+    // Save the date paket: samo poruka i odbrojavanje (bez programa i potvrde dolaska)
+    var bezProgram = (ViewData["BezProgram"] as bool?) == true;
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+}
+
+@if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+{
+    <section class="inv-section inv-reveal">
+        <p class="inv-message">@Model.UvodniTekst</p>
+    </section>
+}
+
+@if (prvi?.DatumVreme is DateTimeOffset cilj)
+{
+    <section class="inv-section inv-reveal">
+        <h2 class="inv-section-title">Do velikog dana</h2>
+        <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+    </section>
+}
+
+<partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />
+
+@if (!bezProgram)
+{
+    <section class="inv-section inv-reveal">
+        <h2 class="inv-section-title">Program</h2>
+        <partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" />
+    </section>
+}
+
+@if (imaRsvp)
+{
+    <section class="inv-section inv-reveal" id="rsvp">
+        <h2 class="inv-section-title">Potvrda dolaska</h2>
+        <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+    </section>
+}
+
+<footer class="tpl-footer inv-reveal">
+    <p class="tpl-footer-names">@glavno</p>
+    <p class="tpl-footer-note">@(bezProgram ? "Zvanična pozivnica stiže uskoro ♥" : "Radujemo se zajedničkom slavlju ♥")</p>
+</footer>

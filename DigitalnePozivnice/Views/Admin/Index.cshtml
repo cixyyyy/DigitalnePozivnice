@@ -1,0 +1,59 @@
+@model DigitalnePozivnice.Models.ViewModels.AdminPregledViewModel
+@using DigitalnePozivnice.Models.Generated
+@{
+    ViewData["Title"] = "Admin pregled";
+    ViewData["Aktivno"] = "pregled";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz pz-wide">
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">ADMIN</span>
+            <h1>Pregled</h1>
+            <p>Narudžbe, uplate i pozivnice na jednom mjestu.</p>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <div class="ap-stats">
+        <a class="ap-stat @(Model.CekaUplatu > 0 ? "is-warn" : "")" asp-action="Narudzbe" asp-route-status="@NarudzbaStatus.CekaUplatu" style="text-decoration:none">
+            <b>@Model.CekaUplatu</b><span>Čeka uplatu</span>
+        </a>
+        <div class="ap-stat"><b>@Model.Placeno</b><span>Plaćenih narudžbi</span></div>
+        <div class="ap-stat"><b>@Model.PrihodUkupno.ToString("N2")</b><span>Ukupno naplaćeno (KM)</span></div>
+        <div class="ap-stat"><b>@Model.Objavljenih / @Model.Pozivnica</b><span>Objavljenih pozivnica</span></div>
+        <div class="ap-stat"><b>@Model.Korisnika</b><span>Korisnika</span></div>
+    </div>
+
+    <h2 class="pz-sub">Posljednje narudžbe</h2>
+    @if (!Model.Zadnje.Any())
+    {
+        <div class="ap-table-wrap"><div class="ap-empty">Još nema narudžbi.</div></div>
+    }
+    else
+    {
+        <div class="ap-table-wrap">
+            <table class="ap-table">
+                <thead><tr><th>Broj</th><th>Korisnik</th><th>Paket</th><th class="ap-num">Iznos</th><th>Status</th><th></th></tr></thead>
+                <tbody>
+                @foreach (var n in Model.Zadnje)
+                {
+                    <tr>
+                        <td>#@n.PozivNaBroj<span class="ap-sub">@n.DatumKreiranja.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</span></td>
+                        <td>@(Model.Emailovi.TryGetValue(n.KorisnikId, out var em) ? em : "?")<span class="ap-sub">@n.Pozivnica.Naslov</span></td>
+                        <td>@n.Paket.Naziv</td>
+                        <td class="ap-num">@n.Iznos.ToString("N2") KM</td>
+                        <td><span class="ap-st @NarudzbaStatus.Css(n.Status)">@NarudzbaStatus.Naziv(n.Status)</span></td>
+                        <td class="ap-num"><a class="ui-btn ui-btn-ghost ui-btn-sm" asp-action="NarudzbaDetalji" asp-route-id="@n.NarudzbaId">Otvori</a></td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</section>

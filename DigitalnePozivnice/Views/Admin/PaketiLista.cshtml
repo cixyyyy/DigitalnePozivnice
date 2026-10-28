@@ -1,0 +1,41 @@
+@model IEnumerable<DigitalnePozivnice.Models.Generated.Paketi>
+@using DigitalnePozivnice.Helpers
+@{
+    ViewData["Title"] = "Paketi i cijene";
+    ViewData["Aktivno"] = "paketi";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">ADMIN</span>
+            <h1>Paketi i cijene</h1>
+            <p>Cijene su u KM. Kurs za prikaz u eurima je fiksan (1 € = 1,95583 KM).</p>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <div class="ap-table-wrap">
+        <table class="ap-table">
+            <thead><tr><th>Paket</th><th>Oznaka</th><th class="ap-num">Cijena</th><th>Aktivan</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var p in Model)
+            {
+                <tr>
+                    <td>@p.Naziv<span class="ap-sub">@p.Opis</span></td>
+                    <td>@p.Oznaka</td>
+                    <td class="ap-num">@p.Cena.ToString("N2") KM<span class="ap-sub">≈ @Cijene.Eur(p.Cena).ToString("N2") €</span></td>
+                    <td><span class="ap-st @(p.Aktivan ? "ap-st-placeno" : "ap-st-off")">@(p.Aktivan ? "Da" : "Ne")</span></td>
+                    <td class="ap-num"><a class="ui-btn ui-btn-ghost ui-btn-sm" asp-action="UrediPaket" asp-route-id="@p.PaketId">Uredi</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <p class="pz-muted" style="margin-top:16px">Novi paketi se dodaju u kodu, jer od oznake zavise mogućnosti (potvrde dolaska, raspored sjedenja). Ovdje mijenjate naziv, opis, cijenu i dostupnost.</p>
+</section>

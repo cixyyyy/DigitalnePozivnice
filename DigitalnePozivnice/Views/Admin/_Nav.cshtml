@@ -1,0 +1,12 @@
+@{
+    var on = (string?)ViewData["Aktivno"];
+    string Cls(string k) => on == k ? "is-on" : "";
+}
+<nav class="ap-nav" aria-label="Admin">
+    <a class="@Cls("pregled")" asp-controller="Admin" asp-action="Index">Pregled</a>
+    <a class="@Cls("narudzbe")" asp-controller="Admin" asp-action="Narudzbe">Narudžbe</a>
+    <a class="@Cls("pozivnice")" asp-controller="Admin" asp-action="PozivniceLista">Pozivnice</a>
+    <a class="@Cls("paketi")" asp-controller="Admin" asp-action="PaketiLista">Paketi i cijene</a>
+    <a class="@Cls("korisnici")" asp-controller="Admin" asp-action="Korisnici">Korisnici</a>
+</nav>
+<partial name="_Poruka" />

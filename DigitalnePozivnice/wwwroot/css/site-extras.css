@@ -1,0 +1,18 @@
+/* Dugme "na vrh" + kontakt u podnozju */
+.to-top {
+    position: fixed; right: clamp(14px, 3vw, 28px); bottom: clamp(14px, 3vw, 28px); z-index: 900;
+    display: grid; place-items: center; width: 46px; height: 46px; padding: 0; border-radius: 50%;
+    border: 1px solid rgba(173, 148, 101, .55); color: #8b7355; cursor: pointer;
+    background: rgba(255, 253, 246, .88); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+    box-shadow: 0 16px 30px -14px rgba(48, 56, 47, .5);
+    opacity: 0; visibility: hidden; transform: translateY(14px) scale(.92);
+    transition: opacity .35s, transform .45s cubic-bezier(.22, 1, .36, 1), visibility .35s, background .25s, color .25s;
+}
+.to-top.is-visible { opacity: 1; visibility: visible; transform: none; }
+.to-top:hover { background: #30382f; color: #f0e6cc; border-color: #30382f; transform: translateY(-3px); }
+.to-top:focus-visible { outline: 2px solid #ad9465; outline-offset: 3px; }
+
+.site-footer .footer-contact { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 6px 10px; margin: 14px 0 6px; font-size: 14px; }
+.site-footer .footer-contact span { letter-spacing: .16em; text-transform: uppercase; font-size: 11px; opacity: .7; }
+.site-footer .footer-contact a { color: inherit; text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 1px; opacity: .92; }
+.site-footer .footer-contact a:hover { opacity: 1; }

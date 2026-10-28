@@ -1,0 +1,62 @@
+/* "Čajanka u zemlji čuda" – ilustrovana scena (Premium / Exclusive) */
+.tpl-alisa{--u:calc(min(100vw,100svh*.5625)/360);background:var(--c-bg);color:var(--c-text)}
+.tpl-alisa .al-hero{position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;background:var(--c-bg)}
+.al-stage{position:relative;width:calc(var(--u)*360);height:calc(var(--u)*640);flex:none;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 90%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0,#000 90%,transparent 100%)}
+@media (min-width:560px){.al-stage{
+  -webkit-mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to bottom,#000 0,#000 90%,transparent 100%);
+  -webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent 0,#000 14%,#000 86%,transparent 100%),linear-gradient(to bottom,#000 0,#000 90%,transparent 100%);mask-composite:intersect}}
+.al-svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+
+/* tekst */
+.al-text{position:absolute;z-index:3;left:0;right:0;top:calc(var(--u)*22);text-align:center;color:#2f2233;padding:0 calc(var(--u)*18)}
+.al-text::before{content:"";position:absolute;z-index:-1;left:0;right:0;top:calc(var(--u)*-22);height:calc(var(--u)*190);
+  background:linear-gradient(rgba(224,240,236,.92) 0,rgba(236,236,240,.85) 60%,rgba(243,228,238,0) 100%)}
+.al-text>*{margin:0}
+.al-kicker{font-family:"Great Vibes","Cormorant Garamond",cursive;font-size:calc(var(--u)*44);line-height:1;color:var(--c-main);animation:al-slide 1.3s .3s cubic-bezier(.2,.8,.2,1) both}
+.al-names{font-family:"Cormorant Garamond",serif;font-weight:600;font-style:italic;font-size:calc(var(--u)*30);letter-spacing:.02em;margin-top:calc(var(--u)*6)!important;animation:al-slide 1.3s .8s cubic-bezier(.2,.8,.2,1) both}
+.al-invite{font-family:"Jost",sans-serif;font-size:calc(var(--u)*10);letter-spacing:.14em;text-transform:uppercase;margin-top:calc(var(--u)*7)!important;opacity:.85;animation:al-up 1s 1.6s ease both}
+.al-date{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:calc(var(--u)*22);margin-top:calc(var(--u)*8)!important;color:var(--c-main);animation:al-up 1s 2s ease both}
+.al-venue{font-family:"Jost",sans-serif;font-size:calc(var(--u)*11);letter-spacing:.1em;margin-top:calc(var(--u)*3)!important;animation:al-up 1s 2.4s ease both}
+@keyframes al-slide{from{opacity:0;transform:translateX(calc(var(--u)*80))}to{opacity:1;transform:none}}
+@keyframes al-up{from{opacity:0;transform:translateY(calc(var(--u)*10))}to{opacity:1;transform:none}}
+
+/* animacije scene */
+.al-c1{animation:al-drift 48s ease-in-out infinite alternate}
+.al-c2{animation:al-drift 62s -20s ease-in-out infinite alternate-reverse}
+@keyframes al-drift{from{transform:translateX(-26px)}to{transform:translateX(40px)}}
+.al-bunt{transform-origin:180px 214px;animation:al-sway 5s ease-in-out infinite alternate}
+@keyframes al-sway{from{transform:rotate(-.7deg)}to{transform:rotate(.7deg)}}
+.al-catbody{animation:al-cat 11s ease-in-out infinite}
+@keyframes al-cat{0%,34%{opacity:1}46%,78%{opacity:0}90%,100%{opacity:1}}
+.al-blink{transform-box:fill-box;transform-origin:center;animation:al-blink 5s infinite}
+@keyframes al-blink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+.al-sip{transform-origin:26px 384px;animation:al-sip 7s ease-in-out infinite}
+@keyframes al-sip{0%,52%,100%{transform:none}62%,74%{transform:translate(-6px,-12px) rotate(10deg)}86%{transform:none}}
+.al-hat{transform-origin:0 330px;animation:al-hat 8s ease-in-out infinite}
+@keyframes al-hat{0%,66%,100%{transform:none}74%,82%{transform:translate(-3px,-4px) rotate(-14deg)}}
+.al-pour{transform-origin:-66px 366px;animation:al-pour 7s ease-in-out infinite}
+@keyframes al-pour{0%,18%,92%,100%{transform:none}30%,70%{transform:rotate(-16deg)}}
+.al-stream{opacity:0;animation:al-stream 7s linear infinite}
+@keyframes al-stream{0%,32%{opacity:0;stroke-dashoffset:0}36%,68%{opacity:1;stroke-dashoffset:-18}72%,100%{opacity:0;stroke-dashoffset:-30}}
+.al-steam{animation:al-steam 3.2s ease-out infinite}.al-st2{animation-delay:-1.4s}
+@keyframes al-steam{0%{transform:translateY(0);opacity:.9}100%{transform:translateY(-12px);opacity:0}}
+.al-z{opacity:0;animation:al-z 3.6s ease-in-out infinite}.al-z2{animation-delay:1.2s}
+@keyframes al-z{0%{opacity:0;transform:translateY(4px)}40%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+.al-bub{animation:al-bub 3s ease-out infinite}
+@keyframes al-bub{0%{transform:translateY(8px);opacity:0}30%{opacity:1}100%{transform:translateY(-12px);opacity:0}}
+.al-card{animation:al-fall 19s linear infinite}
+.al-k1{transform-origin:30px 0;animation-delay:-3s}.al-k2{transform-origin:330px 0;animation-duration:23s;animation-delay:-11s}.al-k3{transform-origin:70px 0;animation-duration:27s;animation-delay:-18s}.al-k4{transform-origin:296px 0;animation-duration:21s;animation-delay:-7s}
+@keyframes al-fall{0%{translate:0 -30px;rotate:-20deg}25%{translate:16px 150px;rotate:80deg}50%{translate:-12px 330px;rotate:170deg}75%{translate:14px 500px;rotate:260deg}100%{translate:-6px 690px;rotate:340deg}}
+.al-rabwrap{animation:al-rab 18s linear infinite}
+@keyframes al-rab{0%{transform:translateX(-80px)}70%{transform:translateX(450px)}100%{transform:translateX(450px)}}
+.al-rhop{animation:al-hop .6s ease-in-out infinite}
+@keyframes al-hop{0%,100%{transform:translateY(0) rotate(2deg)}50%{transform:translateY(-15px) rotate(-5deg)}}
+.al-watch{transform-origin:326px -6px;animation:al-swing 3.4s ease-in-out infinite alternate}
+@keyframes al-swing{from{rotate:-9deg}to{rotate:9deg}}
+.al-hand{transform-box:view-box;transform-origin:0 0;animation:al-tick 12s linear infinite}
+@keyframes al-tick{to{rotate:360deg}}
+
+html.reduce-motion .al-stage *{animation:none!important}
+html.reduce-motion .al-rabwrap,html.reduce-motion .al-card{display:none}
+html.reduce-motion .al-stream{opacity:0}

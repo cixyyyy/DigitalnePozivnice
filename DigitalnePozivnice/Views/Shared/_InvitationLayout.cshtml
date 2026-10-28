@@ -1,0 +1,89 @@
+@* Samostalan layout za javnu pozivnicu: bez zaglavlja i podnožja sajta. *@
+<!DOCTYPE html>
+<html lang="@Loc.HtmlLang">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>@ViewData["Title"]</title>
+    <meta name="description" content="@ViewData["OgDescription"]" />
+
+    @if (ViewBag.Preview == true)
+    {
+        <meta name="robots" content="noindex, nofollow" />
+    }
+
+    @* Pregled linka na WhatsApp-u, Viberu, Facebooku... *@
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="@(Loc.Lang switch { "hr" => "hr_HR", "bs" => "bs_BA", "sl" => "sl_SI", "de" => "de_DE", "en" => "en_US", _ => "sr_RS" })" />
+    <meta property="og:title" content="@ViewData["Title"]" />
+    <meta property="og:description" content="@ViewData["OgDescription"]" />
+    <meta property="og:url" content="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}")" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
+
+    <script>
+        window.__i18n = @Html.Raw(Loc.JsJson());
+        window.tr = function (s) {
+            var t = window.__i18n && window.__i18n.t && window.__i18n.t[s];
+            return t || s;
+        };
+    </script>
+
+    <script>
+        var de = document.documentElement;
+        de.classList.add("js");
+        (function () {
+            // Animacije su podrazumijevano UKLJUCENE (bez ikakvih dozvola).
+            // Gase se samo ako ih korisnik sam iskljuci: dodaj ?motion=0 na adresu
+            // (vraca se sa ?motion=1).
+            var reduce = false;
+            try {
+                if (/[?&]motion=0/.test(location.search)) localStorage.setItem("noMotion", "1");
+                if (/[?&]motion=1/.test(location.search)) localStorage.removeItem("noMotion");
+                reduce = localStorage.getItem("noMotion") === "1";
+            } catch (e) { }
+            if (reduce) de.classList.add("reduce-motion");
+        })();
+        // Ako JavaScript ne proradi u roku od 4 s, sadrzaj se ipak prikazuje
+        setTimeout(function () {
+            if (!document.documentElement.classList.contains("js-ready")) {
+                document.documentElement.classList.remove("js");
+            }
+        }, 4000);
+    </script>
+    <link rel="stylesheet" href="~/css/floaters.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/invitation.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/invitation-art.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/invitation-std.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/invitation-center.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/invitation-bg.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/jazz.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/italija.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/invitation-paper.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/envelope.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/svitak.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/zavesa.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/gallery.css" asp-append-version="true" />
+    @if (ViewBag.HideBar == true)
+    {
+        <style>
+            html { scrollbar-width: none; -ms-overflow-style: none; }
+            html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; width: 0; height: 0; }
+        </style>
+    }
+</head>
+<body>
+    @RenderBody()
+
+    <script src="~/js/floaters.js" asp-append-version="true"></script>
+    <script src="~/js/invitation.js" asp-append-version="true"></script>
+    <script src="~/js/confetti.js" asp-append-version="true"></script>
+    <script src="~/js/savethedate.js" asp-append-version="true"></script>
+    <script src="~/js/svitak.js" asp-append-version="true"></script>
+    <script src="~/js/zavesa.js" asp-append-version="true"></script>
+    <script src="~/js/gallery.js" asp-append-version="true"></script>
+    <script src="~/js/intro.js" asp-append-version="true"></script>
+    <script src="~/js/debug.js" asp-append-version="true"></script>
+</body>
+</html>

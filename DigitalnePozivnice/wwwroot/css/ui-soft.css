@@ -1,0 +1,58 @@
+/* =========================================================
+   JEDINSTVEN STIL DUGMADI I POLJA – "meko" zaobljeni uglovi
+   Učitava se POSLIJE site.css i site-polish.css
+   ========================================================= */
+:root {
+    --ui-r: 14px;
+    --ui-ink: #30382f;
+    --ui-gold: #ad9465;
+    --ui-line: #cfc5aa;
+    --ui-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* ---------- Postojeća dugmad sajta ---------- */
+.btn-elegant, .pricing-button, .nav-create-button, .btn, .btn-primary, .btn-secondary {
+    border-radius: var(--ui-r);
+}
+.btn-elegant { padding: 16px 24px; font-size: 13px; letter-spacing: .04em; box-shadow: 0 18px 36px -22px rgba(48, 56, 47, .7); }
+.pricing-button { padding: 15px 18px; font-size: 14px; }
+.nav-create-button { border-radius: 12px; min-height: 42px; }
+.pricing-card, .invitation-card, .step-card, .template-card, .card { border-radius: 22px; }
+.form-control, .form-select { border-radius: 12px; padding: .7rem .9rem; }
+.invitation-status, .pricing-ribbon { border-radius: 10px; }
+
+/* ---------- Nova porodica dugmadi (.ui-btn) ---------- */
+.ui-btn {
+    position: relative; overflow: hidden;
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    padding: 13px 20px; border: 1px solid transparent; border-radius: var(--ui-r);
+    font: inherit; font-size: 14px; line-height: 1.2; letter-spacing: .02em; text-decoration: none; cursor: pointer;
+    transition: transform .4s var(--ui-ease), box-shadow .4s var(--ui-ease), background .3s, border-color .3s, color .3s;
+}
+.ui-btn::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(110deg, transparent 30%, rgba(255,255,255,.28) 50%, transparent 70%);
+    translate: -130% 0; transition: translate .9s var(--ui-ease);
+}
+.ui-btn:hover::after { translate: 130% 0; }
+.ui-btn:hover { transform: translateY(-2px); }
+.ui-btn:active { transform: translateY(0) scale(.98); }
+.ui-btn:focus-visible { outline: 2px solid var(--ui-gold); outline-offset: 3px; }
+.ui-btn[disabled], .ui-btn.is-disabled { opacity: .5; pointer-events: none; }
+
+.ui-btn-solid { background: var(--ui-ink); color: #f6f0dd; box-shadow: 0 16px 30px -18px rgba(48, 56, 47, .85); }
+.ui-btn-solid:hover { color: #fff; box-shadow: 0 22px 36px -18px rgba(48, 56, 47, .9); }
+.ui-btn-gold { background: linear-gradient(120deg, #b99e68, #a38753); color: #fff; box-shadow: 0 16px 30px -18px rgba(173, 148, 101, .9); }
+.ui-btn-gold:hover { color: #fff; }
+.ui-btn-ghost { background: transparent; border-color: var(--ui-line); color: var(--ui-ink); }
+.ui-btn-ghost:hover { border-color: var(--ui-ink); background: rgba(48, 56, 47, .04); color: var(--ui-ink); }
+.ui-btn-danger { background: #fff; border-color: #ecc5c0; color: #a2453d; }
+.ui-btn-danger:hover { background: #fbeceb; color: #8d352e; }
+.ui-btn-sm { padding: 9px 14px; font-size: 13px; border-radius: 12px; }
+.ui-btn-block { display: flex; width: 100%; }
+
+/* Paketi: "neograničeno slanje" kao istaknuta stavka na dnu liste */
+.pricing-features .feature-unlimited {
+    margin-top: 14px; padding: 11px 14px; border-radius: 12px;
+    background: #eef2e8; color: #35664b; font-weight: 600;
+}

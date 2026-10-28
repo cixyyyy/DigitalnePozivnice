@@ -1,0 +1,42 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+}
+
+<main class="tpl tpl-tabla" data-float="sparkle,dot,diamond" data-float-count="12" data-float-img="@ViewData["PetalUrl"]">
+    <header class="std-stage">
+        <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
+
+        <p class="std-kicker rise" style="--i:0">@kicker</p>
+        <h1 class="std-title" data-split>@glavno</h1>
+        <p class="std-invite rise" style="--i:3">@InvitationText.PozivLinija(Model)</p>
+
+        @if (prvi?.DatumVreme is DateTimeOffset d)
+        {
+            <div class="std-board-wrap rise" style="--i:4">
+                <span class="std-screw s1" aria-hidden="true"></span><span class="std-screw s2" aria-hidden="true"></span>
+                <span class="std-screw s3" aria-hidden="true"></span><span class="std-screw s4" aria-hidden="true"></span>
+                <div class="std-board"
+                     data-anim="board"
+                     data-rows="@(Loc.T("SAČUVAJTE"))|@(Loc.T("DATUM"))|@InvitationTheme.DatumTabla(d)"
+                     role="img"
+                     aria-label="@Loc.T("Sačuvajte datum"): @InvitationTheme.DatumKratko(d)">
+                </div>
+            </div>
+
+            <button type="button" class="std-btn rise" style="--i:5" data-board-replay>Pogledaj ponovo</button>
+
+        }
+        else
+        {
+            <p class="std-reveal-text is-static">Datum uskoro</p>
+        }
+
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    <partial name="~/Views/Pozivnice/_SaveTheDateDetalji.cshtml" model="Model" />
+</main>

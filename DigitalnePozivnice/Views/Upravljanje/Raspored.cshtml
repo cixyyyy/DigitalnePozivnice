@@ -1,0 +1,113 @@
+@using System.Text.Json
+@model DigitalnePozivnice.Models.ViewModels.RasporedViewModel
+
+@{
+    ViewData["Title"] = "Raspored sjedenja";
+
+    var podaci = new
+    {
+        stolovi = Model.Stolovi,
+        gosti = Model.Gosti,
+        saveUrl = Url.Action("SacuvajRaspored", "Upravljanje", new { id = Model.PozivnicaId }),
+        addGuestUrl = Url.Action("DodajRucnogGosta", "Upravljanje", new { id = Model.PozivnicaId }),
+        removeGuestUrl = Url.Action("UkloniRucnogGosta", "Upravljanje", new { id = Model.PozivnicaId, gostId = 0 })
+    };
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+}
+
+@section Scripts {
+    <script type="application/json" id="rs-data">@Html.Raw(JsonSerializer.Serialize(podaci, new JsonSerializerOptions(JsonSerializerDefaults.Web)))</script>
+    <script src="~/js/raspored.js" asp-append-version="true"></script>
+}
+
+<section class="pz pz-wide">
+    <a class="pz-back" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">← Nazad na pozivnicu</a>
+
+    <header class="pz-head" data-rv>
+        <div>
+            <span class="eyebrow">EXCLUSIVE</span>
+            <h1>Raspored sjedenja</h1>
+            <p>@Model.Naslov</p>
+        </div>
+        <div class="pz-head-actions">
+            <span class="rs-state" id="rsState" aria-live="polite">Sačuvano</span>
+            <button type="button" class="ui-btn ui-btn-solid" id="rsSave">Sačuvaj raspored</button>
+        </div>
+    </header>
+
+    @Html.AntiForgeryToken()
+
+    <ol class="rs-steps" data-rv>
+        <li><b>1</b> Dodajte stolove (okrugle ili pravougaone, možete im mijenjati veličinu i rotaciju)</li>
+        <li><b>2</b> Prevucite goste sa desne strane na sto</li>
+        <li><b>3</b> Sačuvajte raspored</li>
+    </ol>
+
+    <div class="rs">
+        <div class="rs-board" data-rv>
+            <div class="rs-toolbar">
+                <div class="rs-menu-wrap">
+                    <button type="button" class="ui-btn ui-btn-solid ui-btn-sm" id="rsAdd" aria-haspopup="true" aria-expanded="false">+ Dodaj sto ▾</button>
+                    <div class="rs-menu" id="rsMenu" hidden></div>
+                </div>
+                <button type="button" class="ui-btn ui-btn-ghost ui-btn-sm" id="rsAuto">Rasporedi automatski</button>
+                <button type="button" class="ui-btn ui-btn-ghost ui-btn-sm" id="rsClear">Očisti raspored</button>
+
+                <div class="rs-zoom" role="group" aria-label="Zumiranje sale">
+                    <button type="button" id="rsZoomOut" aria-label="Umanji">−</button>
+                    <output id="rsZoomVal">90%</output>
+                    <button type="button" id="rsZoomIn" aria-label="Uvećaj">+</button>
+                </div>
+
+                <div class="rs-view" role="group" aria-label="Prikaz sale">
+                    <button type="button" class="is-active" data-view="2d">2D</button>
+                    <button type="button" data-view="3d">3D</button>
+                </div>
+            </div>
+
+            <div class="rs-hall" id="rsHall">
+                <div class="rs-stage" id="rsStage"></div>
+                <p class="rs-hint" id="rsHint">Dodajte sto dugmetom iznad, ili prevucite gosta ovdje pa će se sto napraviti sam.</p>
+                <p class="rs-drop" id="rsDrop">Pustite gosta na sto, ili na prazno mjesto da napravite novi sto</p>
+            </div>
+        </div>
+
+        <aside class="rs-side">
+            <div class="pz-card rs-card" data-rv data-rv-delay="0.1">
+                <div class="rs-card-head">
+                    <h3>Gosti bez stola</h3>
+                    <span id="rsFreeCount">0</span>
+                </div>
+                <div class="rs-guests" id="rsGuests"></div>
+                <p class="rs-tip">Povucite gosta na sto. Na telefonu: dodirnite gosta, pa sto.</p>
+            </div>
+
+            <div class="pz-card rs-card" data-rv data-rv-delay="0.14">
+                <div class="rs-card-head"><h3>Dodaj gosta ručno</h3></div>
+                <p class="rs-empty">Za goste koji nisu potvrdili preko linka. Ne ulaze u statistiku potvrda.</p>
+                <form id="rsGuestForm" class="rs-add" autocomplete="off">
+                    <input type="text" id="rsGuestName" maxlength="200" placeholder="Ime i prezime gosta" required />
+                    <div class="rs-add-row">
+                        <span class="rs-add-label">Pratnja</span>
+                        <div class="rs-step">
+                            <button type="button" id="rsGuestMinus" aria-label="Manje osoba u pratnji">−</button>
+                            <output id="rsGuestCount">0</output>
+                            <button type="button" id="rsGuestPlus" aria-label="Više osoba u pratnji">+</button>
+                        </div>
+                    </div>
+                    <div class="rs-add-row">
+                        <span class="rs-add-total" id="rsGuestTotal">Ukupno za sto: 1 osoba</span>
+                        <button type="submit" class="ui-btn ui-btn-solid ui-btn-sm">Dodaj</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="pz-card rs-card" id="rsDetail" data-rv data-rv-delay="0.18"></div>
+        </aside>
+    </div>
+
+    <div class="rs-toast" id="rsToast" role="status" aria-live="polite"></div>
+</section>

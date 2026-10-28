@@ -1,0 +1,116 @@
+@using System.Globalization
+@using System.Text.RegularExpressions
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+    const string img = "/img/italija/";
+
+    // "Ana i Marko" -> dva reda rukopisa + monogram
+    var dijelovi = Regex.Split(glavno ?? "", @"\s+(?:i|&|and|und|in|sa)\s+", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)
+        .Select(x => x.Trim()).Where(x => x.Length > 0).ToArray();
+    var n1 = dijelovi.Length > 0 ? dijelovi[0] : (glavno ?? "");
+    var n2 = dijelovi.Length > 1 ? dijelovi[1] : null;
+    string Ini(string? s) => string.IsNullOrWhiteSpace(s) ? "" : char.ToUpperInvariant(s.Trim()[0]).ToString();
+    var ini1 = Ini(n1); var ini2 = Ini(n2);
+
+    // vremenska linija ispisivanja (sekunde)
+    string F(double v) => v.ToString("0.0#", CultureInfo.InvariantCulture) + "s";
+    double Dur(string s) => Math.Min(4.2, 0.45 + s.Length * 0.16);
+    double t = 1.0;
+    var tKicker = t; t += 0.55;
+    var tN1 = t; var dN1 = Dur(n1); t += dN1 + 0.1;
+    var tAmp = t; if (n2 != null) t += 0.3;
+    var tN2 = t; var dN2 = n2 != null ? Dur(n2) : 0; t += dN2 + 0.2;
+    var tInv = t; t += 0.5;
+    var tRule = t; t += 0.4;
+    var tDate = t; t += 0.5;
+    var venue = prvi?.NazivLokacije;
+    var tVenue = t; var dVenue = string.IsNullOrWhiteSpace(venue) ? 0 : Dur(venue!); t += dVenue + 0.2;
+    var tSub = t;
+}
+
+<main class="tpl tpl-italija">
+
+    <header class="it-hero" aria-label="@glavno">
+        <figure class="it-villa" aria-hidden="true"><img src="@(img)hero.webp" alt="" /></figure>
+
+        <div class="it-text">
+            <p class="it-sc it-fade" style="--dl:@F(tKicker)">@kicker</p>
+
+            <h1 class="it-script it-names">
+                <span class="it-w" style="--dur:@F(dN1);--dl:@F(tN1)">@n1</span>
+                @if (n2 != null)
+                {
+                    <span class="it-amp it-fade" style="--dl:@F(tAmp)">&amp;</span>
+                    <span class="it-w" style="--dur:@F(dN2);--dl:@F(tN2)">@n2</span>
+                }
+            </h1>
+
+            <p class="it-sc it-invite it-fade" style="--dl:@F(tInv)">@InvitationText.PozivLinija(Model)</p>
+            <span class="it-rule" style="--dl:@F(tRule)" aria-hidden="true"></span>
+
+            @if (prvi?.DatumVreme is DateTimeOffset d)
+            {
+                <p class="it-sc it-date it-fade" style="--dl:@F(tDate)">@InvitationTheme.DatumDugo(d)</p>
+            }
+            @if (!string.IsNullOrWhiteSpace(venue))
+            {
+                <p class="it-script it-venue"><span class="it-w" style="--dur:@F(dVenue);--dl:@F(tVenue)">@venue</span></p>
+            }
+            @if (!string.IsNullOrWhiteSpace(prvi?.Adresa))
+            {
+                <p class="it-sc it-addr it-fade" style="--dl:@F(tSub)">@prvi!.Adresa</p>
+            }
+        </div>
+        <span class="tpl-scroll" aria-hidden="true"></span>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+    {
+        <section class="inv-section it-s-msg inv-reveal">
+            <p class="inv-message">@Model.UvodniTekst</p>
+        </section>
+    }
+
+    @if (prvi?.DatumVreme is DateTimeOffset cilj)
+    {
+        <section class="inv-section it-s-cd inv-reveal">
+            <h2 class="inv-section-title">Još samo</h2>
+            <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+        </section>
+    }
+
+    <section class="inv-section it-s-ev inv-reveal">
+        <h2 class="inv-section-title">Gdje i kada</h2>
+        <div class="it-card-w"><div class="it-card"><partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" /></div></div>
+    </section>
+
+    <partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />
+
+    @if (imaRsvp)
+    {
+        <section class="inv-section it-s-rsvp inv-reveal" id="rsvp">
+            <h2 class="inv-section-title">Hoćete li biti s nama?</h2>
+            <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+        </section>
+    }
+
+    <footer class="tpl-footer it-footer inv-reveal">
+        <div class="it-fcopy">
+            <div class="it-fgroup">
+            <p class="tpl-footer-names it-script it-fnames">@glavno</p>
+            @if (prvi?.DatumVreme is DateTimeOffset fd)
+            {
+                <p class="it-sc it-fdate">@InvitationTheme.DatumDugo(fd)</p>
+            }
+            <span class="it-heart" aria-hidden="true"></span>
+            </div>
+            <p class="tpl-footer-note it-sc">Con amore</p>
+        </div>
+        <img class="it-fscene" src="@(img)footer.webp" alt="" aria-hidden="true" loading="lazy" />
+    </footer>
+</main>

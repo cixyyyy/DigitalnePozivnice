@@ -1,0 +1,68 @@
+/* Male sličice dizajna na stranici "Izaberi dizajn" (dok nemaš prave slike) */
+.tpl-thumb {
+    height: 260px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    padding: 20px;
+}
+.tpl-thumb small { font-size: 10px; letter-spacing: 3px; }
+.tpl-thumb strong { font-size: 32px; font-weight: 500; line-height: 1.1; }
+.tpl-thumb em { font-size: 13px; letter-spacing: 2px; font-style: normal; }
+
+.tpl-thumb-klasicna {
+    background: #1f1d1a; color: #c9a961;
+    border: 1px solid #c9a961; outline: 1px solid rgba(201,169,97,.4); outline-offset: -10px;
+    font-family: "Cormorant Garamond", Georgia, serif;
+}
+.tpl-thumb-klasicna strong { text-transform: uppercase; letter-spacing: 3px; font-size: 26px; }
+
+.tpl-thumb-romanticni-vrt {
+    background: radial-gradient(circle at 20% 10%, #f3d6d2, transparent 55%), #fff8f4;
+    color: #b76e79;
+    font-family: "Great Vibes", cursive;
+}
+.tpl-thumb-romanticni-vrt strong { font-size: 44px; font-weight: 400; }
+.tpl-thumb-romanticni-vrt small, .tpl-thumb-romanticni-vrt em { font-family: Georgia, serif; }
+
+.tpl-thumb-prirodna {
+    background: #f4f6ee; color: #4f5d40;
+    font-family: "Jost", Arial, sans-serif;
+    border-radius: 120px 120px 12px 12px;
+    border: 2px solid #c9d3bc;
+}
+.tpl-thumb-prirodna strong { font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-size: 34px; }
+
+/* ---- Save the date animacije ---- */
+.tpl-thumb-slot-masina {
+    background: #1b1220; color: #f2c94c; border: 3px solid #f2c94c;
+    font-family: Georgia, serif; border-radius: 18px;
+}
+.tpl-thumb-slot-masina strong { letter-spacing: 3px; font-size: 28px; background: #fffdf6; color: #2a1f2e; padding: 6px 14px; border-radius: 8px; }
+
+.tpl-thumb-koverta {
+    background: linear-gradient(160deg, #c99aa4, #a7727d); color: #fffdf8;
+    font-family: Georgia, serif; clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
+    padding-top: 70px; border-radius: 0;
+}
+.tpl-thumb-koverta strong { font-size: 26px; letter-spacing: 2px; }
+
+.tpl-thumb-svitak {
+    background:
+        linear-gradient(#e48a8f, #e48a8f) center 30% / 74% 9px no-repeat,
+        linear-gradient(#e48a8f, #e48a8f) center 78% / 74% 9px no-repeat,
+        radial-gradient(circle at 50% 50%, #fff7e8 0 60%, #fbf1e4 61%);
+    color: #7a3a40; font-family: "Great Vibes", Georgia, cursive;
+}
+.tpl-thumb-svitak strong { font-size: 34px; font-weight: 400; letter-spacing: 0; }
+
+.tpl-thumb-zavesa {
+    background: repeating-linear-gradient(90deg, #7b1e2b 0 14px, #5d1620 14px 28px); color: #fff3d6;
+    font-family: Georgia, serif; border-radius: 6px;
+}
+.tpl-thumb-zavesa strong { font-size: 26px; letter-spacing: 3px; }

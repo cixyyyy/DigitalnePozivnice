@@ -1,0 +1,71 @@
+@inject Microsoft.Extensions.Configuration.IConfiguration Config
+@{
+    ViewData["Title"] = "Uslovi korištenja";
+    var kontakt = Config["Kontakt:Email"] ?? "info@digitalnepozivnice.com";
+}
+
+<article class="lg">
+    @* PRAVNIK: ovaj tekst je nacrt – pregledati i dopuniti polja u [UGLASTIM ZAGRADAMA] prije objave. *@
+    @if (Loc.Lang is not ("sr" or "bs" or "hr"))
+    {
+        <p class="lg-note">Pravni tekst je dostupan samo na srpskom/bosanskom jeziku.</p>
+    }
+    <h1>Uslovi korištenja</h1>
+    <p class="lg-date">Važe od: 15. 10. 2026.</p>
+
+    <h2>1. Ko smo i na šta se uslovi odnose</h2>
+    <p>Ovi uslovi uređuju korištenje web stranice i usluge „Digitalne Pozivnice“ (u daljem tekstu: Usluga), koju pruža:</p>
+    <partial name="_Operater" />
+    <p>Usluga omogućava izradu digitalnih pozivnica, njihovo dijeljenje putem linka, prikupljanje potvrda dolaska gostiju i (u zavisnosti od paketa) raspored sjedenja, galeriju fotografija i muziku. Registracijom ili korištenjem Usluge prihvatate ove uslove.</p>
+
+    <h2>2. Korisnički nalog</h2>
+    <p>Za izradu pozivnice potreban je nalog. Dužni ste da navedete tačne podatke, da lozinku čuvate u tajnosti i da nas bez odlaganja obavijestite o neovlaštenom pristupu. Odgovorni ste za sve radnje preduzete preko vašeg naloga. Nalog može otvoriti samo punoljetna osoba.</p>
+
+    <h2>3. Paketi, cijene i plaćanje</h2>
+    <p>Usluga se nudi u paketima (Save the date, Premium, Exclusive) čiji su sadržaj i cijena prikazani na stranici „Paketi“. Cijene su izražene u [VALUTA] [sa/bez] PDV-a. Pozivnica se može objaviti i dijeliti nakon uplate izabranog paketa, osim ako je izričito drugačije navedeno. Način plaćanja: [DOPUNITI]. Zadržavamo pravo izmjene cijena za buduće narudžbe; već plaćena narudžba ne mijenja se.</p>
+
+    <h2>4. Isporuka i pravo na odustanak</h2>
+    <p>Usluga je digitalni sadržaj koji se isporučuje elektronski, odmah po objavi pozivnice. Ako ste potrošač, a ova se stranica nudi u državi u kojoj zakon propisuje pravo na odustanak od ugovora na daljinu, to pravo može prestati kada započne izvršenje digitalne usluge uz vašu izričitu saglasnost i potvrdu da ste upoznati s gubitkom prava na odustanak. [PRAVNIK: uskladiti sa zakonom o zaštiti potrošača države poslovanja.] Zahtjeve za povrat sredstava u slučaju tehničkog nedostatka usluge šaljite na adresu navedenu u tački 1.</p>
+
+    <h2>5. Vaš sadržaj i odgovornost za njega</h2>
+    <p>Sadržaj koji unosite ili otpremate (imena, tekstovi, datumi, lokacije, fotografije, vlastita muzika) ostaje vaš. Vi ste isključivo odgovorni za njegovu tačnost i zakonitost. Otpremanjem sadržaja garantujete da:</p>
+    <ul>
+        <li>imate sva potrebna prava (autorska, srodna i prava na lik) za sadržaj koji otpremate, uključujući fotografije i pjesme;</li>
+        <li>osobe koje se prepoznaju na fotografijama znaju za objavu i saglasne su s njom;</li>
+        <li>sadržaj nije nezakonit, uvredljiv, prijeteći, diskriminatoran, lažan niti krši prava trećih lica.</li>
+    </ul>
+    <p>Dajete nam neisključivu, ograničenu dozvolu da vaš sadržaj čuvamo, obrađujemo i prikazujemo gostima kojima podijelite link, isključivo radi pružanja Usluge.</p>
+
+    <h2>6. Muzika</h2>
+    <p>Pjesme iz biblioteke Usluge su originalni instrumentali koje možete slobodno koristiti na svojoj pozivnici. Ako otpremite <b>vlastitu pjesmu</b>, potvrđujete da imate pravo da je javno saopštavate putem interneta. Komercijalne pjesme poznatih izvođača su zaštićene autorskim i srodnim pravima; njihovo otpremanje bez dozvole nosilaca prava nije dozvoljeno. Za svaku takvu povredu odgovara korisnik koji je pjesmu otpremio, a mi se oslobađamo odgovornosti u najširem obimu koji zakon dozvoljava.</p>
+
+    <h2>7. Uklanjanje sadržaja</h2>
+    <p>Zadržavamo pravo da bez prethodne najave uklonimo ili onemogućimo sadržaj za koji osnovano smatramo da krši ove uslove ili prava trećih lica, a nosioci prava mogu nam poslati obavještenje o povredi na adresu iz tačke 1. Po prijemu osnovanog obavještenja sporni sadržaj ćemo bez odlaganja ukloniti.</p>
+
+    <h2>8. Podaci vaših gostiju</h2>
+    <p>Kada gosti potvrde dolazak, njihovi podaci (ime, odgovor, broj osoba) postaju dostupni vama. U odnosu na te podatke vi ste rukovalac, a mi smo obrađivač koji ih čuva i prikazuje isključivo po vašem nalogu. Dužni ste da se prema podacima gostiju odnosite u skladu sa propisima o zaštiti ličnih podataka i da ih koristite samo radi organizacije vašeg događaja. Više u <a asp-controller="Legal" asp-action="Privatnost">Politici privatnosti</a>.</p>
+
+    <h2>9. Zabranjeno korištenje</h2>
+    <p>Zabranjeno je: korištenje Usluge u nezakonite svrhe; slanje neželjenih poruka (spam) putem linkova pozivnice; pokušaj neovlaštenog pristupa tuđim nalozima ili podacima; ometanje rada Usluge; kopiranje ili preprodaja dizajna, šablona i koda Usluge.</p>
+
+    <h2>10. Dostupnost i čuvanje pozivnice</h2>
+    <p>Trudimo se da Usluga bude dostupna bez prekida, ali ne garantujemo neprekidan rad; moguća su kratka tehnička održavanja. Objavljena pozivnica ostaje dostupna najmanje [BROJ] mjeseci nakon datuma događaja, nakon čega je možemo arhivirati ili obrisati. Preporučujemo da sačuvate sopstvene kopije važnih podataka (na primjer, izvoz liste gostiju).</p>
+
+    <h2>11. Intelektualna svojina</h2>
+    <p>Dizajn, šabloni, ilustracije, animacije, programski kod, tekstovi Usluge i muzika iz biblioteke zaštićeni su autorskim pravom. Dobijate pravo da ih koristite samo kroz svoju pozivnicu, u okviru izabranog paketa.</p>
+
+    <h2>12. Ograničenje odgovornosti</h2>
+    <p>Usluga se pruža „kakva jeste“. U granicama koje zakon dozvoljava, ne odgovaramo za posrednu štetu, izgubljenu dobit, ni za štetu nastalu zbog netačnih podataka koje ste unijeli, zbog nedostupnosti interneta ili uređaja gosta, niti zbog radnji gostiju. Naša ukupna odgovornost ograničena je na iznos koji ste platili za predmetni paket. Ništa u ovim uslovima ne isključuje odgovornost koja se ne može isključiti zakonom, niti vaša prava kao potrošača.</p>
+
+    <h2>13. Prestanak i brisanje naloga</h2>
+    <p>Nalog možete zatražiti da se obriše u svakom trenutku slanjem zahtjeva na adresu iz tačke 1; time se brišu i vaše pozivnice, fotografije, otpremljena muzika i potvrde gostiju, osim podataka koje smo po zakonu dužni čuvati (npr. računovodstvena dokumentacija). Možemo privremeno ili trajno ukinuti nalog koji krši ove uslove.</p>
+
+    <h2>14. Izmjene uslova</h2>
+    <p>Uslove možemo izmijeniti. O bitnim izmjenama obavijestićemo vas putem naloga ili e-pošte; nastavak korištenja nakon izmjene znači da ih prihvatate. Važeća verzija je uvijek na ovoj stranici.</p>
+
+    <h2>15. Mjerodavno pravo i nadležnost</h2>
+    <p>Na ove uslove primjenjuje se pravo [DRŽAVA]. Za sporove je nadležan sud u [MJESTO], pri čemu potrošači zadržavaju prava koja im pripadaju po obaveznim propisima mjesta njihovog boravišta. Prije pokretanja spora pozivamo vas da nam se obratite radi mirnog rješenja.</p>
+
+    <h2>16. Kontakt</h2>
+    <p>Sva pitanja o ovim uslovima: <a href="mailto:@kontakt" translate="no">@kontakt</a>.</p>
+</article>

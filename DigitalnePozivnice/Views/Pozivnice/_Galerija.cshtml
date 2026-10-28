@@ -1,0 +1,26 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+@{
+    var ima = (ViewData["ImaRsvp"] as bool?) == true;
+    var slike = ima
+        ? Model.MedijiPozivnices.Where(m => m.Opis == MuzikaBiblioteka.OpisFoto).OrderBy(m => m.Redosled).ToList()
+        : new List<DigitalnePozivnice.Models.Generated.MedijiPozivnice>();
+}
+
+@if (slike.Count > 0)
+{
+    <section class="inv-section inv-reveal" id="galerija">
+        <h2 class="inv-section-title">Galerija</h2>
+        <partial name="~/Views/Pozivnice/_ArtDivider.cshtml" />
+
+        <div class="inv-gal inv-gal-@(slike.Count >= 4 ? "4" : slike.Count.ToString())" data-gallery>
+            @for (var i = 0; i < slike.Count; i++)
+            {
+                var url = MuzikaBiblioteka.MedijUrl(slike[i]);
+                <button type="button" class="inv-gal-item" data-full="@url" data-index="@i" aria-label="Otvori fotografiju">
+                    <img src="@url" alt="" loading="lazy" decoding="async" />
+                </button>
+            }
+        </div>
+    </section>
+}

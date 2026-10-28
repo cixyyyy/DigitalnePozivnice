@@ -1,0 +1,87 @@
+@model DigitalnePozivnice.Models.Generated.Narudzba
+@using DigitalnePozivnice.Models.Generated
+@using DigitalnePozivnice.Helpers
+@{
+    ViewData["Title"] = "Narudžba #" + Model.PozivNaBroj;
+    ViewData["Aktivno"] = "narudzbe";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin-panel.css" asp-append-version="true" />
+}
+
+<section class="pz">
+    <a class="pz-back" asp-action="Narudzbe">← Sve narudžbe</a>
+    <header class="pz-head">
+        <div>
+            <span class="eyebrow">NARUDŽBA</span>
+            <h1>#@Model.PozivNaBroj <span class="ap-st @NarudzbaStatus.Css(Model.Status)" style="font-size:14px;vertical-align:middle">@NarudzbaStatus.Naziv(Model.Status)</span></h1>
+        </div>
+    </header>
+
+    <partial name="_Nav" />
+
+    <div class="ap-grid2">
+        <article class="pz-card">
+            <h2>Podaci</h2>
+            <dl class="ap-kv">
+                <dt>Iznos</dt><dd class="is-big">@Model.Iznos.ToString("N2") KM <span class="ap-sub">≈ @Cijene.Eur(Model.Iznos).ToString("N2") €</span></dd>
+                <dt>Korisnik</dt><dd>@ViewBag.Email</dd>
+                <dt>Paket</dt><dd>@Model.Paket.Naziv</dd>
+                <dt>Pozivnica</dt><dd>@Model.Pozivnica.Naslov <span class="ap-sub">@Model.Pozivnica.ImenaDomacina · @(Model.Pozivnica.Objavljena ? "objavljena" : "u pripremi")</span></dd>
+                <dt>Način plaćanja</dt><dd>@Model.NacinPlacanja</dd>
+                <dt>Kreirana</dt><dd>@Model.DatumKreiranja.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+                @if (Model.DatumPlacanja != null)
+                {
+                    <dt>Plaćena</dt><dd>@Model.DatumPlacanja.Value.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</dd>
+                    <dt>Potvrdio</dt><dd>@Model.PotvrdioKorisnik</dd>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.VanjskiId))
+                {
+                    <dt>Referenca</dt><dd>@Model.VanjskiId</dd>
+                }
+            </dl>
+
+            <div class="ap-row-actions">
+                @if (Model.Status == NarudzbaStatus.CekaUplatu)
+                {
+                    <form asp-action="PotvrdiUplatu" asp-route-id="@Model.NarudzbaId" method="post" onsubmit="return confirm('Potvrditi prijem uplate?');">
+                        <button type="submit" class="ui-btn ui-btn-gold">Potvrdi uplatu</button>
+                    </form>
+                    <form asp-action="OtkaziNarudzbu" asp-route-id="@Model.NarudzbaId" method="post" onsubmit="return confirm('Otkazati narudžbu?');">
+                        <button type="submit" class="ui-btn ui-btn-danger">Otkaži</button>
+                    </form>
+                }
+                else if (Model.Status == NarudzbaStatus.Placeno)
+                {
+                    <form asp-action="VratiNaCekanje" asp-route-id="@Model.NarudzbaId" method="post" onsubmit="return confirm('Vratiti na „Čeka uplatu“? Koristite samo ako je uplata potvrđena greškom.');">
+                        <button type="submit" class="ui-btn ui-btn-ghost">Poništi potvrdu uplate</button>
+                    </form>
+                }
+                else
+                {
+                    @if (Model.Status == NarudzbaStatus.Otkazano)
+                    {
+                        <form asp-action="ObrisiNarudzbu" asp-route-id="@Model.NarudzbaId" method="post" onsubmit="return confirm('Trajno obrisati narudžbu?');">
+                            <button type="submit" class="ui-btn ui-btn-danger">Obriši narudžbu</button>
+                        </form>
+                    }
+                    <form asp-action="VratiNaCekanje" asp-route-id="@Model.NarudzbaId" method="post">
+                        <button type="submit" class="ui-btn ui-btn-ghost">Vrati na „Čeka uplatu“</button>
+                    </form>
+                }
+            </div>
+        </article>
+
+        <article class="pz-card">
+            <h2>Napomena</h2>
+            <p class="pz-muted">Npr. datum uplate, broj izvoda ili dogovor sa kupcem. Vidi je samo admin.</p>
+            <form asp-action="Napomena" asp-route-id="@Model.NarudzbaId" method="post" class="ap-form">
+                <div class="ap-field">
+                    <textarea name="napomena" maxlength="500">@Model.Napomena</textarea>
+                </div>
+                <div><button type="submit" class="ui-btn ui-btn-solid">Sačuvaj napomenu</button></div>
+            </form>
+        </article>
+    </div>
+</section>

@@ -1,0 +1,222 @@
+/* =========================================================
+   KOVERTA (v2): vosak pečat, uzorak podstave, papirna tekstura,
+   ukrasna kartica i pozivnica kao pravi list papira.
+   Koristi se u dizajnu "Koverta" i u uvodnoj sceni premium dizajna.
+   ========================================================= */
+.env-root {
+    --kv-gold: #b8913f;
+    --kv-gold-hi: #ecd48f;
+    --kv-ink: #3a322b;
+    --ev-a: color-mix(in srgb, var(--c-accent) 80%, var(--c-main));
+    --ev-b: color-mix(in srgb, var(--c-accent) 58%, #fff);
+    --ev-c: color-mix(in srgb, var(--c-accent) 42%, #fff);
+    --wax-a: color-mix(in srgb, var(--c-main) 22%, #e2677c);
+    --wax-b: color-mix(in srgb, var(--c-main) 18%, #a62b43);
+    --wax-c: color-mix(in srgb, var(--c-main) 10%, #5a0e20);
+    --wax-text: #e9a0ae;
+    position: relative;
+    display: block;
+}
+.intro-klasicna .env-root { --wax-a: #f3de98; --wax-b: #c9a14a; --wax-c: #7a5a1c; --wax-text: #fbefc4; }
+.intro-prirodna .env-root { --wax-a: #b99067; --wax-b: #7d5a3b; --wax-c: #43301f; --wax-text: #e8d2b6; }
+
+
+/* ---------- Sjena i odsjaj ---------- */
+.env-shadow { position: absolute; left: 4%; right: 4%; bottom: -34px; height: 44px; border-radius: 50%; background: radial-gradient(ellipse, rgba(0,0,0,.45), transparent 70%); filter: blur(9px); }
+.env-glow {
+    position: absolute; left: 8%; right: 8%; top: -34%; height: 90%; z-index: 1; pointer-events: none; opacity: 0; scale: .5;
+    background: radial-gradient(closest-side, rgba(255, 226, 150, .75), rgba(255, 226, 150, .22) 55%, transparent);
+    transition: opacity 1.2s ease .9s, scale 1.6s var(--ease, ease) .9s;
+}
+:is(.std-envelope.is-open, .intro.is-opening) .env-glow { opacity: 1; scale: 1.25; }
+
+/* ---------- Zadnja strana + uzorak podstave ---------- */
+.env-back {
+    position: absolute; inset: 0; border-radius: 7px; overflow: hidden;
+    background: linear-gradient(165deg, var(--ev-a), color-mix(in srgb, var(--ev-a) 70%, #000));
+    box-shadow: 0 34px 64px -28px rgba(0,0,0,.55), 0 2px 0 rgba(255,255,255,.12) inset;
+}
+.env-liner { position: absolute; inset: 0; clip-path: polygon(0 0, 100% 0, 50% 58%); }
+.env-liner::before {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(170deg, color-mix(in srgb, var(--c-main) 70%, #000), color-mix(in srgb, var(--c-main) 45%, #000));
+}
+.env-liner::after {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background: color-mix(in srgb, var(--kv-gold-hi) 70%, var(--c-main));
+    -webkit-mask: url("/img/koverta/liner.svg") 0 0 / 34px 34px; mask: url("/img/koverta/liner.svg") 0 0 / 34px 34px;
+}
+
+/* ---------- Kartica (fizička pozivnica) ---------- */
+.env-card {
+    position: absolute; left: 6%; right: 6%; top: 8%; bottom: 10%; z-index: 2; padding: clamp(14px, 4%, 26px) clamp(16px, 5%, 30px);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 5px; text-align: center;
+    color: var(--kv-ink); border-radius: 3px; overflow: visible;
+    background: linear-gradient(172deg, #fffefa, #f8f1e1 70%, #f1e8d3);
+    box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(120, 95, 50, .22), 0 14px 34px rgba(0,0,0,.28);
+    transition: transform 1.5s cubic-bezier(.2, 1.05, .3, 1) .85s, box-shadow 1s ease .85s;
+}
+.env-card::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: url("/img/koverta/paper.svg") 0 0 / 300px, url("/img/koverta/fibre.svg") 0 0 / 400px;
+    mix-blend-mode: multiply; opacity: .6;
+}
+.env-card::after {
+    content: ""; position: absolute; inset: 7px; border: 1.5px solid var(--kv-gold); border-radius: 2px; pointer-events: none;
+    box-shadow: 0 0 0 4px transparent, inset 0 0 0 4px #f9f2e2, inset 0 0 0 5px rgba(184, 145, 63, .55);
+}
+.env-card > * { position: relative; z-index: 1; }
+.ec { position: absolute !important; z-index: 2 !important; width: clamp(34px, 17%, 78px); aspect-ratio: 1; color: var(--kv-gold); pointer-events: none; overflow: visible; }
+.ec-tl { top: 3px; left: 3px; }
+.ec-tr { top: 3px; right: 3px; scale: -1 1; }
+.ec-bl { bottom: 3px; left: 3px; scale: 1 -1; }
+.ec-br { bottom: 3px; right: 3px; scale: -1 -1; }
+:is(.std-envelope.is-open, .intro.is-opening) .env-card {
+    transform: translateY(-86%) scale(1.07);
+    box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(120, 95, 50, .22), 0 30px 60px rgba(0,0,0,.35);
+}
+.env-card-kicker { font-size: clamp(8px, 1.9vw, 11px); letter-spacing: .38em; text-transform: uppercase; color: var(--kv-gold); font-weight: 600; }
+.env-card-div { width: min(62%, 190px); height: auto; color: var(--kv-gold); }
+.env-card-invite { text-shadow: 0 1px 0 rgba(255,255,255,.8); }
+.env-card-title { filter: drop-shadow(0 1px 0 rgba(255,255,255,.7)); }
+.env-card-line { background: linear-gradient(90deg, transparent, var(--kv-gold), transparent) !important; height: 1px; width: 90px !important; }
+.env-card-date { color: var(--kv-gold); text-shadow: 0 1px 0 rgba(255,255,255,.8); font-weight: 600; }
+
+/* kartica u uvodnoj sceni: imena u kaligrafskom pismu */
+.ie-card { gap: 0; }
+.ie-card-names { display: grid; place-items: center; text-align: center; padding: 0 8%; color: var(--c-main);
+    font-family: "Great Vibes", cursive; font-size: clamp(26px, 7vw, 46px); line-height: 1.1; text-shadow: 0 1px 0 rgba(255,255,255,.9); }
+.ie-card-names i { font-style: normal; overflow-wrap: anywhere; }
+
+/* ---------- Prednja strana ---------- */
+.env-front {
+    position: absolute; inset: 0; z-index: 3; border-radius: 7px; overflow: hidden;
+    background: linear-gradient(160deg, var(--ev-b), color-mix(in srgb, var(--ev-a) 86%, var(--c-main)));
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+.env-front::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .6;
+    background: url("/img/koverta/paper.svg") 0 0 / 300px, url("/img/koverta/fibre.svg") 0 0 / 400px;
+}
+.env-front::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background: linear-gradient(115deg, transparent 38%, rgba(255,255,255,.22) 50%, transparent 62%) no-repeat -120% 0 / 60% 100%;
+    animation: env-sheen 7s ease-in-out 1.4s infinite;
+}
+@keyframes env-sheen { 0%, 55% { background-position: -120% 0; } 100% { background-position: 260% 0; } }
+.env-front > span { position: absolute; inset: 0; }
+.ef-l { clip-path: polygon(0 0, 50% 58%, 0 100%); background: linear-gradient(90deg, rgba(255,255,255,.16), rgba(255,255,255,0)); }
+.ef-r { clip-path: polygon(100% 0, 50% 58%, 100% 100%); background: linear-gradient(270deg, rgba(0,0,0,.16), rgba(0,0,0,0)); }
+.ef-b { clip-path: polygon(0 100%, 50% 58%, 100% 100%); background: linear-gradient(0deg, rgba(0,0,0,.18), rgba(255,255,255,.08) 70%); }
+.env-folds { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; }
+.env-folds path { stroke: rgba(0,0,0,.22); stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.env-folds .ef-edge { stroke: rgba(255,255,255,.55); stroke-width: 1.4; }
+.env-folds .ef-soft { stroke: rgba(0,0,0,.12); stroke-width: 1; }
+.ef-orn { position: absolute; bottom: 4%; width: 15%; aspect-ratio: 1; color: rgba(184, 145, 63, .85); filter: drop-shadow(0 1px 0 rgba(255,255,255,.5)); }
+.ef-orn-l { left: 2.5%; scale: 1 -1; }
+.ef-orn-r { right: 2.5%; scale: -1 -1; }
+.env-front .ef-orn { inset: auto; }
+
+/* ---------- Preklop (spoljašnja i unutrašnja strana) ---------- */
+.env-flap, .env-flap-in {
+    position: absolute; left: 0; right: 0; top: 0; height: 58%; clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top center; transform: rotateX(0deg);
+    transition: transform 1.05s cubic-bezier(.3, 1.25, .5, 1) .5s, opacity 0s .98s, z-index 0s .9s;
+}
+.env-flap {
+    z-index: 5;
+    background: linear-gradient(180deg, color-mix(in srgb, var(--ev-b) 92%, #fff), color-mix(in srgb, var(--ev-a) 80%, var(--c-main)));
+    filter: drop-shadow(0 8px 6px rgba(0,0,0,.28));
+}
+.env-flap::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .55;
+    background: url("/img/koverta/paper.svg") 0 0 / 300px, url("/img/koverta/fibre.svg") 0 0 / 400px;
+}
+.env-flap svg { position: absolute; inset: 0; width: 100%; height: 100%; fill: none; }
+.env-flap svg path { stroke: rgba(255,255,255,.7); stroke-width: 1.4; stroke-dasharray: 5 4; vector-effect: non-scaling-stroke; }
+.env-flap-in {
+    z-index: 1; opacity: 0; transform: rotateX(0deg);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--c-main) 65%, #000), color-mix(in srgb, var(--c-main) 45%, #000));
+}
+.env-flap-in::after {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background: color-mix(in srgb, var(--kv-gold-hi) 70%, var(--c-main));
+    -webkit-mask: url("/img/koverta/liner.svg") 0 0 / 34px 34px; mask: url("/img/koverta/liner.svg") 0 0 / 34px 34px;
+}
+:is(.std-envelope.is-open, .intro.is-opening) .env-flap { transform: rotateX(180deg); z-index: 1; opacity: 0; filter: none; }
+:is(.std-envelope.is-open, .intro.is-opening) .env-flap-in { transform: rotateX(180deg); opacity: 1; }
+
+/* ---------- Pečat od voska ---------- */
+.env-root .env-seal {
+    --sw: clamp(74px, 22vw, 124px);
+    position: absolute; left: 50%; top: 58%; z-index: 6; width: var(--sw); aspect-ratio: 1; margin: calc(var(--sw) / -2) 0 0 calc(var(--sw) / -2);
+    display: grid; place-items: center; border-radius: 0; background: none; box-shadow: none;
+    transition: scale .5s var(--ease, ease); animation: none; pointer-events: none;
+}
+.env-root .env-seal .wax { position: absolute; inset: -4%; width: 108%; height: 108%; filter: drop-shadow(0 7px 8px rgba(0,0,0,.4)); overflow: visible; }
+.env-root .env-seal b {
+    position: relative; z-index: 2; font-family: "Cormorant Garamond", Georgia, serif; font-style: italic; font-weight: 600;
+    font-size: calc(var(--sw) * .3); letter-spacing: .02em; color: var(--wax-text); margin-top: -2%;
+    text-shadow: -1px -1px 1px rgba(0,0,0,.6), 1px 1px 1px rgba(255,255,255,.3);
+}
+.env-root .env-seal-img { background-color: transparent; background-size: contain; background-repeat: no-repeat; background-position: center; }
+.env-root:hover .env-seal { scale: 1.07; }
+:is(.std-envelope:not(.is-open), .intro:not(.is-opening)) .env-seal .wax { animation: wax-breathe 3.2s ease-in-out infinite; }
+@keyframes wax-breathe { 50% { transform: scale(1.035); filter: drop-shadow(0 9px 12px rgba(0,0,0,.45)) brightness(1.06); } }
+:is(.std-envelope.is-open, .intro.is-opening) .env-seal { animation: wax-fall 1.15s cubic-bezier(.5, 0, .75, .6) forwards; }
+@keyframes wax-fall {
+    0% { transform: none; opacity: 1; }
+    14% { transform: scale(1.16) rotate(-5deg); opacity: 1; }
+    28% { transform: scale(1.1) rotate(4deg); opacity: 1; }
+    100% { transform: translateY(150%) rotate(34deg) scale(.88); opacity: 0; }
+}
+.env-crumb { position: absolute; left: 50%; top: 50%; width: 9%; aspect-ratio: 1; border-radius: 40% 60% 55% 45%; background: var(--wax-b); box-shadow: inset -1px -1px 2px rgba(0,0,0,.4); opacity: 0; pointer-events: none; }
+:is(.std-envelope.is-open, .intro.is-opening) .env-crumb { animation: wax-crumb .9s cubic-bezier(.2, .7, .3, 1) .12s forwards; }
+@keyframes wax-crumb {
+    0% { opacity: 1; transform: translate(0, 0) scale(.6); }
+    100% { opacity: 0; transform: translate(var(--dx), var(--dy)) rotate(160deg) scale(.15); }
+}
+
+/* uvodna scena: dimenzije i tok */
+.intro-env.env-root { overflow: visible; }
+.intro-env .env-card { transition-delay: .9s; }
+
+/* ---------- Pozivnica kao list papira (dizajn Koverta) ---------- */
+.kv-sheet-wrap { position: relative; z-index: 1; max-width: 1040px; margin: 0 auto; padding: clamp(10px, 3vw, 36px) clamp(10px, 3vw, 28px) clamp(30px, 6vw, 70px); }
+.kv-sheet {
+    --kv-gold: #b8913f; --c-text: #3a322b; color: var(--c-text);
+    position: relative; border-radius: 4px;
+    background: linear-gradient(176deg, #fffefa, #faf3e3 60%, #f4ead4);
+    box-shadow: 0 1px 0 #fff inset, 0 0 0 1px rgba(120, 95, 50, .2), 0 3px 6px rgba(60, 40, 10, .1), 0 40px 80px -34px rgba(40, 25, 5, .55);
+}
+.kv-sheet::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    background: url("/img/koverta/paper.svg") 0 0 / 300px, url("/img/koverta/fibre.svg") 0 0 / 400px; mix-blend-mode: multiply; opacity: .55;
+}
+.kv-sheet::after {
+    content: ""; position: absolute; inset: clamp(10px, 2.4vw, 20px); border: 1.5px solid var(--kv-gold); border-radius: 2px; pointer-events: none;
+    box-shadow: inset 0 0 0 5px #fbf4e4, inset 0 0 0 6px rgba(184, 145, 63, .55);
+}
+.kv-c { position: absolute; z-index: 2; width: clamp(54px, 13vw, 120px); aspect-ratio: 1; color: var(--kv-gold); pointer-events: none; overflow: visible; }
+.kv-c-tl { top: clamp(8px, 2vw, 16px); left: clamp(8px, 2vw, 16px); }
+.kv-c-tr { top: clamp(8px, 2vw, 16px); right: clamp(8px, 2vw, 16px); scale: -1 1; }
+.kv-c-bl { bottom: clamp(8px, 2vw, 16px); left: clamp(8px, 2vw, 16px); scale: 1 -1; }
+.kv-c-br { bottom: clamp(8px, 2vw, 16px); right: clamp(8px, 2vw, 16px); scale: -1 -1; }
+.kv-sheet-in { position: relative; z-index: 1; padding: clamp(26px, 6vw, 70px) clamp(18px, 6vw, 70px); }
+.kv-sheet .inv-section { padding: clamp(34px, 6vw, 62px) 8px; }
+.kv-sheet-in > section:not(:first-child),
+.kv-sheet-in > .inv-section:not(:first-child) { position: relative; }
+.kv-sheet-in > section:not(:first-child)::before {
+    content: ""; display: block; height: 22px; margin: 0 auto clamp(6px, 2vw, 14px); width: min(260px, 70%);
+    background: url("/img/koverta/divider.svg") center / contain no-repeat;
+}
+.kv-sheet .inv-section-title { color: var(--kv-gold); }
+.kv-sheet .inv-section-title::before, .kv-sheet .inv-section-title::after { background: linear-gradient(90deg, transparent, var(--kv-gold)) !important; }
+.kv-sheet .tpl-footer-note { color: var(--kv-gold); }
+
+@media (max-width: 560px) {
+    .env-card-div { display: none; }
+    .kv-sheet::after { inset: 8px; }
+}
+html.reduce-motion .env-front::after, html.reduce-motion .env-seal .wax { animation: none !important; }
+html.reduce-motion :is(.env-flap, .env-flap-in, .env-card, .env-glow) { transition: none; }

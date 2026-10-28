@@ -1,0 +1,74 @@
+@{
+    ViewData["Title"] = "Politika privatnosti";
+}
+
+<article class="lg">
+    @* PRAVNIK: ovaj tekst je nacrt – pregledati i dopuniti polja u [UGLASTIM ZAGRADAMA] prije objave. *@
+    @if (Loc.Lang is not ("sr" or "bs" or "hr"))
+    {
+        <p class="lg-note">Pravni tekst je dostupan samo na srpskom/bosanskom jeziku.</p>
+    }
+    <h1>Politika privatnosti i kolačići</h1>
+    <p class="lg-date">Važi od: 15. 10. 2026.</p>
+
+    <p>Vaša privatnost nam je važna. Ovdje objašnjavamo koje podatke prikupljamo, zašto, koliko ih čuvamo i koja su vaša prava.</p>
+
+    <h2>1. Rukovalac podacima</h2>
+    <partial name="_Operater" />
+
+    <h2>2. Koje podatke obrađujemo</h2>
+    <ul>
+        <li><b>Podaci naloga:</b> ime i prezime, e-adresa i lozinka (čuva se samo u zaštićenom, heširanom obliku).</li>
+        <li><b>Podaci pozivnice:</b> imena domaćina, naslov, datum, vrijeme i lokacije događaja, tekst poruke, izabrani dizajn, boje, jezik, te fotografije i muzika koje sami otpremite.</li>
+        <li><b>Podaci gostiju:</b> kada gost potvrdi dolazak, upisuje ime, odgovor (dolazi / ne dolazi), broj osoba koje dolaze i eventualnu poruku. Ako imate paket Exclusive, tu je i raspored sjedenja.</li>
+        <li><b>Tehnički podaci:</b> IP adresa, vrsta preglednika i vrijeme pristupa u serverskim zapisima, radi sigurnosti i ispravnog rada.</li>
+    </ul>
+    <p>Ne prikupljamo osjetljive kategorije podataka i ne koristimo alate za praćenje ni reklamne alate.</p>
+
+    <h2>3. Svrha i pravni osnov</h2>
+    <ul>
+        <li>Izrada, objava i prikaz pozivnice, te prikupljanje potvrda dolaska – <i>izvršenje ugovora</i>.</li>
+        <li>Sigurnost, sprečavanje zloupotrebe i tehnička ispravnost – <i>legitimni interes</i>.</li>
+        <li>Računovodstvo i porezi – <i>zakonska obaveza</i>.</li>
+        <li>Odgovor na vaš upit – <i>legitimni interes</i> odnosno vaš zahtjev.</li>
+    </ul>
+
+    <h2>4. Gosti i vi kao domaćin</h2>
+    <p>Podatke koje gosti upisuju u potvrdu dolaska prikazujemo vama kao domaćinu, koji ih koristi isključivo radi organizacije događaja. U odnosu na te podatke vi ste rukovalac, a mi obrađivač koji ih čuva po vašem nalogu. Gostima na obrascu jasno navodimo ko će vidjeti njihove odgovore. Fotografije osoba objavljujete na vlastitu odgovornost i uz njihovu saglasnost.</p>
+
+    <h2>5. Kome podatke dajemo</h2>
+    <p>Podatke ne prodajemo i ne dijelimo ih radi reklamiranja. Pristup imaju samo pružaoci usluga koji su nam potrebni za rad: hosting i baza podataka ([DOPUNITI: PROVAJDER]), obrada plaćanja ([DOPUNITI: PROCESOR PLAĆANJA]) i e-pošta ([DOPUNITI]). Podatke možemo otkriti organima vlasti kada nas na to obavezuje zakon. Sav sadržaj stranice (fontovi, slike, skripte, muzika) poslužuje se sa naših servera, bez eksternih servisa za praćenje. Jedini izuzetak: pri prvom posjetu, radi automatskog izbora jezika prema državi, IP adresu posjetioca šaljemo servisu za geolokaciju (ipwho.is), koji vraća samo državu; mi tu adresu ne čuvamo. Jezik možete promijeniti u svakom trenutku.</p>
+
+    <h2>6. Koliko dugo čuvamo podatke</h2>
+    <ul>
+        <li>Nalog i pozivnice – dok je nalog aktivan, odnosno dok ne zatražite brisanje.</li>
+        <li>Objavljena pozivnica i potvrde gostiju – najmanje [BROJ] mjeseci nakon događaja, zatim brisanje ili anonimizacija.</li>
+        <li>Računovodstvena dokumentacija – rok propisan zakonom.</li>
+        <li>Serverski zapisi – do [BROJ] dana.</li>
+    </ul>
+
+    <h2>7. Vaša prava</h2>
+    <p>Imate pravo na pristup podacima, ispravku, brisanje, ograničenje obrade, prenosivost podataka i prigovor na obradu. Ako je obrada zasnovana na saglasnosti, možete je povući u svakom trenutku. Zahtjev pošaljite na adresu iz tačke 1; odgovorićemo u zakonskom roku. Imate i pravo da se požalite nadležnom organu za zaštitu podataka u vašoj državi (npr. Poverenik za informacije od javnog značaja i zaštitu podataka o ličnosti u Srbiji, AZOP u Hrvatskoj, Agencija za zaštitu ličnih podataka u BiH, Informacijski pooblaščenec u Sloveniji).</p>
+    <p>Gosti koji žele ispravku ili brisanje svojih odgovora mogu se obratiti domaćinu pozivnice ili nama.</p>
+
+    <h2>8. Kolačići i slična tehnologija</h2>
+    <p>Koristimo isključivo <b>neophodne</b> kolačiće i lokalnu pohranu u pregledniku, bez kojih stranica ne može ispravno raditi. Zato ne prikazujemo baner za pristanak. Ne koristimo analitiku, oglašavanje niti kolačiće trećih strana.</p>
+    <table class="lg-table">
+        <thead><tr><th>Naziv</th><th>Svrha</th><th>Trajanje</th></tr></thead>
+        <tbody>
+            <tr><td><code>lang</code></td><td>Pamti izabrani (ili automatski određeni) jezik stranice</td><td>1 godina</td></tr>
+            <tr><td><code>.AspNetCore.Identity.Application</code></td><td>Održava prijavu na nalog</td><td>Sesija / do odjave</td></tr>
+            <tr><td><code>.AspNetCore.Antiforgery.*</code></td><td>Zaštita obrazaca od lažnih zahtjeva</td><td>Sesija</td></tr>
+            <tr><td><code>noMotion</code> (lokalna pohrana)</td><td>Pamti ako ste isključili animacije</td><td>Dok ga ne obrišete</td></tr>
+        </tbody>
+    </table>
+    <p>Kolačiće možete obrisati u postavkama preglednika; tada ćete biti odjavljeni, a jezik će se vratiti na početni.</p>
+
+    <h2>9. Sigurnost</h2>
+    <p>Koristimo šifrovanu vezu (HTTPS), heširanje lozinki, zaštitu obrazaca i provjeru vlasništva nad pozivnicom prije svakog pristupa podacima. Nijedan sistem nije potpuno siguran, ali podatke štitimo razumnim tehničkim i organizacionim mjerama. O povredi podataka obavještavamo vas i nadležni organ u zakonskim rokovima.</p>
+
+    <h2>10. Izmjene</h2>
+    <p>Politiku možemo ažurirati; važeća verzija je uvijek na ovoj stranici, s datumom početka važenja.</p>
+
+    <p class="lg-links"><a asp-controller="Legal" asp-action="Uslovi">Uslovi korištenja →</a></p>
+</article>

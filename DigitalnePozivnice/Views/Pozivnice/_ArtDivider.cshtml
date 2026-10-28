@@ -1,0 +1,9 @@
+@using DigitalnePozivnice.Helpers
+@{
+    var assets = ViewData["Assets"] as Dictionary<string, TemplateAssets.Asset>;
+}
+
+@if (assets != null && assets.TryGetValue("divider", out var d))
+{
+    <span class="art-divider @(d.Mono ? "is-mono" : "")" style="--art:url('@d.Url')" aria-hidden="true"></span>
+}

@@ -1,0 +1,31 @@
+@using DigitalnePozivnice.Helpers
+@{
+    var assets = ViewData["Assets"] as Dictionary<string, TemplateAssets.Asset>;
+}
+
+@if (assets != null)
+{
+    if (assets.TryGetValue("hero", out var hero))
+    {
+        <span class="art art-hero-bg @(hero.Mono ? "is-mono" : "")" style="--art:url('@hero.Url')" aria-hidden="true"></span>
+    }
+
+    if (assets.TryGetValue("corner", out var c))
+    {
+        var m = c.Mono ? "is-mono" : "";
+        <span class="art art-corner art-tl @m" style="--art:url('@c.Url')" aria-hidden="true"></span>
+        <span class="art art-corner art-tr @m" style="--art:url('@c.Url')" aria-hidden="true"></span>
+        <span class="art art-corner art-bl @m" style="--art:url('@c.Url')" aria-hidden="true"></span>
+        <span class="art art-corner art-br @m" style="--art:url('@c.Url')" aria-hidden="true"></span>
+    }
+
+    if (assets.TryGetValue("garland-top", out var gt))
+    {
+        <span class="art art-garland art-garland-top @(gt.Mono ? "is-mono" : "")" style="--art:url('@gt.Url')" aria-hidden="true"></span>
+    }
+
+    if (assets.TryGetValue("garland-bottom", out var gb))
+    {
+        <span class="art art-garland art-garland-bottom @(gb.Mono ? "is-mono" : "")" style="--art:url('@gb.Url')" aria-hidden="true"></span>
+    }
+}

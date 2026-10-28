@@ -1,0 +1,227 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.ViewModels.KreirajPozivnicuViewModel
+
+@{
+    var jeIzmjena = Model.PozivnicaId.HasValue;
+    var vrsta = InvitationText.Nadji(Model.VrstaProslave);
+    var teme = InvitationText.Teme(Model.SablonKljuc);
+}
+
+<link rel="stylesheet" href="~/css/invitation-bg.css" asp-append-version="true" />
+
+<section class="cf">
+    <header class="cf-head">
+        <span class="eyebrow">@(jeIzmjena ? "UREĐIVANJE POZIVNICE" : "VAŠA POZIVNICA")</span>
+        <h1>
+            @if (jeIzmjena)
+            {
+                <text>Ispravite podatke, a pozivnica se <em>odmah osvježava.</em></text>
+            }
+            else
+            {
+                <text>Popunite podatke, a pozivnica se <em>kreira pred vama.</em></text>
+            }
+        </h1>
+        <p class="cf-meta">
+            <span>Paket: <b>@Model.PaketNaziv</b></span>
+            <span>Dizajn: <b>@Model.SablonNaziv</b></span>
+            @if (!jeIzmjena)
+            {
+                <a asp-controller="Sabloni" asp-action="Index" asp-route-paket="@Model.PaketOznaka">Promijeni dizajn</a>
+            }
+        </p>
+    </header>
+
+    <div class="cf-grid">
+
+        <form id="cf-form" class="cf-form" asp-controller="Pozivnice"
+              asp-action="@(jeIzmjena ? "Edit" : "Create")" asp-route-id="@Model.PozivnicaId"
+              method="post" novalidate>
+            <input asp-for="PozivnicaId" type="hidden" />
+            <input asp-for="PaketId" type="hidden" />
+            <input asp-for="SablonId" type="hidden" />
+            <input asp-for="BezProgram" type="hidden" />
+            <input asp-for="OsnovnaBoja" type="hidden" />
+            <input asp-for="DodatnaBoja" type="hidden" />
+            <input asp-for="BojaPozadine" type="hidden" />
+
+            <div asp-validation-summary="All" class="cf-errors"></div>
+
+            <fieldset class="cf-card">
+                <legend><span>1</span> O proslavi</legend>
+
+                <div class="cf-field">
+                    <label>Vrsta proslave</label>
+                    <div class="cf-chips" role="radiogroup" aria-label="Vrsta proslave">
+                        @foreach (var v in InvitationText.Vrste)
+                        {
+                            <label class="cf-chip">
+                                <input type="radio" name="VrstaProslave" value="@v.Naziv" checked="@(v.Naziv == vrsta.Naziv)" />
+                                <span>@v.Naziv</span>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="cf-field" id="cf-naslov-wrap" hidden="@(!InvitationText.JeCustom(vrsta.Naziv))">
+                    <label for="NaslovPozivnice">Naslov pozivnice</label>
+                    <input asp-for="NaslovPozivnice" class="cf-input" placeholder="Npr. Proslava mature" maxlength="60" />
+                    <small class="cf-hint">Prikazuje se iznad imena na pozivnici, npr. „Proslava mature“ ili „Otvaranje restorana“.</small>
+                </div>
+
+                <div class="cf-field">
+                    <label for="ImenaDomacina" id="cf-imena-label">@vrsta.ImenaLabel</label>
+                    <input asp-for="ImenaDomacina" class="cf-input" placeholder="@vrsta.ImenaPrimjer" maxlength="250" required />
+                </div>
+
+                <div class="cf-field">
+                    <label for="Jezik">Jezik pozivnice</label>
+                    <select asp-for="Jezik" class="cf-input cf-lang-select" translate="no">
+                        @foreach (var j in Loc.Jezici)
+                        {
+                            <option value="@j.Code" selected="@(j.Code == Loc.Normalize(Model.Jezik))">@j.Native</option>
+                        }
+                    </select>
+                    <small class="cf-hint">Na ovom jeziku će gosti vidjeti pozivnicu, a predlozi poruka i programa prilagođavaju se izboru.</small>
+                </div>
+            </fieldset>
+
+            <fieldset class="cf-card">
+                <legend><span>2</span> @(Model.BezProgram ? "Datum proslave" : "Datum i program")</legend>
+
+                <div class="cf-field cf-field-date">
+                    <label for="Datum">Datum proslave</label>
+                    <input asp-for="Datum" type="date" asp-format="{0:yyyy-MM-dd}" class="cf-input" required />
+                </div>
+
+                @if (!Model.BezProgram)
+                {
+                    <div class="cf-field">
+                        <label>Program tog dana</label>
+                        <p class="cf-hint">Svaka stavka ima svoje vrijeme i, ako želite, svoje mjesto.</p>
+                        <div id="cf-events" class="cf-events"></div>
+                        <button type="button" id="cf-add" class="cf-add">+ Dodaj stavku programa</button>
+                    </div>
+                }
+                else
+                {
+                    <p class="cf-note">
+                        Save the date pozivnica otkriva samo datum uz izabranu animaciju.
+                        Program dana i potvrde dolaska dostupni su u paketima Premium i Exclusive.
+                    </p>
+                }
+            </fieldset>
+
+            <fieldset class="cf-card">
+                <legend><span>3</span> Poruka gostima</legend>
+
+                <div class="cf-field">
+                    <textarea asp-for="UvodniTekst" class="cf-input" rows="4" maxlength="1000"></textarea>
+                    <div class="cf-suggest">
+                        <small>Predlozi:</small>
+                        <div id="cf-msg-chips"></div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="cf-card">
+                <legend><span>4</span> Boje i pozadina</legend>
+
+                <div class="cf-sub">Paleta boja</div>
+                <div class="cf-swatches" id="cf-swatches">
+                    @foreach (var t in teme)
+                    {
+                        var aktivna = string.Equals(t.Main, Model.OsnovnaBoja, StringComparison.OrdinalIgnoreCase)
+                                      && string.Equals(t.Bg, Model.BojaPozadine, StringComparison.OrdinalIgnoreCase);
+                        <button type="button" class="cf-swatch @(aktivna ? "is-active" : "")"
+                                data-main="@t.Main" data-accent="@t.Accent" data-bg="@t.Bg"
+                                style="--m:@t.Main;--a:@t.Accent;--b:@t.Bg" title="@t.Naziv">
+                            <i></i><span>@t.Naziv</span>
+                        </button>
+                    }
+                </div>
+
+                @* Dizajni sa ilustrovanom scenom: neke opcije nemaju efekta, pa se skrivaju *@
+                <div class="cf-sub" @(InvitationTheme.PodrzavaBojuPozadine(Model.SablonKljuc) ? "" : "hidden")>Boja pozadine</div>
+                <div class="cf-bgcolors" id="cf-bgcolors" @(InvitationTheme.PodrzavaBojuPozadine(Model.SablonKljuc) ? "" : "hidden")>
+                    @foreach (var (naziv, hex) in InvitationText.Pozadine)
+                    {
+                        <button type="button" class="cf-bgc" data-bg="@hex" style="--c:@hex" title="@naziv" aria-label="Pozadina: @naziv"></button>
+                    }
+                </div>
+
+                <div class="cf-sub" @(InvitationTheme.PodrzavaStilPozadine(Model.SablonKljuc) ? "" : "hidden")>Pozadina pozivnice</div>
+                <div class="cf-bgstyles" id="cf-bgstyles" @(InvitationTheme.PodrzavaStilPozadine(Model.SablonKljuc) ? "" : "hidden") style="--pm:@Model.OsnovnaBoja;--pa:@Model.DodatnaBoja;--pb:@Model.BojaPozadine">
+                    @foreach (var st in InvitationTheme.StiloviPozadine)
+                    {
+                        <label class="cf-bgstyle">
+                            <input type="radio" name="StilPozadine" value="@st.Kljuc" checked="@(st.Kljuc == InvitationTheme.StilPozadineOk(Model.StilPozadine))" />
+                            <i class="cf-bgp bgs-@st.Kljuc" aria-hidden="true"></i>
+                            <span>@st.Naziv</span>
+                        </label>
+                    }
+                </div>
+            </fieldset>
+
+            <div class="cf-actions">
+                <button type="submit" class="cf-submit">@(jeIzmjena ? "Sačuvaj izmjene" : "Sačuvaj pozivnicu") →</button>
+                @if (jeIzmjena)
+                {
+                    <a class="cf-cancel" asp-controller="Pozivnice" asp-action="Details" asp-route-id="@Model.PozivnicaId">Odustani</a>
+                }
+                else
+                {
+                    <p>Poslije čuvanja je vidite u „Moje pozivnice“, možete je urediti i objaviti.</p>
+                }
+            </div>
+        </form>
+
+        <aside class="cf-preview" id="cf-preview">
+            <div class="cf-preview-head">
+                <div><b>Pregled uživo</b><small>Tako će pozivnica izgledati na telefonu</small></div>
+                <button type="button" class="cf-preview-close" id="cf-close" aria-label="Zatvori pregled">×</button>
+            </div>
+            <div class="cf-device">
+                <span class="cf-notch" aria-hidden="true"></span>
+                <div class="cf-screen" id="cf-screen">
+                    <iframe name="cf-frame" id="cf-frame" title="Pregled pozivnice" src="about:blank" scrolling="yes"></iframe>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <button type="button" class="cf-fab" id="cf-fab">Pregled pozivnice</button>
+
+    @if (!Model.BezProgram)
+    {
+        <template id="cf-ev-tpl">
+            <div class="cf-ev">
+                <div class="cf-ev-head">
+                    <span class="cf-ev-no">1</span>
+                    <button type="button" class="cf-ev-del" aria-label="Ukloni stavku">×</button>
+                </div>
+                <div class="cf-ev-main">
+                    <label class="cf-mini">
+                        <span>Vrijeme</span>
+                        <input type="time" data-f="Vrijeme" class="cf-input" required />
+                    </label>
+                    <label class="cf-mini cf-grow">
+                        <span>Naziv</span>
+                        <input type="text" data-f="Naziv" class="cf-input" maxlength="150" placeholder="npr. Vjenčanje u crkvi" required />
+                    </label>
+                </div>
+                <div class="cf-ev-place">
+                    <label class="cf-mini cf-grow">
+                        <span>Mjesto (opciono)</span>
+                        <input type="text" data-f="NazivLokacije" class="cf-input" maxlength="200" placeholder="npr. Crkva Svetog Petra" />
+                    </label>
+                    <label class="cf-mini cf-grow">
+                        <span>Adresa (opciono)</span>
+                        <input type="text" data-f="Adresa" class="cf-input" maxlength="300" placeholder="Ulica i grad" />
+                    </label>
+                </div>
+                <button type="button" class="cf-copy">Isto mjesto kao prethodna stavka</button>
+            </div>
+        </template>
+    }
+</section>

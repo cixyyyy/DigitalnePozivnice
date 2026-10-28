@@ -1,0 +1,30 @@
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var kljuc = InvitationTheme.NormalizeKey(Model.Sablon?.Kljuc);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var monogram = InvitationTheme.Monogram(Model.ImenaDomacina).Replace(" ", "");
+}
+
+<partial name="~/Views/Pozivnice/_KovertaDefs.cshtml" />
+
+<div class="intro intro-@kljuc" data-intro role="dialog" aria-label="Otvorite pozivnicu">
+    <div class="intro-inner">
+        <p class="intro-kicker">@kicker</p>
+
+        <button type="button" class="intro-env env-root" data-intro-open aria-label="Otvori pozivnicu">
+            <partial name="~/Views/Pozivnice/_KovertaTijelo.cshtml" />
+
+            <span class="env-card ie-card">
+                <partial name="~/Views/Pozivnice/_KovertaKartaOkvir.cshtml" />
+                <span class="ie-card-names"><i>@glavno</i></span>
+            </span>
+
+            <partial name="~/Views/Pozivnice/_KovertaPrednja.cshtml" />
+            <partial name="~/Views/Pozivnice/_KovertaPecat.cshtml" model="monogram" />
+        </button>
+
+        <p class="intro-hint">Dodirnite pečat da otvorite pozivnicu</p>
+    </div>
+</div>

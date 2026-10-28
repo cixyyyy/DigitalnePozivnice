@@ -1,0 +1,1945 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
+  color: var(--bs-secondary-color);
+  text-align: end;
+}
+
+.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
+  text-align: start;
+}
+
+
+/* DIGITALNE POZIVNICE - HOME PAGE */
+
+:root {
+    --wedding-cream: #f8f6f0;
+    --wedding-paper: #fffefa;
+    --wedding-ink: #30382f;
+    --wedding-muted: #77776c;
+    --wedding-gold: #ad9465;
+    --wedding-line: #e7e2d7;
+    --wedding-sage: #dce1d3;
+}
+
+body {
+    background: var(--wedding-paper);
+    color: var(--wedding-ink);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.wedding-hero {
+    display: grid;
+    grid-template-columns: 1fr 0.95fr;
+    gap: 55px;
+    align-items: center;
+    padding: 75px 6.5% 85px;
+    background: var(--wedding-cream);
+    overflow: hidden;
+}
+
+.hero-copy {
+    max-width: 590px;
+    padding: 20px 0;
+}
+
+.eyebrow {
+    display: block;
+    color: var(--wedding-gold);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    line-height: 1.8;
+}
+
+.hero-copy h1,
+.intro-section h2,
+.section-heading h2,
+.how-heading h2,
+.final-cta h2 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-weight: 400;
+    letter-spacing: -1.8px;
+    line-height: 1.13;
+}
+
+.hero-copy h1 {
+    font-size: clamp(43px, 5vw, 70px);
+    margin: 25px 0;
+}
+
+    .hero-copy h1 em,
+    .intro-section h2 em,
+    .section-heading h2 em,
+    .how-heading h2 em,
+    .final-cta h2 em {
+        color: #8c967d;
+        font-weight: 400;
+    }
+
+.hero-copy > p {
+    max-width: 440px;
+    color: var(--wedding-muted);
+    font-size: 15px;
+    line-height: 1.9;
+}
+
+.hero-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin-top: 32px;
+}
+
+.btn-elegant {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+    padding: 17px 23px;
+    background: var(--wedding-ink);
+    color: white;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    transition: background 0.2s, transform 0.2s;
+}
+
+    .btn-elegant:hover {
+        color: white;
+        background: #505c4d;
+        transform: translateY(-2px);
+    }
+
+    .btn-elegant span {
+        font-size: 18px;
+    }
+
+.btn-text {
+    color: var(--wedding-ink);
+    text-decoration: none;
+    font-size: 12px;
+    border-bottom: 1px solid var(--wedding-gold);
+    padding-bottom: 6px;
+}
+
+    .btn-text:hover {
+        color: var(--wedding-gold);
+    }
+
+.hero-note {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 50px;
+    color: var(--wedding-muted);
+    font-family: Georgia, serif;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.note-star {
+    color: var(--wedding-gold);
+    font-size: 22px;
+}
+
+.hero-visual {
+    position: relative;
+    min-height: 540px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-photo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 55%, #37372c22), radial-gradient(60% 50% at 25% 30%, #f3d9d2, transparent 70%), radial-gradient(55% 45% at 80% 70%, #d9e3cf, transparent 70%), #efe6d3;
+}
+
+.invitation-preview {
+    position: relative;
+    z-index: 1;
+    width: min(300px, 75%);
+    min-height: 365px;
+    padding: 42px 20px;
+    background: #faf7edee;
+    outline: 1px solid #b6a47c;
+    outline-offset: -10px;
+    box-shadow: 0 20px 60px #00000020;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.preview-flower {
+    font-size: 42px;
+    color: var(--wedding-gold);
+    margin-bottom: 17px;
+}
+
+.preview-small {
+    font-size: 8px;
+    letter-spacing: 2px;
+}
+
+.invitation-preview h2 {
+    font-family: Georgia, serif;
+    font-size: 43px;
+    line-height: 1.1;
+    font-weight: 400;
+    margin: 22px 0;
+}
+
+    .invitation-preview h2 em {
+        color: #8c967d;
+    }
+
+.preview-line {
+    width: 45px;
+    height: 1px;
+    background: var(--wedding-gold);
+    margin: 8px 0 20px;
+}
+
+.invitation-preview > p {
+    font-size: 10px;
+    letter-spacing: 3px;
+}
+
+.preview-date {
+    margin-top: 8px;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+.photo-caption {
+    position: absolute;
+    bottom: -27px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 8px;
+    letter-spacing: 1.2px;
+    color: var(--wedding-muted);
+}
+
+.intro-section {
+    padding: 100px 20px 90px;
+    text-align: center;
+}
+
+    .intro-section h2,
+    .how-heading h2 {
+        margin: 22px auto;
+        font-size: clamp(34px, 4vw, 49px);
+    }
+
+    .intro-section > p {
+        max-width: 500px;
+        margin: 0 auto;
+        color: var(--wedding-muted);
+        font-size: 14px;
+        line-height: 1.8;
+    }
+
+.templates-section {
+    padding: 80px 6.5%;
+    background: #f7f5ef;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 25px;
+    margin-bottom: 35px;
+}
+
+    .section-heading h2 {
+        max-width: 620px;
+        font-size: clamp(32px, 4vw, 46px);
+        margin: 15px 0 0;
+    }
+
+.template-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+}
+
+.template-card {
+    min-width: 0;
+}
+
+.template-image {
+    position: relative;
+    min-height: 340px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    overflow: hidden;
+}
+
+.template-one {
+    background: linear-gradient(#24302322, #24302322), radial-gradient(70% 60% at 30% 25%, #f4dcd6, transparent 70%), #ecdfcc;
+}
+
+.template-two {
+    background: linear-gradient(#4a382522, #4a382522), radial-gradient(70% 60% at 70% 25%, #d9c79c, transparent 70%), #2a2620;
+}
+
+.template-three {
+    background: linear-gradient(#24302322, #24302322), radial-gradient(70% 60% at 30% 70%, #cfdcc0, transparent 70%), #e7ecdc;
+}
+
+.mini-invite {
+    width: 85%;
+    min-height: 210px;
+    padding: 25px 12px;
+    background: #fbf7eefa;
+    border: 1px solid #b7a77d;
+    outline: 1px solid #b7a77d;
+    outline-offset: -7px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 10px 30px #00000018;
+}
+
+    .mini-invite > span {
+        font-size: 7px;
+        letter-spacing: 1.5px;
+    }
+
+    .mini-invite h3 {
+        font-family: Georgia, serif;
+        font-weight: 400;
+        font-size: clamp(23px, 2.4vw, 34px);
+        margin: 20px 0;
+    }
+
+        .mini-invite h3 i {
+            color: #9a9c7d;
+            font-weight: 400;
+        }
+
+    .mini-invite p {
+        font-size: 8px;
+        letter-spacing: 1.5px;
+        margin: 0;
+    }
+
+.invite-dark {
+    background: #333a31f5;
+    color: #f9f3e5;
+    border-color: #bba56d;
+    outline-color: #bba56d;
+}
+
+    .invite-dark h3 i {
+        color: #d4bc86;
+    }
+
+.invite-sage {
+    background: #e7e9dff5;
+    border-color: #7c8a70;
+    outline-color: #7c8a70;
+}
+
+.template-number {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    color: white;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+.template-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 19px 0;
+    border-bottom: 1px solid var(--wedding-line);
+}
+
+    .template-info h3 {
+        font-family: Georgia, serif;
+        font-size: 20px;
+        font-weight: 400;
+        margin: 0 0 8px;
+    }
+
+    .template-info p {
+        margin: 0;
+        font-size: 11px;
+        color: var(--wedding-muted);
+    }
+
+.template-arrow {
+    font-size: 22px;
+    color: var(--wedding-gold);
+}
+
+.template-disclaimer {
+    margin: 22px 0 0;
+    font-size: 11px;
+    color: var(--wedding-muted);
+}
+
+.how-section {
+    padding: 100px 6.5%;
+}
+
+.how-heading {
+    max-width: 750px;
+    margin: 0 auto 50px;
+    text-align: center;
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--wedding-line);
+    border-bottom: 1px solid var(--wedding-line);
+}
+
+.step-card {
+    padding: 30px 23px;
+    border-right: 1px solid var(--wedding-line);
+}
+
+    .step-card:last-child {
+        border-right: none;
+    }
+
+.step-number {
+    display: block;
+    margin-bottom: 35px;
+    color: var(--wedding-gold);
+    font-family: Georgia, serif;
+    font-size: 24px;
+}
+
+.step-card h3 {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 21px;
+}
+
+.step-card p {
+    color: var(--wedding-muted);
+    font-size: 12px;
+    line-height: 1.8;
+}
+
+.final-cta {
+    padding: 90px 20px;
+    background: #e9e9df;
+    text-align: center;
+}
+
+    .final-cta h2 {
+        margin: 20px 0;
+        font-size: clamp(37px, 5vw, 58px);
+    }
+
+    .final-cta > p {
+        margin: 0 auto 28px;
+        color: var(--wedding-muted);
+        font-size: 14px;
+    }
+
+@media (max-width: 900px) {
+    .wedding-hero {
+        grid-template-columns: 1fr;
+        gap: 35px;
+        padding: 55px 6%;
+    }
+
+    .hero-copy {
+        max-width: 700px;
+    }
+
+    .hero-visual {
+        min-height: 490px;
+    }
+
+    .template-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .template-card:last-child {
+        grid-column: 1 / -1;
+    }
+
+        .template-card:last-child .template-image {
+            min-height: 300px;
+        }
+
+    .steps-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .step-card:nth-child(2) {
+        border-right: none;
+    }
+
+    .step-card:nth-child(-n+2) {
+        border-bottom: 1px solid var(--wedding-line);
+    }
+}
+
+@media (max-width: 560px) {
+    .wedding-hero {
+        padding-top: 38px;
+        padding-bottom: 65px;
+    }
+
+    .hero-copy h1 {
+        font-size: 43px;
+    }
+
+    .hero-actions {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .hero-visual {
+        min-height: 410px;
+    }
+
+    .invitation-preview {
+        min-height: 320px;
+    }
+
+    .intro-section,
+    .how-section {
+        padding: 70px 20px;
+    }
+
+    .templates-section {
+        padding: 65px 20px;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .template-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .template-card:last-child {
+        grid-column: auto;
+    }
+
+        .template-image,
+        .template-card:last-child .template-image {
+            min-height: 340px;
+        }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .step-card,
+    .step-card:nth-child(2) {
+        border-right: none;
+        border-bottom: 1px solid var(--wedding-line);
+    }
+
+        .step-card:last-child {
+            border-bottom: none;
+        }
+
+    .step-number {
+        margin-bottom: 18px;
+    }
+
+    .final-cta {
+        padding: 70px 20px;
+    }
+}
+
+
+
+/* HEADER AND NAVIGATION */
+
+/* Navbar ostaje na vrhu tokom skrolovanja */
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+    background: #faf8f2;
+}
+
+.site-header-inner {
+    max-width: 1600px;
+    min-height: 88px;
+    margin: 0 auto;
+    padding: 0 6.5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.brand-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: #30382f;
+    flex-shrink: 0;
+}
+
+.brand-symbol {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ad9465;
+    border-radius: 50%;
+    color: #68745e;
+    font-family: Georgia, serif;
+    font-size: 23px;
+    font-style: italic;
+}
+
+    .brand-symbol span {
+        margin-left: -5px;
+        margin-top: 9px;
+        color: #ad9465;
+        font-size: 18px;
+    }
+
+.brand-name {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2.2px;
+}
+
+    .brand-name span {
+        font-size: 9px;
+        font-weight: 400;
+        letter-spacing: 3px;
+    }
+
+.main-navigation {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.nav-link-elegant,
+.nav-login {
+    color: #56584f;
+    text-decoration: none;
+    font-size: 12px;
+    white-space: nowrap;
+    transition: color 0.2s;
+}
+
+    .nav-link-elegant:hover,
+    .nav-login:hover {
+        color: #ad9465;
+    }
+
+.nav-account {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    margin-left: 5px;
+}
+
+.nav-create-button {
+    min-height: 43px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 0 18px;
+    border: 1px solid #30382f;
+    background: #30382f;
+    color: #fffefa;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 11px;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+    .nav-create-button:hover {
+        color: #fffefa;
+        background: #515b4c;
+        border-color: #515b4c;
+    }
+
+    .nav-create-button span {
+        font-size: 16px;
+    }
+
+.nav-logout-form {
+    margin: 0;
+}
+
+.mobile-menu-toggle {
+    display: none;
+    width: 43px;
+    height: 43px;
+    border: 1px solid #e7e2d7;
+    background: transparent;
+    cursor: pointer;
+}
+
+    .mobile-menu-toggle span {
+        display: block;
+        width: 19px;
+        height: 1px;
+        margin: 5px auto;
+        background: #30382f;
+    }
+
+.site-footer {
+    padding: 45px 20px 30px;
+    background: #30382f;
+    color: #f8f6f0;
+    text-align: center;
+}
+
+.footer-brand {
+    color: #e3d4b3;
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 3px;
+}
+
+    .footer-brand:hover {
+        color: #fffefa;
+    }
+
+.site-footer p {
+    margin: 14px 0 20px;
+    color: #d1d1c6;
+    font-family: Georgia, serif;
+    font-size: 14px;
+    font-style: italic;
+}
+
+.site-footer > span {
+    color: #b7b9ae;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+
+@media (max-width: 1000px) {
+    .site-header-inner {
+        min-height: 78px;
+        padding: 0 5%;
+    }
+
+    .mobile-menu-toggle {
+        display: block;
+        flex-shrink: 0;
+    }
+
+    .main-navigation {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        display: none;
+        align-items: stretch;
+        gap: 0;
+        padding: 12px 5% 24px;
+        background: #fffefa;
+        border-bottom: 1px solid #eae6dc;
+        box-shadow: 0 15px 25px #00000008;
+    }
+
+        .main-navigation.is-open {
+            display: flex;
+            flex-direction: column;
+        }
+
+    .nav-link-elegant {
+        padding: 15px 0;
+        border-bottom: 1px solid #eeeae1;
+    }
+
+    .nav-account {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 15px;
+        margin: 18px 0 0;
+    }
+
+    .nav-login {
+        padding: 8px 0;
+    }
+
+    .nav-create-button {
+        min-height: 46px;
+    }
+
+    .nav-logout-form {
+        display: flex;
+    }
+
+        .nav-logout-form .nav-create-button {
+            width: 100%;
+        }
+}
+
+@media (min-width: 1001px) {
+    .main-navigation {
+        display: flex !important;
+    }
+}
+
+
+/* MOJE POZIVNICE */
+
+.my-invitations {
+    max-width: 1180px;
+    min-height: 65vh;
+    margin: 0 auto;
+    padding: 75px 24px 100px;
+    color: #263d32;
+}
+
+.my-invitations-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 42px;
+}
+
+.my-invitations .eyebrow {
+    color: #a68b59;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+}
+
+.my-invitations-heading h1 {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    font-size: clamp(34px, 5vw, 48px);
+    font-weight: 400;
+}
+
+.invitations-subtitle {
+    color: #788078;
+    margin: 0;
+}
+
+.invitations-count {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90px;
+    height: 90px;
+    border: 1px solid #ded8c9;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+    .invitations-count span {
+        font-family: Georgia, serif;
+        font-size: 30px;
+    }
+
+    .invitations-count small {
+        color: #788078;
+        font-size: 11px;
+    }
+
+.invitations-empty {
+    padding: 70px 24px;
+    text-align: center;
+    background: #f7f5ef;
+    border: 1px solid #eae5d9;
+    border-radius: 8px;
+}
+
+.empty-icon {
+    color: #a68b59;
+    font-family: Georgia, serif;
+    font-size: 48px;
+}
+
+.invitations-empty h2 {
+    margin: 15px 0 12px;
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 29px;
+}
+
+.invitations-empty p {
+    max-width: 430px;
+    margin: 0 auto;
+    color: #788078;
+    line-height: 1.8;
+}
+
+.invitations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+}
+
+.invitation-card {
+    padding: 25px;
+    background: #fffefa;
+    border: 1px solid #e8e3d8;
+    border-radius: 8px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+    .invitation-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 32px #263d3210;
+    }
+
+.invitation-card-top,
+.invitation-card-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.invitation-heart {
+    color: #a68b59;
+    font-size: 28px;
+}
+
+.invitation-status {
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+}
+
+    .invitation-status.published {
+        color: #35664b;
+        background: #e9f2e9;
+    }
+
+    .invitation-status.draft {
+        color: #826b3e;
+        background: #f5efdf;
+    }
+
+.invitation-card h2 {
+    margin: 24px 0 8px;
+    font-family: Georgia, serif;
+    font-size: 25px;
+    font-weight: 400;
+    overflow-wrap: anywhere;
+}
+
+.invitation-hosts {
+    color: #788078;
+}
+
+.invitation-date {
+    margin-top: 20px;
+    color: #788078;
+    font-size: 13px;
+}
+
+.invitation-card-bottom {
+    margin-top: 22px;
+    padding-top: 15px;
+    border-top: 1px solid #eee9df;
+    color: #8b7954;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 600px) {
+    .my-invitations {
+        padding: 48px 18px 70px;
+    }
+
+    .my-invitations-heading {
+        align-items: flex-start;
+    }
+
+    .invitations-count {
+        width: 68px;
+        height: 68px;
+    }
+}
+
+
+/* PAKETI I CENE */
+
+.pricing-page {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 80px 24px 90px;
+    color: #293e33;
+}
+
+.pricing-heading {
+    max-width: 760px;
+    margin: 0 auto 55px;
+    text-align: center;
+}
+
+    .pricing-heading .eyebrow {
+        color: #a68b59;
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 3px;
+    }
+
+    .pricing-heading h1 {
+        margin: 15px 0;
+        font-family: Georgia, serif;
+        font-size: clamp(34px, 5vw, 51px);
+        font-weight: 400;
+        line-height: 1.2;
+    }
+
+.pricing-intro {
+    max-width: 620px;
+    margin: 0 auto;
+    color: #788078;
+    line-height: 1.8;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 24px;
+}
+
+.pricing-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 34px 28px 28px;
+    background: #fffefa;
+    border: 1px solid #e7e1d5;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.pricing-featured {
+    border: 1px solid #9aab98;
+    box-shadow: 0 12px 38px #293e330d;
+}
+
+.pricing-ribbon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 9px;
+    background: #354e40;
+    color: #fff;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.pricing-featured .pricing-card-icon {
+    margin-top: 22px;
+}
+
+.pricing-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    margin-bottom: 20px;
+    background: #f2eee4;
+    border-radius: 50%;
+    color: #92794b;
+    font-family: Georgia, serif;
+    font-size: 30px;
+}
+
+.pricing-card h2 {
+    margin: 0 0 10px;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    font-weight: 400;
+}
+
+.pricing-description {
+    min-height: 54px;
+    margin: 0;
+    color: #788078;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.pricing-price {
+    display: flex;
+    align-items: baseline;
+    gap: 7px;
+    margin-top: 27px;
+}
+
+.price-number {
+    font-family: Georgia, serif;
+    font-size: clamp(30px, 3vw, 40px);
+    overflow-wrap: anywhere;
+}
+
+.price-currency {
+    color: #788078;
+    font-size: 13px;
+}
+
+.pricing-onetime {
+    margin: 5px 0 0;
+    color: #788078;
+    font-size: 12px;
+}
+
+.pricing-divider {
+    height: 1px;
+    margin: 25px 0;
+    background: #e9e4d9;
+}
+
+.pricing-features {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin: 0 0 30px;
+    padding: 0;
+    list-style: none;
+    color: #45564b;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+    .pricing-features li {
+        overflow-wrap: anywhere;
+    }
+
+    .pricing-features .feature-muted {
+        color: #9a9c94;
+    }
+
+.pricing-button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: auto;
+    padding: 14px 17px;
+    border: 1px solid #354e40;
+    border-radius: 4px;
+    color: #354e40;
+    text-decoration: none;
+    font-size: 13px;
+    transition: background .2s, color .2s;
+}
+
+    .pricing-button:hover {
+        background: #f0f1eb;
+        color: #293e33;
+    }
+
+.pricing-button-primary {
+    background: #354e40;
+    color: white;
+}
+
+    .pricing-button-primary:hover {
+        background: #263d32;
+        color: white;
+    }
+
+.pricing-note {
+    margin: 35px auto 0;
+    color: #788078;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+@media (max-width: 950px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 540px;
+        margin: 0 auto;
+    }
+
+    .pricing-description {
+        min-height: auto;
+    }
+
+    .price-number {
+        font-size: 38px;
+    }
+}
+
+@media (max-width: 560px) {
+    .pricing-page {
+        padding: 55px 17px 65px;
+    }
+
+    .pricing-card {
+        padding: 28px 22px 23px;
+    }
+
+    .pricing-heading {
+        margin-bottom: 35px;
+    }
+}
+
+.nav-account {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.nav-logout-form {
+    display: inline-flex;
+    align-items: center;
+    margin: 0;
+}
+
+.nav-create-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+/* Dugme Odjavi se */
+.nav-logout-form .nav-create-button {
+    background: transparent;
+    color: #59664E;
+    border: 1px solid #59664E;
+    box-shadow: none;
+}
+
+    .nav-logout-form .nav-create-button:hover {
+        background: rgba(89, 102, 78, 0.08);
+        color: #59664E;
+        border-color: #59664E;
+    }
+
+
+
+/* Kartice paketa */
+.pricing-grid {
+    align-items: stretch;
+}
+
+.pricing-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+}
+
+/* Prostor na vrhu svih kartica */
+.pricing-card-topline {
+    height: 60px;
+    min-height: 60px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
+
+/* Premium kartica */
+.pricing-card.pricing-featured {
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* Ikonice */
+.pricing-card-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+
+    .pricing-card-icon svg {
+        width: 42px;
+        height: 42px;
+        display: block;
+    }
+
+/* Dugmad pri dnu kartica */
+.pricing-features {
+    flex-grow: 1;
+}
+
+.pricing-button {
+    margin-top: auto;
+}
+/* Premium kartica: zeleno zaglavlje sa vidljivim natpisom */
+.pricing-card.pricing-featured {
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card.pricing-featured::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: #59664E;
+    z-index: 0;
+}
+
+.pricing-card-topline {
+    position: relative;
+    z-index: 1;
+    height: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Premium kartica — zelena traka sa natpisom */
+.pricing-card.pricing-featured {
+    position: relative;
+    overflow: hidden;
+}
+
+    .pricing-card.pricing-featured .pricing-card-topline {
+        position: static;
+        height: 0;
+        min-height: 0;
+        padding: 0;
+        margin: 0;
+    }
+
+    .pricing-card.pricing-featured .pricing-ribbon {
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 60px;
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        margin: 0 !important;
+        padding: 0 12px !important;
+        background: #59664E !important;
+        color: #FFFFFF !important;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+        line-height: 1.2;
+        white-space: nowrap;
+        z-index: 5;
+        transform: none !important;
+    }
+
+    /* Poravnanje sadržaja Premium kartice sa ostalim karticama */
+    .pricing-card.pricing-featured .pricing-card-topline {
+        height: 60px;
+        min-height: 60px;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Traka ostaje na vrhu, bez uticaja na ostatak sadržaja */
+    .pricing-card.pricing-featured .pricing-ribbon {
+        height: 60px;
+        top: 0;
+    }
+
+/* Iste margine za ikonice i naslove svih kartica */
+.pricing-card .pricing-card-icon {
+    margin-top: 0;
+    margin-bottom: 18px;
+}
+
+.pricing-card h2 {
+    margin-top: 0;
+}
+
+
+
+.currency-selector {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin: 0 0 20px;
+}
+
+    .currency-selector label {
+        font-size: 13px;
+        color: #777;
+    }
+
+    .currency-selector select {
+        width: 82px;
+        padding: 7px 8px;
+        border: 1px solid #e2d7c7;
+        border-radius: 8px;
+        background: #fff;
+        color: #333;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+
+/* =========================================
+   ANIMACIJE POČETNE STRANICE
+   ========================================= */
+
+/* Početni ulazak sadržaja */
+@keyframes weddingFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(28px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes invitationFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(0.4deg);
+    }
+}
+
+@keyframes flowerAppear {
+    from {
+        opacity: 0;
+        transform: rotate(-25deg) scale(0.75);
+    }
+
+    to {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+    }
+}
+
+/* Hero sekcija */
+.wedding-hero .hero-copy > * {
+    animation: weddingFadeUp 0.8s ease both;
+}
+
+    .wedding-hero .hero-copy > *:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(3) {
+        animation-delay: 0.32s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(4) {
+        animation-delay: 0.44s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(5) {
+        animation-delay: 0.56s;
+    }
+
+.wedding-hero .hero-photo {
+    animation: weddingFadeUp 1s ease both;
+}
+
+.wedding-hero .invitation-preview {
+    animation: weddingFadeUp 1s 0.25s ease both, invitationFloat 6s 1.3s ease-in-out infinite;
+}
+
+.wedding-hero .preview-flower {
+    animation: flowerAppear 1s 0.8s ease both;
+}
+
+.wedding-hero .photo-caption {
+    animation: weddingFadeUp 0.8s 0.7s ease both;
+}
+
+/* Glatko skrolovanje */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px;
+}
+
+/* Kartice šablona */
+.template-card {
+    transition: transform 0.45s ease;
+}
+
+.template-image {
+    isolation: isolate;
+}
+
+    .template-image::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        background: inherit;
+        transition: transform 0.7s cubic-bezier(.2, .7, .2, 1);
+        pointer-events: none;
+    }
+
+.template-card:hover {
+    transform: translateY(-7px);
+}
+
+    .template-card:hover .template-image::before {
+        transform: scale(1.06);
+    }
+
+.mini-invite {
+    position: relative;
+    z-index: 1;
+    transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.template-card:hover .mini-invite {
+    transform: scale(1.035);
+    box-shadow: 0 18px 40px #00000025;
+}
+
+.template-arrow {
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.template-card:hover .template-arrow {
+    transform: translate(4px, -4px);
+    color: #6c795f;
+}
+
+/* Dugmad */
+.btn-elegant {
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .btn-elegant:hover {
+        box-shadow: 0 10px 24px #30382f20;
+    }
+
+    .btn-elegant span {
+        display: inline-block;
+        transition: transform 0.3s ease;
+    }
+
+    .btn-elegant:hover span {
+        transform: translate(3px, -3px);
+    }
+
+.btn-text {
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Ulazak sekcija pri skrolovanju.
+   Bez JavaScripta sadržaj ostaje vidljiv. */
+.motion-enabled .scroll-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(.2, .7, .2, 1);
+}
+
+    .motion-enabled .scroll-reveal.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+.motion-enabled .template-card.scroll-reveal:nth-child(2),
+.motion-enabled .step-card.scroll-reveal:nth-child(2) {
+    transition-delay: 0.12s;
+}
+
+.motion-enabled .template-card.scroll-reveal:nth-child(3),
+.motion-enabled .step-card.scroll-reveal:nth-child(3) {
+    transition-delay: 0.24s;
+}
+
+.motion-enabled .step-card.scroll-reveal:nth-child(4) {
+    transition-delay: 0.36s;
+}
+
+/* Mobilni uređaji */
+@media (max-width: 560px) {
+    .wedding-hero .hero-visual {
+        overflow: hidden;
+    }
+
+    .wedding-hero .invitation-preview {
+        width: min(300px, 82%);
+    }
+
+    .template-card:hover {
+        transform: translateY(-3px);
+    }
+}
+
+/* (blok prefers-reduced-motion uklonjen: upravlja site-polish.css) */
+
+
+
+/* ==========================================
+   DIGITALNE POZIVNICE — FLUIDNE ANIMACIJE
+   ========================================== */
+
+.wedding-atmosphere {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 5;
+    isolation: isolate;
+}
+
+.floating-detail {
+    position: absolute;
+    display: block;
+    color: #ad9465;
+    opacity: 0;
+    line-height: 1;
+    will-change: transform, opacity;
+    animation: romanticDrift var(--duration, 18s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s);
+}
+
+.detail-heart {
+    --duration: 19s;
+    --delay: -5s;
+    top: 18%;
+    left: 7%;
+    font-size: 27px;
+}
+
+.detail-envelope {
+    --duration: 24s;
+    --delay: -12s;
+    top: 63%;
+    left: 87%;
+    font-size: 31px;
+}
+
+.detail-flower {
+    --duration: 22s;
+    --delay: -8s;
+    top: 76%;
+    left: 13%;
+    font-size: 25px;
+    color: #89947a;
+}
+
+.detail-heart-two {
+    --duration: 21s;
+    --delay: -15s;
+    top: 42%;
+    left: 92%;
+    font-size: 19px;
+}
+
+.detail-envelope-two {
+    --duration: 27s;
+    --delay: -18s;
+    top: 25%;
+    left: 76%;
+    font-size: 23px;
+}
+
+.detail-flower-two {
+    --duration: 25s;
+    --delay: -10s;
+    top: 83%;
+    left: 72%;
+    font-size: 30px;
+}
+
+.detail-heart-three {
+    --duration: 23s;
+    --delay: -7s;
+    top: 55%;
+    left: 4%;
+    font-size: 21px;
+}
+
+@keyframes romanticDrift {
+    0% {
+        opacity: 0;
+        transform: translate3d(0, 35px, 0) rotate(-12deg) scale(.8);
+    }
+
+    15% {
+        opacity: .48;
+    }
+
+    50% {
+        opacity: .35;
+        transform: translate3d(25px, -65px, 0) rotate(9deg) scale(1);
+    }
+
+    82% {
+        opacity: .4;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate3d(-15px, -130px, 0) rotate(-8deg) scale(.9);
+    }
+}
+
+/* Početni kadar */
+
+.wedding-hero .hero-copy > * {
+    animation: heroTextEnter 1s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+    .wedding-hero .hero-copy > *:nth-child(1) {
+        animation-delay: .1s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(2) {
+        animation-delay: .2s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(3) {
+        animation-delay: .34s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(4) {
+        animation-delay: .46s;
+    }
+
+    .wedding-hero .hero-copy > *:nth-child(5) {
+        animation-delay: .58s;
+    }
+
+.wedding-hero .hero-photo {
+    animation: photoEnter 1.5s cubic-bezier(.22, 1, .36, 1) both;
+}
+
+.wedding-hero .invitation-preview {
+    animation: invitationEnter 1.2s .3s cubic-bezier(.22, 1, .36, 1) both, invitationBreathe 7s 1.8s ease-in-out infinite;
+    transform-origin: center;
+}
+
+@keyframes heroTextEnter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 35px, 0);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes photoEnter {
+    from {
+        opacity: 0;
+        clip-path: inset(10% 0 0 0);
+        transform: scale(1.07);
+    }
+
+    to {
+        opacity: 1;
+        clip-path: inset(0);
+        transform: scale(1);
+    }
+}
+
+@keyframes invitationEnter {
+    from {
+        opacity: 0;
+        transform: translate3d(0, 45px, 0) rotate(3deg);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) rotate(0);
+    }
+}
+
+@keyframes invitationBreathe {
+    0%, 100% {
+        translate: 0 0;
+    }
+
+    50% {
+        translate: 0 -8px;
+    }
+}
+
+/* Glatko otkrivanje sadržaja pri skrolovanju */
+
+.motion-enabled .scroll-reveal {
+    opacity: 0;
+    transform: translate3d(0, 55px, 0);
+    filter: blur(3px);
+    transition: opacity .9s ease, transform 1s cubic-bezier(.16, 1, .3, 1), filter .9s ease;
+    transition-delay: var(--reveal-delay, 0ms);
+}
+
+    .motion-enabled .scroll-reveal.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+        filter: blur(0);
+    }
+
+.template-card.scroll-reveal:nth-child(2),
+.step-card.scroll-reveal:nth-child(2) {
+    --reveal-delay: 120ms;
+}
+
+.template-card.scroll-reveal:nth-child(3),
+.step-card.scroll-reveal:nth-child(3) {
+    --reveal-delay: 240ms;
+}
+
+.step-card.scroll-reveal:nth-child(4) {
+    --reveal-delay: 360ms;
+}
+
+/* Kartice i dugmad reaguju mekše */
+
+.template-card {
+    transition: transform .65s cubic-bezier(.2, .7, .2, 1), box-shadow .65s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .template-card:hover {
+        transform: translate3d(0, -9px, 0);
+    }
+
+    .btn-elegant:hover {
+        transform: translateY(-2px);
+    }
+}
+
+/* animacije */
+
+/* (blok prefers-reduced-motion uklonjen: upravlja site-polish.css) */
+
+
+@media (max-width: 600px) {
+    .floating-detail {
+        font-size: 18px;
+    }
+
+    .detail-envelope,
+    .detail-heart-two,
+    .detail-flower-two {
+        display: none;
+    }
+}
+
+
+/* =========================================
+   PAKETI — kompaktan prikaz na telefonu
+   ========================================= */
+@media (max-width: 560px) {
+    .pricing-page { padding: 34px 14px 48px; }
+    .pricing-heading { margin-bottom: 22px; }
+    .currency-selector { margin-bottom: 12px; }
+
+    .pricing-grid { display: flex; flex-direction: column; gap: 14px; }
+    .pricing-card.pricing-featured { order: -1; }
+
+    .pricing-card { padding: 20px 18px 18px; height: auto; }
+
+    .pricing-card-topline,
+    .pricing-card.pricing-featured .pricing-card-topline { height: 0; min-height: 0; }
+    .pricing-card.pricing-featured::before { height: 32px; }
+    .pricing-card.pricing-featured .pricing-ribbon { height: 32px !important; font-size: 11px; }
+    .pricing-card.pricing-featured { padding-top: 46px; }
+
+    /* ikonica pored naslova */
+    .pricing-card { display: grid; grid-template-columns: auto 1fr; column-gap: 12px; align-items: center; }
+    .pricing-card > * { grid-column: 1 / -1; }
+    .pricing-card .pricing-card-icon { grid-column: 1; grid-row: 2; margin: 0; }
+    .pricing-card h2 { grid-column: 2; grid-row: 2; margin: 0; font-size: 24px; }
+    .pricing-card-icon svg, .pricing-card-icon span { width: 32px; height: 32px; font-size: 22px; }
+
+    .pricing-description { min-height: 0; margin-top: 10px; font-size: 13px; line-height: 1.55; }
+    .pricing-price { margin-top: 12px; }
+    .price-number { font-size: 30px; }
+    .pricing-divider { margin: 14px 0; }
+    .pricing-features { gap: 7px; margin-bottom: 16px; font-size: 13px; line-height: 1.45; }
+    .pricing-button { padding: 12px 14px; }
+    .pricing-note { margin-top: 22px; }
+}
+@media (max-width: 560px) {
+    .pricing-card .pricing-card-icon { width: 42px; height: 42px; }
+    .pricing-card-icon svg, .pricing-card-icon span { width: 26px; height: 26px; font-size: 20px; }
+}
