@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @model DigitalnePozivnice.Models.Generated.Pozivnice
 
 @{
@@ -26,6 +26,7 @@
 
                     <li class="inv-tl-item">
                         <span class="inv-tl-time">@InvitationTheme.Vreme(d.DatumVreme!.Value)</span>
+                        <span class="inv-tl-icon" aria-hidden="true">@Html.Raw(InvitationIcons.Svg(InvitationIcons.Odredi(d.Ikona, d.Naziv, d.NazivLokacije)))</span>
                         <span class="inv-tl-dot" aria-hidden="true"></span>
                         <h3 class="inv-tl-title">@d.Naziv</h3>
 
@@ -39,7 +40,7 @@
                         }
                         @if (mapa != null)
                         {
-                            <a class="inv-link" href="@mapa" target="_blank" rel="noopener noreferrer">Prikaži na mapi</a>
+                            <a class="inv-link inv-link--map" href="@mapa" target="_blank" rel="noopener noreferrer">Prikaži na mapi</a>
                         }
                     </li>
                 }
@@ -48,7 +49,7 @@
             @if (kalendar != null)
             {
                 <div class="inv-day-actions">
-                    <a class="inv-link" href="@kalendar" target="_blank" rel="noopener noreferrer">Dodaj u kalendar</a>
+                    <a class="inv-link inv-link--cal" href="@kalendar" target="_blank" rel="noopener noreferrer">Dodaj u kalendar</a>
                 </div>
             }
         </div>

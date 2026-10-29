@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
     "use strict";
 
     var dataEl = document.getElementById("cf-data");
@@ -53,13 +53,70 @@
         });
     }
 
+    // ---------- Ikonice uz stavke programa ----------
+    var ic = data.ikone || { ikone: [], pravila: [], podrazumijevana: "srce" };
+    var icByKey = {};
+    ic.ikone.forEach(function (i) { icByKey[i.kljuc] = i; });
+    var icRules = ic.pravila.map(function (r) { return [new RegExp(r[0]), r[1]]; });
+    function icNorm(s) { return (s || "").toLowerCase().replace(/đ/g, "dj").normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
+    function icFind(t) {
+        if (!t) return null;
+        for (var i = 0; i < icRules.length; i++) if (icRules[i][0].test(t)) return icRules[i][1];
+        return null;
+    }
+    function icGuess(naziv, mjesto) {
+        var a = icFind(icNorm(naziv)); if (a && a !== "prsteni") return a;
+        var b = icFind(icNorm(mjesto)); if (b && b !== "prsteni") return b;
+        return a || b || ic.podrazumijevana;
+    }
+    function icInit(row) {
+        var box = row.querySelector(".cf-ev-icon");
+        if (!box) return;
+        var hid = box.querySelector('[data-f="Ikona"]');
+        var cur = box.querySelector(".cf-ic-cur");
+        var grid = box.querySelector(".cf-ic-grid");
+        var nm = row.querySelector('[data-f="Naziv"]');
+        var pl = row.querySelector('[data-f="NazivLokacije"]');
+        var autoLabel = tr("Automatski");
+        function show() {
+            var key = hid.value || icGuess(nm.value, pl.value);
+            var i = icByKey[key] || icByKey[ic.podrazumijevana];
+            if (!i) return;
+            box.querySelector(".cf-ic-svg").innerHTML = i.svg;
+            box.querySelector(".cf-ic-name").textContent = hid.value ? i.naziv : autoLabel + " · " + i.naziv;
+            grid.querySelectorAll("button").forEach(function (b) { b.classList.toggle("is-on", b.dataset.k === hid.value); });
+        }
+        var html = '<button type="button" class="cf-ic-opt cf-ic-auto" data-k=""><span>✦</span><small>' + autoLabel + '</small></button>';
+        ic.ikone.forEach(function (i) {
+            html += '<button type="button" class="cf-ic-opt" data-k="' + i.kljuc + '" title="' + i.naziv.replace(/"/g, "&quot;") + '">' + i.svg + '<small>' + i.naziv + '</small></button>';
+        });
+        grid.innerHTML = html;
+        cur.addEventListener("click", function () {
+            var open = grid.hidden;
+            grid.hidden = !open;
+            cur.setAttribute("aria-expanded", open ? "true" : "false");
+        });
+        grid.addEventListener("click", function (e) {
+            var b = e.target.closest(".cf-ic-opt");
+            if (!b) return;
+            hid.value = b.dataset.k;
+            grid.hidden = true; cur.setAttribute("aria-expanded", "false");
+            show();
+            eventsDirty = true;
+            hid.dispatchEvent(new Event("input", { bubbles: true }));
+        });
+        [nm, pl].forEach(function (el) { if (el) el.addEventListener("input", function () { if (!hid.value) show(); }); });
+        show();
+    }
+
     function addRow(v) {
         if (!hasProgram) return null;
         v = v || {};
         var row = tpl.content.firstElementChild.cloneNode(true);
         var set = function (f, val) { var el = row.querySelector('[data-f="' + f + '"]'); if (el && val) el.value = val; };
-        set("Vrijeme", v.vrijeme); set("Naziv", v.naziv); set("NazivLokacije", v.lokacija); set("Adresa", v.adresa);
+        set("Vrijeme", v.vrijeme); set("Naziv", v.naziv); set("NazivLokacije", v.lokacija); set("Adresa", v.adresa); set("Ikona", v.ikona);
         list.appendChild(row);
+        icInit(row);
         reindex();
         return row;
     }

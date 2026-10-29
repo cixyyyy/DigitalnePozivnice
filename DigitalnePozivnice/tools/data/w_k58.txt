@@ -1,0 +1,28 @@
+Molimo potvrdite dolazak ## Please confirm your attendance ## Bitte bestätigen Sie Ihr Kommen ## Prosimo, potrdite svojo udeležbo
+Ikonica uz stavku ## Icon for this item ## Symbol für diesen Punkt ## Ikona za to točko
+Automatski ## Automatic ## Automatisch ## Samodejno
+Džamija ## Mosque ## Moschee ## Mošeja
+Matičar / opština ## Registry office / town hall ## Standesamt / Rathaus ## Matičar / občina
+Prsteni / vjenčanje ## Rings / wedding ## Ringe / Hochzeit ## Prstana / poroka
+Restoran ## Restaurant ## Restaurant ## Restavracija
+Roštilj ## Barbecue ## Grill ## Žar
+Torta ## Cake ## Torte ## Torta
+Nazdravljanje ## Toast ## Anstoßen ## Nazdravljanje
+Srce ## Heart ## Herz ## Srce
+Fotografisanje ## Photo shoot ## Fotoshooting ## Fotografiranje
+Automobil ## Car ## Auto ## Avtomobil
+Autobus / prevoz ## Bus / transport ## Bus / Transfer ## Avtobus / prevoz
+Cvijeće ## Flowers ## Blumen ## Cvetje
+Zvono / ceremonija ## Bell / ceremony ## Glocke / Zeremonie ## Zvon / ceremonija
+Poklon ## Gift ## Geschenk ## Darilo
+Baloni / rođendan ## Balloons / birthday ## Luftballons / Geburtstag ## Baloni / rojstni dan
+Kafa / piće ## Coffee / drinks ## Kaffee / Getränke ## Kava / pijača
+Smještaj / hotel ## Accommodation / hotel ## Unterkunft / Hotel ## Namestitev / hotel
+Zalazak sunca / napolju ## Sunset / outdoors ## Sonnenuntergang / draußen ## Sončni zahod / na prostem
+Bašta / priroda ## Garden / nature ## Garten / Natur ## Vrt / narava
+Okupljanje / gosti ## Gathering / guests ## Treffen / Gäste ## Zbiranje / gostje
+Kuća / dom ## House / home ## Haus / Zuhause ## Hiša / dom
+Nazad ## Back ## Zurück ## Nazaj
+Crkva 1 ## Church 1 ## Kirche 1 ## Cerkev 1
+Crkva 2 ## Church 2 ## Kirche 2 ## Cerkev 2
+Muzika / ples ## Music / dancing ## Musik / Tanz ## Glasba / ples

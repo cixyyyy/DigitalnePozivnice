@@ -1,0 +1,18 @@
+@* Traka iz fotomata: 4 fotografije iza okvira sa prozorima + datum. Model: (slike, datum) *@
+@model (IReadOnlyList<string> Slike, string Datum)
+@{
+    // prozori u traci (x, y, sirina, visina u %), prosireni za 1% da se ne vide rubovi
+    var prozori = new (double X, double Y, double W, double H)[]
+    {
+        (7.2, 0.7, 85.6, 21.9), (7.2, 23.0, 85.6, 21.9), (7.2, 45.5, 85.6, 22.4), (7.2, 68.3, 85.6, 22.4)
+    };
+}
+<div class="ft-strip">
+    @for (var i = 0; i < prozori.Length; i++)
+    {
+        var p = prozori[i];
+        <span class="ft-sw" style="left:@(p.X.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%;top:@(p.Y.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%;width:@(p.W.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%;height:@(p.H.ToString("0.##", System.Globalization.CultureInfo.InvariantCulture))%"><img src="@Model.Slike[i % Model.Slike.Count]" alt="" decoding="async" /></span>
+    }
+    <img class="ft-strip-fr" src="/img/fotomat/strip.webp" alt="" aria-hidden="true" />
+    <span class="ft-strip-date">@Model.Datum</span>
+</div>

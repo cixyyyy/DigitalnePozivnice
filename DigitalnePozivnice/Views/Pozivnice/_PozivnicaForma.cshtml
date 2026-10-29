@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @model DigitalnePozivnice.Models.ViewModels.KreirajPozivnicuViewModel
 
 @{
@@ -209,6 +209,16 @@
                         <span>Naziv</span>
                         <input type="text" data-f="Naziv" class="cf-input" maxlength="150" placeholder="npr. Vjenčanje u crkvi" required />
                     </label>
+                </div>
+                <div class="cf-ev-icon">
+                    <span class="cf-mini-l">Ikonica uz stavku</span>
+                    <input type="hidden" data-f="Ikona" value="" />
+                    <button type="button" class="cf-ic-cur" aria-expanded="false">
+                        <span class="cf-ic-svg" aria-hidden="true"></span>
+                        <span class="cf-ic-name">Automatski</span>
+                        <span class="cf-ic-caret" aria-hidden="true">▾</span>
+                    </button>
+                    <div class="cf-ic-grid" hidden></div>
                 </div>
                 <div class="cf-ev-place">
                     <label class="cf-mini cf-grow">

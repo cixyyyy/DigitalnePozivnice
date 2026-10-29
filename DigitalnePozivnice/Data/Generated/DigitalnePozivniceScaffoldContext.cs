@@ -37,6 +37,7 @@ public partial class DigitalnePozivniceScaffoldContext : DbContext
             entity.ToTable("DogadjajiPozivnice");
 
             entity.Property(e => e.Adresa).HasMaxLength(300);
+            entity.Property(e => e.Ikona).HasMaxLength(30);
             entity.Property(e => e.Naziv).HasMaxLength(150);
             entity.Property(e => e.NazivLokacije).HasMaxLength(200);
             entity.Property(e => e.VrstaDogadjaja).HasMaxLength(50);
@@ -178,7 +179,6 @@ public partial class DigitalnePozivniceScaffoldContext : DbContext
             entity.ToTable("SabloniPozivnica");
 
             entity.Property(e => e.Aktivan).HasDefaultValue(true);
-            entity.Property(e => e.Kljuc).HasMaxLength(50);
             entity.Property(e => e.Naziv).HasMaxLength(150);
             entity.Property(e => e.SlikaPregleda).HasMaxLength(500);
             entity.Property(e => e.Vrsta).HasMaxLength(30);

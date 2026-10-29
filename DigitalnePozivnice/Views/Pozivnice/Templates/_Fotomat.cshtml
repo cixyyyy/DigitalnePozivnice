@@ -1,0 +1,168 @@
+﻿@using System.Globalization
+@using DigitalnePozivnice.Helpers
+@model DigitalnePozivnice.Models.Generated.Pozivnice
+
+@{
+    var prvi = InvitationTheme.PrviDogadjaj(Model);
+    var (kicker, glavno) = InvitationTheme.Glavno(Model);
+    var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
+    var bezUvoda = ViewBag.NoIntro == true;
+    var jeDemo = ViewBag.JeDemo == true;
+    const string img = "/img/fotomat/";
+
+    // Fotografije gostiju (Premium/Exclusive). Dok ih nema: u demou prave fotografije para,
+    // a u stvarnoj pozivnici mekane rezervne slike.
+    var vlastite = imaRsvp
+        ? Model.MedijiPozivnices.Where(m => m.Opis == MuzikaBiblioteka.OpisFoto).OrderBy(m => m.Redosled)
+            .Select(m => MuzikaBiblioteka.MedijUrl(m)).ToList()
+        : new List<string>();
+    var rezerva = jeDemo
+        ? new List<string> { img + "demo-1.webp", img + "demo-2.webp", img + "demo-3.webp", img + "demo-4.webp" }
+        : new List<string> { img + "ph-1.webp", img + "ph-2.webp", img + "ph-3.webp", img + "ph-4.webp" };
+    var fotke = vlastite.Count > 0 ? vlastite : rezerva;
+    string Foto(int i) => fotke[i % fotke.Count];
+
+    IReadOnlyList<string> traka = new List<string> { Foto(0), Foto(1), Foto(2), Foto(3) };
+    var polaroid = vlastite.Count == 0 && jeDemo ? img + "demo-grad.webp" : Foto(4);
+
+    var datumTrake = prvi?.DatumVreme is DateTimeOffset dt ? dt.ToString("dd.MM.yyyy.", CultureInfo.InvariantCulture) : "";
+    var datumKratko = prvi?.DatumVreme is DateTimeOffset dk ? InvitationTheme.DatumKratko(dk) : "";
+    var datumDugo = prvi?.DatumVreme is DateTimeOffset dd ? InvitationTheme.DatumDugo(dd) : "";
+    var venue = prvi?.NazivLokacije;
+    var mapa = prvi != null ? InvitationTheme.MapsUrl(prvi) : null;
+
+    // "pisana slova": ime se ispisuje slovo po slovo
+    string F(double v) => v.ToString("0.0#", CultureInfo.InvariantCulture) + "s";
+    double Dur(string x) => Math.Min(3.2, 0.5 + x.Length * 0.17);
+    var dIme = Dur(glavno ?? "");
+}
+
+<main class="tpl tpl-fotomat@(bezUvoda ? " ft-nointro" : "")" data-fotomat>
+
+    @* ---------- 1) Fotomat: pritisni dugme, traka se štampa ---------- *@
+    <section class="ft-intro" data-ft-intro aria-label="@glavno">
+        <div class="ft-intro-in">
+            <p class="ft-kicker ft-script">@kicker</p>
+            <p class="ft-iname"><span class="ft-w" style="--dur:@F(dIme);--dl:.8s">@glavno</span></p>
+
+            <div class="ft-booth" style="--lbl:@F(0.8 + dIme + 0.1)">
+                <img class="ft-box" src="@(img)camera.webp" alt="" aria-hidden="true" />
+                <span class="ft-flashwin" aria-hidden="true"></span>
+                <div class="ft-out" aria-hidden="true">
+                    <div class="ft-print">
+                        @await Html.PartialAsync("~/Views/Pozivnice/_FotomatTraka.cshtml", (traka, datumTrake))
+                    </div>
+                </div>
+                <button type="button" class="ft-shutter" data-ft-print aria-label="Pritisni dugme"></button>
+                <button type="button" class="ft-label" data-ft-print><span class="ft-script">Pritisni dugme</span></button>
+            </div>
+
+            <button type="button" class="ft-open ft-script" data-ft-open>Otvori pozivnicu</button>
+        </div>
+    </section>
+
+    @* ---------- 2) Kolaž ---------- *@
+    <header class="ft-hero" aria-label="@glavno">
+        <div class="ft-board" data-ft-board>
+            <h1 class="ft-sr">@glavno</h1>
+
+            <img class="ft-item ft-chain" src="@(img)chain.webp" alt="" aria-hidden="true" style="--r:6deg;--d:.05s" />
+
+            <div class="ft-item ft-card-i" style="--r:-4deg;--d:.15s">
+                <img src="@(img)card.webp" alt="" aria-hidden="true" />
+                <div class="ft-card-t">
+                    <p class="ft-sc">@InvitationText.PozivLinija(Model)</p>
+                    <p class="ft-script ft-rname"><span class="ft-w ft-wb" style="--dur:@F(dIme);--dl:1.2s">@glavno</span></p>
+                    @if (!string.IsNullOrEmpty(datumKratko))
+                    {
+                        <p class="ft-sc ft-rdate">@datumKratko</p>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(venue))
+                    {
+                        <p class="ft-sc ft-rven">@venue</p>
+                    }
+                </div>
+            </div>
+
+            <a class="ft-item ft-flower" href="@(mapa ?? "#ft-ev")" target="@(mapa != null ? "_blank" : null)" rel="noopener" style="--r:5deg;--d:.4s">
+                <img src="@(img)flower.webp" alt="" aria-hidden="true" />
+                <span class="ft-flower-t">
+                    <span class="ft-script">Lokacija</span>
+                    @if (!string.IsNullOrWhiteSpace(venue))
+                    {
+                        <span class="ft-sc">@venue</span>
+                    }
+                </span>
+            </a>
+
+            <a class="ft-item ft-details" href="#ft-ev" style="--r:-3deg;--d:.6s">
+                <img src="@(img)heart.webp" alt="" aria-hidden="true" />
+                <span class="ft-details-t">
+                    <span class="ft-script">Detalji</span>
+                    @if (!string.IsNullOrEmpty(datumKratko))
+                    {
+                        <span class="ft-sc">@datumKratko</span>
+                    }
+                </span>
+            </a>
+
+            <div class="ft-item ft-strip-w" style="--r:4deg;--d:.8s">
+                @await Html.PartialAsync("~/Views/Pozivnice/_FotomatTraka.cshtml", (traka, datumTrake))
+            </div>
+
+            <a class="ft-item ft-env" href="#rsvp" style="--r:-4deg;--d:1s">
+                <img src="@(img)envelope.webp" alt="" aria-hidden="true" />
+                <span class="ft-script ft-env-t">Molimo potvrdite dolazak</span>
+            </a>
+
+            <div class="ft-item ft-pol-w" style="--r:-5deg;--d:1.2s">
+                @await Html.PartialAsync("~/Views/Pozivnice/_FotomatPolaroid.cshtml", polaroid)
+            </div>
+
+            <span class="ft-spark ft-sp1" aria-hidden="true">✦</span>
+            <span class="ft-spark ft-sp2" aria-hidden="true">✦</span>
+            <span class="ft-spark ft-sp3" aria-hidden="true">✦</span>
+
+            <p class="ft-script ft-count-hint">Odbrojavanje je počelo</p>
+        </div>
+    </header>
+
+    @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
+    {
+        <section class="inv-section ft-s-msg inv-reveal">
+            <p class="inv-message">@Model.UvodniTekst</p>
+        </section>
+    }
+
+    @if (prvi?.DatumVreme is DateTimeOffset cilj)
+    {
+        <section class="inv-section ft-s-cd inv-reveal">
+            <h2 class="inv-section-title">Još samo</h2>
+            <partial name="~/Views/Pozivnice/_Odbrojavanje.cshtml" model="cilj" />
+        </section>
+    }
+
+    <section class="inv-section ft-s-ev inv-reveal" id="ft-ev">
+        <h2 class="inv-section-title">Gdje i kada</h2>
+        <div class="ft-card"><partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" /></div>
+    </section>
+
+    @if (imaRsvp)
+    {
+        <section class="inv-section ft-s-rsvp ft-noorn inv-reveal" id="rsvp">
+            <h2 class="inv-section-title">Hoćete li biti s nama?</h2>
+            <div class="ft-card ft-card--rsvp">
+                <span class="ft-flap" aria-hidden="true"><i class="ft-seal">♥</i></span>
+                <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
+            </div>
+        </section>
+    }
+
+    <footer class="tpl-footer ft-footer inv-reveal">
+        <p class="tpl-footer-names ft-script ft-fnames">@glavno</p>
+        @if (!string.IsNullOrEmpty(datumDugo))
+        {
+            <p class="ft-sc ft-fdate">@datumDugo</p>
+        }
+    </footer>
+</main>

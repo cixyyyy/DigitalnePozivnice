@@ -41,6 +41,11 @@
                 automatski smanjuju. JPG, PNG ili WEBP.
             </p>
 
+            @if (InvitationTheme.NormalizeKey(Model.Sablon?.Kljuc) == "fotomat")
+            {
+                <p class="pz-muted"><strong>Podsjetnik:</strong> Dizajn „Fotomat“ koristi vaše fotografije. Prve četiri idu na foto-traku koja se štampa, a ostale u kolaž. Dok ih ne dodate, prikazuju se rezervne slike. Najbolje izgledaju bliže fotografije para, koje se automatski prikazuju crno-bijelo.</p>
+            }
+
             <div class="pz-photos" id="pzPhotos">
                 @foreach (var f in foto)
                 {

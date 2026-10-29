@@ -21,5 +21,8 @@ public partial class DogadjajiPozivnice
 
     public int Redosled { get; set; }
 
+    /// <summary>Ključ ikonice iz InvitationIcons (NULL = automatski izbor prema nazivu i mjestu).</summary>
+    public string? Ikona { get; set; }
+
     public virtual Pozivnice Pozivnica { get; set; } = null!;
 }

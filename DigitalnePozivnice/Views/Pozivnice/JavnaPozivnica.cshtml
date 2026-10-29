@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @using Microsoft.AspNetCore.Hosting
 @inject IWebHostEnvironment Env
 @model DigitalnePozivnice.Models.Generated.Pozivnice
@@ -70,7 +70,7 @@
         <div class="inv-preview-bar">
             @if (!string.IsNullOrEmpty(nazadUrl))
             {
-                <a class="inv-preview-back" href="@nazadUrl">← Nazad</a>
+                <a class="inv-preview-back" href="@nazadUrl">Nazad</a>
             }
             else
             {

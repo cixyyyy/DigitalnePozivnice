@@ -1,9 +1,9 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @model (DigitalnePozivnice.Models.Generated.SabloniPozivnica Sablon, string? Paket, int Index, string Vrsta)
 
 @{
     var kljuc = InvitationTheme.NormalizeKey(Model.Sablon.Kljuc);
-    var demoUrl = Url.Action("Demo", "Sabloni", new { kljuc, paket = Model.Paket });
+    var demoUrl = Url.Action("Demo", "Sabloni", new { kljuc, paket = Model.Paket, lang = Loc.Lang });
     var miniUrl = Url.Action("Demo", "Sabloni", new { kljuc, mini = true, paket = Model.Paket });
 }
 

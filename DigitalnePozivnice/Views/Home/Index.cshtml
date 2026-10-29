@@ -1,4 +1,4 @@
-@{
+﻿@{
     ViewData["Title"] = "Digitalne pozivnice za vjenčanja i proslave";
 }
 
@@ -206,7 +206,7 @@
 
     <div class="hs-grid">
         <article class="hs-card" data-rv data-rv-delay="0">
-            <a class="hs-link" asp-controller="Sabloni" asp-action="Demo" asp-route-kljuc="slot-masina" target="_blank" rel="noopener" aria-label="Pogledaj demo: Slot mašina">
+            <a class="hs-link" asp-controller="Sabloni" asp-action="Demo" asp-route-lang="@Loc.Lang" asp-route-kljuc="slot-masina" target="_blank" rel="noopener" aria-label="Pogledaj demo: Slot mašina">
                 <span class="hs-num">01</span>
                 <div class="hs-phone">
                     <span class="hs-notch" aria-hidden="true"></span>
@@ -223,7 +223,7 @@
             </div>
         </article>
         <article class="hs-card" data-rv data-rv-delay="0.12">
-            <a class="hs-link" asp-controller="Sabloni" asp-action="Demo" asp-route-kljuc="koverta" target="_blank" rel="noopener" aria-label="Pogledaj demo: Koverta">
+            <a class="hs-link" asp-controller="Sabloni" asp-action="Demo" asp-route-lang="@Loc.Lang" asp-route-kljuc="koverta" target="_blank" rel="noopener" aria-label="Pogledaj demo: Koverta">
                 <span class="hs-num">02</span>
                 <div class="hs-phone">
                     <span class="hs-notch" aria-hidden="true"></span>
@@ -240,7 +240,7 @@
             </div>
         </article>
         <article class="hs-card" data-rv data-rv-delay="0.24">
-            <a class="hs-link" asp-controller="Sabloni" asp-action="Demo" asp-route-kljuc="romanticni-vrt" target="_blank" rel="noopener" aria-label="Pogledaj demo: Romantični vrt">
+            <a class="hs-link" asp-controller="Sabloni" asp-action="Demo" asp-route-lang="@Loc.Lang" asp-route-kljuc="romanticni-vrt" target="_blank" rel="noopener" aria-label="Pogledaj demo: Romantični vrt">
                 <span class="hs-num">03</span>
                 <div class="hs-phone">
                     <span class="hs-notch" aria-hidden="true"></span>

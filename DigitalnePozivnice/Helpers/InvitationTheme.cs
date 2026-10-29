@@ -11,7 +11,7 @@ namespace DigitalnePozivnice.Helpers;
 /// </summary>
 public static class InvitationTheme
 {
-    public const string DefaultKey = "klasicna";
+    public const string DefaultKey = "italija";
 
     public const string GrupaSaveTheDate = "save-the-date";
     public const string GrupaPremium = "premium";
@@ -26,6 +26,7 @@ public static class InvitationTheme
             ["romanticni-vrt"] = new TemplateInfo("~/Views/Pozivnice/Templates/_RomanticniVrt.cshtml", GrupaPremium),
             ["klasicna"] = new TemplateInfo("~/Views/Pozivnice/Templates/_Klasicna.cshtml", GrupaPremium),
             ["italija"] = new TemplateInfo("~/Views/Pozivnice/Templates/_ItalijanskaRomansa.cshtml", GrupaPremium),
+            ["fotomat"] = new TemplateInfo("~/Views/Pozivnice/Templates/_Fotomat.cshtml", GrupaPremium),
             ["jazz-vecer"] = new TemplateInfo("~/Views/Pozivnice/Templates/_JazzVecer.cshtml", GrupaPremium),
 
             // Save the date paket (animacije)
@@ -62,6 +63,7 @@ public static class InvitationTheme
         "romanticni-vrt" => "Nježni cvjetni motivi i pastelne boje",
         "klasicna" => "Tamna elegancija sa zlatnim detaljima",
         "italija" => "Akvarelna italijanska vila sa lukovima, rukopis koji se ispisuje slovo po slovo",
+        "fotomat" => "Pritisni dugme, stari aparat štampa fotografsku traku, pa se otvara kolaž sa vašim fotografijama",
         "jazz-vecer" => "Ručno crtana džez večer sa konobarom, parom i plesačima",
         "slot-masina" => "Povuci ručicu i otkrij datum",
         "koverta" => "Koverta sa pečatom koja se otvara",
@@ -110,6 +112,7 @@ public static class InvitationTheme
             "romanticni-vrt" => ("#B76E79", "#E8C9C4", "#FFF8F4"),
             "jazz-vecer" => ("#8C2F2B", "#2B2420", "#E2B466"),
             "italija" => ("#5A3E78", "#B08BB8", "#F8F3FA"),
+            "fotomat" => ("#8A6A2F", "#C9A961", "#F5EBDD"),
             "slot-masina" => ("#D9627F", "#F6C6D2", "#FBE3EA"),
             "koverta" => ("#A7727D", "#EBD5D0", "#FBF5F1"),
             "svitak" => ("#E48A8F", "#C8973A", "#FBF1E4"),
@@ -149,12 +152,13 @@ public static class InvitationTheme
             "slot-masina" => "glatka",
             "zavesa" => "glatka",
             "svitak" => "glatka",
+            "fotomat" => "prasina",   // pokretna zlatna prasina je izvorna pozadina (i u demou)
             _ => "glatka"
         };
 
     /// <summary>Koja uvodna scena se prikazuje: "koverta" ili "none".</summary>
     public static string IntroZa(string? kljuc)
-        => GrupaSablona(kljuc) == GrupaPremium && NormalizeKey(kljuc) is not ("jazz-vecer" or "italija") ? "koverta" : "none";
+        => GrupaSablona(kljuc) == GrupaPremium && NormalizeKey(kljuc) is not ("jazz-vecer" or "italija" or "fotomat") ? "koverta" : "none";
 
     // ---------- Bezbedan CSS ----------
 

@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -234,7 +234,8 @@ namespace DigitalnePozivnice.Controllers
                         Naziv = d.Naziv,
                         Vrijeme = d.DatumVreme.HasValue ? TimeOnly.FromDateTime(d.DatumVreme.Value.DateTime) : null,
                         NazivLokacije = d.NazivLokacije,
-                        Adresa = d.Adresa
+                        Adresa = d.Adresa,
+                        Ikona = d.Ikona
                     });
                 }
             }
@@ -376,6 +377,7 @@ namespace DigitalnePozivnice.Controllers
                         DatumVreme = new DateTimeOffset(datum + (d.Vrijeme ?? new TimeOnly(12, 0)).ToTimeSpan()),
                         NazivLokacije = d.NazivLokacije?.Trim(),
                         Adresa = d.Adresa?.Trim(),
+                        Ikona = InvitationIcons.Ocisti(d.Ikona),
                         Redosled = red++
                     });
                 }
@@ -779,6 +781,7 @@ namespace DigitalnePozivnice.Controllers
                     DatumVreme = new DateTimeOffset(datum + d.Vrijeme!.Value.ToTimeSpan()),
                     NazivLokacije = string.IsNullOrWhiteSpace(d.NazivLokacije) ? null : d.NazivLokacije.Trim(),
                     Adresa = string.IsNullOrWhiteSpace(d.Adresa) ? null : d.Adresa.Trim(),
+                    Ikona = InvitationIcons.Ocisti(d.Ikona),
                     Redosled = redosled++
                 });
             }

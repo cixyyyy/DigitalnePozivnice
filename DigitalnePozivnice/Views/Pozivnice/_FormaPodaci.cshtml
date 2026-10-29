@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @using DigitalnePozivnice.Localization
 @model DigitalnePozivnice.Models.ViewModels.KreirajPozivnicuViewModel
 
@@ -25,8 +25,10 @@
             naziv = d.Naziv,
             vrijeme = d.Vrijeme?.ToString("HH:mm"),
             lokacija = d.NazivLokacije,
-            adresa = d.Adresa
+            adresa = d.Adresa,
+            ikona = d.Ikona
         }),
+        ikone = InvitationIcons.ZaFormu(),
         previewUrl = Url.Action("PreviewLive", "Pozivnice"),
         dirty = Context.Request.Method == "POST" || Model.PozivnicaId.HasValue
     };

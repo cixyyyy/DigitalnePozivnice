@@ -94,8 +94,8 @@
     if (!intro) {
         if (audio) {
             // Dizajni koje gost mora dodirnuti (svitak, zavjesa): muzika krece uz dodir koji pokrece animaciju
-            var gated = document.querySelector("[data-svitak], [data-curtain-toggle], [data-slot-spin], [data-anim=\"envelope\"]");
-            var starters = "[data-svitak], [data-svitak-toggle], [data-svitak-hint], [data-curtain-toggle], .std-curtain, [data-slot-spin], [data-slot-lever], [data-anim=\"envelope\"]";
+            var gated = document.querySelector("[data-svitak], [data-curtain-toggle], [data-slot-spin], [data-ft-print], [data-anim=\"envelope\"]");
+            var starters = "[data-svitak], [data-svitak-toggle], [data-svitak-hint], [data-curtain-toggle], .std-curtain, [data-slot-spin], [data-slot-lever], [data-ft-print], [data-anim=\"envelope\"]";
 
             if (gated) {
                 var onStart = function (e) {

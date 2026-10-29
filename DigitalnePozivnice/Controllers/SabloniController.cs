@@ -1,4 +1,4 @@
-using DigitalnePozivnice.Data.Generated;
+﻿using DigitalnePozivnice.Data.Generated;
 using DigitalnePozivnice.Helpers;
 using DigitalnePozivnice.Localization;
 using DigitalnePozivnice.Models.Generated;
@@ -133,9 +133,9 @@ namespace DigitalnePozivnice.Controllers
             }
             else
             {
-                ViewBag.PreviewText = string.IsNullOrEmpty(paket)
+                ViewBag.PreviewText = Loc.T(string.IsNullOrEmpty(paket)
                     ? "Primjer dizajna – podaci su izmišljeni"
-                    : $"Primjer dizajna – paket {nazivPaketa} – podaci su izmišljeni";
+                    : $"Primjer dizajna – paket {nazivPaketa} – podaci su izmišljeni");
                 ViewBag.PreviewBackUrl = string.IsNullOrEmpty(paket)
                     ? Url.Action("Index", "Paketi")
                     : Url.Action("Index", "Sabloni", new { paket = oznaka });

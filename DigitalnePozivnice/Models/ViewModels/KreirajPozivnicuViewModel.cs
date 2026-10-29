@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -18,6 +18,10 @@ namespace DigitalnePozivnice.Models.ViewModels
 
         [StringLength(300)]
         public string? Adresa { get; set; }
+
+        /// <summary>Ključ ikonice (InvitationIcons); prazno = automatski.</summary>
+        [StringLength(30)]
+        public string? Ikona { get; set; }
 
         public bool JePrazan =>
             string.IsNullOrWhiteSpace(Naziv) && Vrijeme == null &&
