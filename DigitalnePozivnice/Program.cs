@@ -12,6 +12,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Podaci za uplatu i spisak admina (izdvojeno da se ne mijesa sa konekcijom)
 builder.Configuration.AddJsonFile("appsettings.Placanje.json", optional: true, reloadOnChange: true);
+// Podesavanja slanja emailova (SMTP) - ne ide na GitHub
+builder.Configuration.AddJsonFile("appsettings.Email.json", optional: true, reloadOnChange: true);
 
 var connectionString =
     builder.Configuration.GetConnectionString("DefaultConnection")
@@ -30,6 +32,8 @@ builder.Services
     .AddDefaultTokenProviders();
 
 builder.Services.Configure<PlacanjeOptions>(builder.Configuration.GetSection("Placanje"));
+builder.Services.Configure<EmailOptions>(builder.Configuration.GetSection("Email"));
+builder.Services.AddSingleton<IEmailService, EmailService>();
 builder.Services.AddSingleton<AdminProvjera>();
 builder.Services.AddSingleton<IAuthorizationHandler, AdminHandler>();
 builder.Services.AddAuthorizationBuilder()

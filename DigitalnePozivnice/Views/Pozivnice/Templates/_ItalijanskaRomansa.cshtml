@@ -1,4 +1,4 @@
-@using System.Globalization
+﻿@using System.Globalization
 @using System.Text.RegularExpressions
 @using DigitalnePozivnice.Helpers
 @model DigitalnePozivnice.Models.Generated.Pozivnice
@@ -86,7 +86,7 @@
 
     <section class="inv-section it-s-ev inv-reveal">
         <h2 class="inv-section-title">Gdje i kada</h2>
-        <div class="it-card-w"><div class="it-card"><partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" /></div></div>
+        <div class="it-card-w"><div class="it-card"><span class="it-pil it-pil-l" aria-hidden="true"><i class="t"></i><i class="m"></i><i class="b"></i></span><span class="it-pil it-pil-r" aria-hidden="true"><i class="t"></i><i class="m"></i><i class="b"></i></span><partial name="~/Views/Pozivnice/_Dogadjaji.cshtml" model="Model" /></div></div>
     </section>
 
     <partial name="~/Views/Pozivnice/_Galerija.cshtml" model="Model" />

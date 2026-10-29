@@ -22,12 +22,18 @@ namespace DigitalnePozivnice.Controllers
         private readonly DigitalnePozivniceScaffoldContext _context;
         private readonly UserManager<ApplicationUser> _users;
         private readonly AdminProvjera _admin;
+        private readonly IEmailService _email;
+        private readonly EmailOptions _emailOpt;
 
         public AdminController(
             DigitalnePozivniceScaffoldContext context,
             UserManager<ApplicationUser> users,
-            AdminProvjera admin)
+            AdminProvjera admin,
+            IEmailService email,
+            Microsoft.Extensions.Options.IOptions<EmailOptions> emailOpt)
         {
+            _email = email;
+            _emailOpt = emailOpt.Value;
             _context = context;
             _users = users;
             _admin = admin;
@@ -145,6 +151,9 @@ namespace DigitalnePozivnice.Controllers
                 n.PotvrdioKorisnik = User.Identity?.Name;
                 if (!string.IsNullOrWhiteSpace(napomena)) n.Napomena = Skrati(napomena, 500);
                 await _context.SaveChangesAsync();
+                var kupac = await _users.FindByIdAsync(n.KorisnikId);
+                var (nas, tij) = EmailSadrzaj.UplataPotvrdjena(n, _emailOpt.SiteUrl);
+                await _email.PosaljiAsync(kupac?.Email, nas, tij);
                 TempData["Poruka"] = "Uplata je potvrđena. Korisnik sada može objaviti pozivnicu.";
             }
 

@@ -9,6 +9,8 @@ using DigitalnePozivnice.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace DigitalnePozivnice.Controllers
 {
@@ -17,10 +19,20 @@ namespace DigitalnePozivnice.Controllers
     public class NarudzbeController : Controller
     {
         private readonly DigitalnePozivniceScaffoldContext _context;
+        private readonly IEmailService _email;
+        private readonly PlacanjeOptions _placanje;
+        private readonly IConfiguration _config;
 
-        public NarudzbeController(DigitalnePozivniceScaffoldContext context)
+        public NarudzbeController(
+            DigitalnePozivniceScaffoldContext context,
+            IEmailService email,
+            IOptions<PlacanjeOptions> placanje,
+            IConfiguration config)
         {
             _context = context;
+            _email = email;
+            _placanje = placanje.Value;
+            _config = config;
         }
 
         private string? KorisnikId => User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -98,6 +110,15 @@ namespace DigitalnePozivnice.Controllers
 
             _context.Narudzbe.Add(narudzba);
             await _context.SaveChangesAsync();
+
+            // Email kupcu (podaci za uplatu) i obavjestenje adminima
+            var mail = User.Identity?.Name;
+            var eur = Cijene.Eur(narudzba.Iznos);
+            var (nasK, tijK) = EmailSadrzaj.NarudzbaKupac(narudzba, p.Paket.Naziv, eur, _placanje);
+            await _email.PosaljiAsync(mail, nasK, tijK);
+            var (nasA, tijA) = EmailSadrzaj.NarudzbaAdmin(narudzba, p.Paket.Naziv, mail);
+            foreach (var a in _config.GetSection("Admin:Emails").Get<string[]>() ?? Array.Empty<string>())
+                await _email.PosaljiAsync(a, nasA, tijA);
 
             return RedirectToAction(nameof(Detalji), new { id = narudzba.NarudzbaId });
         }

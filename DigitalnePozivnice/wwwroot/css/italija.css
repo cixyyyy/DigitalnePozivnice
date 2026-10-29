@@ -54,9 +54,16 @@
 .it-card-w{container-type:inline-size;max-width:1100px;margin:0 auto}
 .it-card{position:relative;padding:20cqw 19cqw 17cqw;min-height:58cqw;
   background:url("../img/italija/frame-top.webp") top center/100% auto no-repeat,url("../img/italija/frame-bot.webp") bottom center/100% auto no-repeat}
-.it-card::before{content:"";position:absolute;left:0;right:0;top:15cqw;bottom:15cqw;pointer-events:none;
-  background:url("../img/italija/side-l.webp") left top/21.2% auto repeat-y,url("../img/italija/side-r.webp") right top/21.2% auto repeat-y;
-  -webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
+/* bočni stubovi sa cvijećem: gornji i donji dio su jedan komad, sredina se produžuje cijelim zavojima trake */
+.it-card{--pw:20cqw}
+.it-card>.it-pil{position:absolute;top:6cqw;bottom:6cqw;width:var(--pw);display:flex;flex-direction:column;pointer-events:none;z-index:0}
+.it-pil-l{left:-.5cqw}.it-pil-r{right:-.5cqw}
+.it-pil i{display:block;width:100%}
+.it-pil .t{flex:none;height:calc(var(--pw)*300/380);background:center top/100% 100% no-repeat}
+.it-pil .b{flex:none;height:calc(var(--pw)*216/380);background:center bottom/100% 100% no-repeat}
+.it-pil .m{flex:1 1 auto;min-height:0;background:left top/100% auto no-repeat round}
+.it-pil-l .t{background-image:url("../img/italija/pil-lt.webp")}.it-pil-l .m{background-image:url("../img/italija/pil-lm.webp")}.it-pil-l .b{background-image:url("../img/italija/pil-lb.webp")}
+.it-pil-r .t{background-image:url("../img/italija/pil-rt.webp")}.it-pil-r .m{background-image:url("../img/italija/pil-rm.webp")}.it-pil-r .b{background-image:url("../img/italija/pil-rb.webp")}
 .it-card>*{position:relative}
 @media (min-width:900px){.it-card-w{max-width:1000px}}
 

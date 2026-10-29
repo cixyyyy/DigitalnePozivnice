@@ -1,5 +1,7 @@
 
+using DigitalnePozivnice.Helpers;
 using DigitalnePozivnice.Models;
+using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,11 +11,17 @@ namespace DigitalnePozivnice.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IEmailService _email;
+        private readonly EmailOptions _emailOpt;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IEmailService email,
+            IOptions<EmailOptions> emailOpt)
         {
+            _email = email;
+            _emailOpt = emailOpt.Value;
             _userManager = userManager;
             _signInManager = signInManager;
         }
@@ -62,6 +70,9 @@ namespace DigitalnePozivnice.Controllers
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, isPersistent: false);
+
+                var (naslov, tijelo) = EmailSadrzaj.Dobrodoslica(user.ImePrezime, _emailOpt.SiteUrl);
+                await _email.PosaljiAsync(user.Email, naslov, tijelo);
 
                 return NazadIliPocetna(returnUrl);
             }
