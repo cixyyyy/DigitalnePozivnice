@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @model DigitalnePozivnice.Models.Generated.Pozivnice
 
 @{
@@ -7,7 +7,7 @@
     var imaRsvp = (ViewData["ImaRsvp"] as bool?) == true;
 }
 
-<main class="tpl tpl-klasicna" data-float="sparkle,diamond,dot,star" data-float-count="14" data-float-img="@ViewData["PetalUrl"]">
+<main class="tpl tpl-klasicna" data-float="sparkle,diamond,dot,star" data-float-count="18" data-float-sides data-float-img="@ViewData["PetalUrl"]">
 
     <header class="tpl-hero">
         <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />

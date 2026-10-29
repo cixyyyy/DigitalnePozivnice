@@ -1,6 +1,6 @@
 /* "Jazz večer" – ručno crtana scena (Premium / Exclusive) */
-.tpl-jazz{--u:calc(min(100vw,100svh*.5625)/360);background:var(--c-bg);color:var(--c-text);}
-.tpl-jazz .jz-hero{position:relative;min-height:calc(var(--u)*640);display:flex;justify-content:center;align-items:flex-start;overflow:hidden;background:var(--c-bg)}
+.tpl-jazz{--u:calc(min(100vw,100svh*.5625)/360);background:transparent;color:var(--c-text);}
+.tpl-jazz .jz-hero{position:relative;min-height:calc(var(--u)*640);display:flex;justify-content:center;align-items:flex-start;overflow:hidden;background:transparent}
 .jz-stage{position:relative;width:calc(var(--u)*360);height:max(calc(var(--u)*640),min(100svh,calc(var(--u)*760)));flex:none;overflow:hidden;
   -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 88%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0,#000 88%,transparent 100%)}
 @media (min-width:560px){.jz-stage{
@@ -168,3 +168,8 @@ html.reduce-motion .jz-wshadow{opacity:.2}
 
 /* Boja pozadine toniruje zid scene (samo kad je razlicita od izvorne; --jz-tint postavlja JavnaPozivnica) */
 .jz-stage::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;background:var(--c-bg);mix-blend-mode:color;opacity:var(--jz-tint,0)}
+
+/* ukras ispod animacije i iznad podnožja */
+.tpl-jazz .jz-orn { display: flex; justify-content: center; padding: 26px 24px 4px; color: var(--c-main); opacity: .9; }
+.tpl-jazz .jz-orn svg { width: min(320px, 78vw); height: auto; overflow: visible; }
+.tpl-jazz .jz-orn--foot { padding-top: 40px; }

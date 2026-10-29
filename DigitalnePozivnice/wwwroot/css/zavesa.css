@@ -5,29 +5,32 @@
    ========================================================= */
 .tpl-zavesa .zv-stage {
     --gold: var(--c-main);
-    min-height: 100svh; padding: 28px 18px 0;
+    min-height: max(100svh, 600px); padding: 0;
     justify-content: flex-start; gap: 0; overflow: hidden; background: #3a0610;
 }
 .tpl-zavesa .zv-stage > * { position: absolute; }
-.tpl-zavesa .zv-stage > .zv-copy { position: relative; }
-/* baršun iznad slike (na telefonu) */
+
+/* ambijent iza scene: zamućena kopija iste slike (da scena ne bude zalijepljena) */
 .tpl-zavesa .zv-stage::before {
-    content: ""; position: absolute; inset: 0; z-index: 0;
-    background: #3a0610 url('/img/zavesa/velvet.webp') center bottom / auto 135% no-repeat;
-    filter: var(--zv-filter, hue-rotate(0deg));
+    content: ""; position: absolute; inset: -40px; z-index: 0;
+    background: #2a0610 url('/img/zavesa/stage.webp') center / cover no-repeat;
+    filter: blur(26px) brightness(.6) saturate(1.1);
 }
 
-/* scena: na telefonu je uz donju ivicu, na širokom ekranu preko cijelog prostora */
+/* scena: cijela slika, centrirana; ako je ekran uzi od slike, krajevi se rezu */
 .zv-scene {
-    left: 50%; bottom: 0; z-index: 1; height: clamp(360px, 64svh, 660px); width: auto; max-width: none;
-    transform: translateX(-46%); pointer-events: none;
+    left: 0; top: 0; z-index: 1; width: 100%; height: 100%; object-fit: cover; object-position: center; max-width: none;
+    pointer-events: none;
 }
-.js .zv-stage:not(.is-open) .zv-scene { opacity: 0; }
-.zv-stage.is-open .zv-scene { animation: zv-fade 2.2s ease-out both; }
-@keyframes zv-fade { from { opacity: 0; transform: translateX(-46%) scale(1.03); } to { opacity: 1; transform: translateX(-46%); } }
+.zv-scene { transition: opacity 1.8s ease .4s; }
+.js .zv-stage:not(.is-open) .zv-scene { opacity: 0; transition: opacity 1s ease 2.4s; }
 
 /* tekst */
-.tpl-zavesa .zv-copy { z-index: 4; display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(88vw, 470px); }
+.tpl-zavesa .zv-copy::before {
+    content: ""; position: absolute; z-index: -1; inset: -34px -60px -26px; pointer-events: none;
+    background: radial-gradient(closest-side, rgba(14, 5, 24, .62), rgba(14, 5, 24, .3) 62%, transparent);
+}
+.tpl-zavesa .zv-copy { z-index: 4; position: absolute; left: 50%; translate: -50% 0; top: 16%; display: flex; flex-direction: column; align-items: center; gap: 8px; width: min(88vw, 470px); }
 .tpl-zavesa .std-kicker { color: var(--gold); letter-spacing: .5em; font-size: 11px; text-shadow: 0 0 12px rgba(0,0,0,.8); }
 .tpl-zavesa .std-title {
     text-transform: uppercase; letter-spacing: .04em; font-weight: 500; line-height: 1.04;
@@ -38,14 +41,12 @@
 .tpl-zavesa .std-big-date { color: var(--gold); font-size: clamp(22px, 6.6vw, 36px); text-shadow: 0 2px 14px rgba(0,0,0,.8); }
 .zv-venue { color: #f6e8cb; font-size: 12px; letter-spacing: .3em; text-transform: uppercase; text-shadow: 0 1px 10px rgba(0,0,0,.9); }
 
-.js .zv-in { opacity: 0; transform: translateY(10px); }
-.js .is-open .zv-in { animation: zv-in 1.3s cubic-bezier(.22, 1, .36, 1) forwards; animation-delay: calc(1.6s + var(--k, 0) * .45s); }
-@keyframes zv-in { to { opacity: 1; transform: none; } }
+.js .zv-in { opacity: 0; transform: translateY(10px); transition: opacity .7s ease, transform .7s ease; }
+.js .is-open .zv-in { opacity: 1; transform: none; transition: opacity 1.3s cubic-bezier(.22, 1, .36, 1) calc(1.6s + var(--k, 0) * .45s), transform 1.3s cubic-bezier(.22, 1, .36, 1) calc(1.6s + var(--k, 0) * .45s); }
 
 /* zatvorena zavjesa: dva baršunasta krila, razmiču se na strane */
 .tpl-zavesa .std-curtain {
     z-index: 6; top: 0; bottom: 0; width: 50.4%; overflow: hidden; background: #3a0610;
-    box-shadow: 0 0 60px rgba(0, 0, 0, .7);
     transition: transform 3s cubic-bezier(.6, .02, .25, 1);
 }
 .tpl-zavesa .std-curtain::before {
@@ -58,9 +59,11 @@
 .tpl-zavesa .std-curtain-r { right: 0; }
 .tpl-zavesa .std-curtain-r::before { right: 0; }
 .tpl-zavesa .std-curtain::after {
-    content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 10%; background: linear-gradient(90deg, transparent, rgba(0,0,0,.5));
+    content: ""; position: absolute; top: 0; bottom: 0; right: 0; width: 7%;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.35) 45%, rgba(255,120,110,.16) 62%, rgba(0,0,0,.6));
+    box-shadow: -14px 0 24px -10px rgba(0,0,0,.45);
 }
-.tpl-zavesa .std-curtain-r::after { right: auto; left: 0; background: linear-gradient(270deg, transparent, rgba(0,0,0,.5)); }
+.tpl-zavesa .std-curtain-r::after { right: auto; left: 0; background: linear-gradient(270deg, transparent, rgba(0,0,0,.35) 45%, rgba(255,120,110,.16) 62%, rgba(0,0,0,.6)); box-shadow: 14px 0 24px -10px rgba(0,0,0,.45); }
 .tpl-zavesa .is-open .std-curtain-l { transform: translateX(-104%); }
 .tpl-zavesa .is-open .std-curtain-r { transform: translateX(104%); }
 
@@ -70,25 +73,23 @@
 }
 .tpl-zavesa .is-open .std-curtain-btn { bottom: 3%; opacity: .75; scale: .85; }
 
-/* široki ekran: scena preko cijelog prostora, tekst na nebu */
+/* siroki ekran: scena je u svojoj razmjeri, bocne ivice se stapaju sa ambijentom */
 @media (min-width: 700px) {
-    .tpl-zavesa .zv-stage { min-height: max(100svh, 620px); padding-top: 14.5%; }
-    .tpl-zavesa .zv-copy { gap: 5px; }
+    .zv-scene {
+        left: 50%; width: auto; min-width: 0; height: 100%; transform: translateX(-50%); object-fit: contain;
+        -webkit-mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+        mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+    }
+    .tpl-zavesa .zv-copy { top: 19%; gap: 5px; }
     .tpl-zavesa .std-title { font-size: clamp(28px, 3.4vw, 44px); }
     .tpl-zavesa .std-big-date { font-size: clamp(20px, 2.2vw, 28px); }
     .tpl-zavesa .std-invite { font-size: 13px; max-width: none; }
     .tpl-zavesa .zv-venue { margin-top: 2px; }
-    .zv-scene {
-        left: 0; bottom: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 35%; transform: none;
-        -webkit-mask-image: none; mask-image: none;
-    }
-    @keyframes zv-fade { from { opacity: 0; } to { opacity: 1; } }
-    .tpl-zavesa .zv-copy::before {
-        content: ""; position: absolute; z-index: -1; inset: -30px -50px -24px; pointer-events: none;
-        background: radial-gradient(closest-side, rgba(14, 5, 24, .5), rgba(14, 5, 24, .24) 62%, transparent);
-    }
 }
 
-html.reduce-motion .zv-scene { animation: none; opacity: 1; }
+html.reduce-motion .zv-scene, html.reduce-motion .zv-in { transition: none; }
+html.reduce-motion .zv-scene { opacity: 1; }
 html.reduce-motion .tpl-zavesa .std-curtain { transition: none; }
 html.reduce-motion.js .zv-in { opacity: 1; transform: none; animation: none; }
+
+@media (min-width: 700px) and (max-aspect-ratio: 1/1) { .zv-scene { min-width: 100%; } }

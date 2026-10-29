@@ -138,3 +138,22 @@
 
 .has-preview-bar .ft-intro { top: 52px; }
 @media (max-width: 520px) { .has-preview-bar .ft-intro { top: 56px; } }
+
+/* ---------- Potvrda dolaska u tamnim šablonima (Zavesa, Jazz večer): bez kartice, na pozadini stranice ---------- */
+.tpl-zavesa .inv-rsvp.inv-card, .tpl-jazz .inv-rsvp.inv-card {
+    background: none; border: 0; border-radius: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+    max-width: 460px; padding: 6px 4px 0;
+}
+.tpl-zavesa .inv-rsvp-intro, .tpl-jazz .inv-rsvp-intro { text-align: center; opacity: .88; font-size: 16px; margin-bottom: 22px; }
+.tpl-zavesa .inv-rsvp .inv-field input[type="text"], .tpl-zavesa .inv-rsvp .inv-field input[type="number"], .tpl-zavesa .inv-rsvp .inv-field textarea,
+.tpl-jazz .inv-rsvp .inv-field input[type="text"], .tpl-jazz .inv-rsvp .inv-field input[type="number"], .tpl-jazz .inv-rsvp .inv-field textarea,
+.tpl-zavesa .inv-rsvp .inv-seg, .tpl-jazz .inv-rsvp .inv-seg,
+.tpl-zavesa .inv-rsvp .inv-step button, .tpl-jazz .inv-rsvp .inv-step button {
+    background: color-mix(in srgb, var(--c-main) 8%, transparent); box-shadow: none; color: inherit;
+}
+.tpl-zavesa .inv-rsvp .inv-step button, .tpl-jazz .inv-rsvp .inv-step button { color: var(--c-main); }
+.tpl-zavesa .inv-rsvp .inv-field input:focus, .tpl-zavesa .inv-rsvp .inv-field textarea:focus,
+.tpl-jazz .inv-rsvp .inv-field input:focus, .tpl-jazz .inv-rsvp .inv-field textarea:focus { background: color-mix(in srgb, var(--c-main) 13%, transparent); }
+.tpl-zavesa .inv-rsvp .inv-seg input:checked + label, .tpl-jazz .inv-rsvp .inv-seg input:checked + label { color: var(--c-bg); }
+.tpl-zavesa .inv-rsvp-done, .tpl-jazz .inv-rsvp-done { text-align: center; }
+.tpl-zavesa .inv-privacy-note, .tpl-jazz .inv-privacy-note, .tpl-zavesa .inv-form-note, .tpl-jazz .inv-form-note { text-align: center; margin-top: 18px; font-size: 12.5px; opacity: .7; }

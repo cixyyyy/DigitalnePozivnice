@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @model DigitalnePozivnice.Models.Generated.Pozivnice
 
 @{
@@ -6,7 +6,7 @@
     var (kicker, glavno) = InvitationTheme.Glavno(Model);
 }
 
-<main class="tpl tpl-svitak" data-float="sparkle,star,dot" data-float-count="10" data-float-img="@ViewData["PetalUrl"]">
+<main class="tpl tpl-svitak" data-float="sparkle,star,dot" data-float-count="13" data-float-sides data-float-img="@ViewData["PetalUrl"]">
     <header class="std-stage svt-stage">
         <partial name="~/Views/Pozivnice/_ArtHero.cshtml" />
 

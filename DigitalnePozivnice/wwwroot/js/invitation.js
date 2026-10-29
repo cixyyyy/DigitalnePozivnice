@@ -77,8 +77,9 @@
             dir: tpl.getAttribute("data-float-dir") || "up",
             count: parseInt(tpl.getAttribute("data-float-count"), 10) || undefined,
             image: tpl.getAttribute("data-float-img") || undefined,
-            min: 14, max: 40,
-            opacity: [0.1, 0.26]
+            sides: tpl.hasAttribute("data-float-sides"),
+            min: parseInt((tpl.getAttribute("data-float-size") || "14,40").split(",")[0], 10), max: parseInt((tpl.getAttribute("data-float-size") || "14,40").split(",")[1], 10),
+            opacity: (tpl.getAttribute("data-float-op") || "0.1,0.26").split(",").map(parseFloat)
         });
     }
 

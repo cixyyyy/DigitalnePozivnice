@@ -1,4 +1,4 @@
-@using DigitalnePozivnice.Helpers
+﻿@using DigitalnePozivnice.Helpers
 @model DigitalnePozivnice.Models.Generated.Pozivnice
 
 @{
@@ -8,7 +8,7 @@
     const string img = "/img/jazz/";
 }
 
-<main class="tpl tpl-jazz">
+<main class="tpl tpl-jazz" data-float="note,sparkle,star,note,dot" data-float-count="22" data-float-sides data-float-size="22,52" data-float-op="0.22,0.46">
 
     <header class="jz-hero" aria-label="@glavno">
         <div class="jz-stage">
@@ -128,6 +128,16 @@
         <span class="tpl-scroll" aria-hidden="true"></span>
     </header>
 
+    <div class="jz-orn" aria-hidden="true">
+        <svg viewBox="0 0 320 36" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+            <path d="M6 18h118M196 18h118" opacity=".7"/>
+            <path d="M160 3l12 15-12 15-12-15z" fill="currentColor" fill-opacity=".18"/>
+            <path d="M160 9l6.5 9-6.5 9-6.5-9z"/>
+            <path d="M132 18c4-9 9-9 14 0M188 18c-4-9-9-9-14 0M132 18c4 9 9 9 14 0M188 18c-4 9-9 9-14 0" opacity=".65"/>
+            <circle cx="124" cy="18" r="2" fill="currentColor"/><circle cx="196" cy="18" r="2" fill="currentColor"/>
+        </svg>
+    </div>
+
     @if (!string.IsNullOrWhiteSpace(Model.UvodniTekst))
     {
         <section class="inv-section inv-reveal">
@@ -157,6 +167,16 @@
             <partial name="~/Views/Pozivnice/_Rsvp.cshtml" model="Model" />
         </section>
     }
+
+    <div class="jz-orn jz-orn--foot" aria-hidden="true">
+        <svg viewBox="0 0 320 36" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+            <path d="M6 18h118M196 18h118" opacity=".7"/>
+            <path d="M160 3l12 15-12 15-12-15z" fill="currentColor" fill-opacity=".18"/>
+            <path d="M160 9l6.5 9-6.5 9-6.5-9z"/>
+            <path d="M132 18c4-9 9-9 14 0M188 18c-4-9-9-9-14 0M132 18c4 9 9 9 14 0M188 18c-4 9-9 9-14 0" opacity=".65"/>
+            <circle cx="124" cy="18" r="2" fill="currentColor"/><circle cx="196" cy="18" r="2" fill="currentColor"/>
+        </svg>
+    </div>
 
     <footer class="tpl-footer inv-reveal">
         <p class="tpl-footer-names">@glavno</p>

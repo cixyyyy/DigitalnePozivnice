@@ -13,6 +13,7 @@
         petal: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c4.5 2.5 7 7 5 12-1.2 3-3.2 5-5 6-1.8-1-3.8-3-5-6-2-5 .5-9.5 5-12z"/></svg>',
         ring: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="15" r="5.5"/><circle cx="15" cy="15" r="5.5"/><path d="M12 2.5l1.8 2.4L12 7.3 10.2 4.9z" fill="currentColor"/></svg>',
         diamond: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l8.5 10L12 22 3.5 12z"/></svg>',
+        note: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M9 3.2v12.3A3.6 3.6 0 1 0 11 18.7V8.2l8-1.9v7.2a3.6 3.6 0 1 0 2 3.2V2z"/></svg>',
         dot: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="6"/></svg>'
     };
 
@@ -49,11 +50,13 @@
             var down = dir === "down" || (dir === "mixed" && i % 2 === 0);
 
             el.className = "fl" + (down ? " fl-down" : "");
-            el.style.left = rand(-2, 97).toFixed(1) + "%";
+            var x = rand(-2, 97);
+            if (opts.sides && global.innerWidth > 800) x = i % 2 ? rand(1, 24) : rand(74, 96);
+            el.style.left = x.toFixed(1) + "%";
             el.style.width = el.style.height = size.toFixed(0) + "px";
             el.style.color = colors[i % colors.length];
             el.style.setProperty("--dur", dur.toFixed(1) + "s");
-            el.style.setProperty("--delay", "-" + rand(0, dur).toFixed(1) + "s");
+            el.style.setProperty("--delay", "-" + (opts.sides ? ((i / count) * dur + rand(0, dur / count)) : rand(0, dur)).toFixed(1) + "s");
             el.style.setProperty("--o", rand(op[0], op[1]).toFixed(2));
             el.style.setProperty("--sway", rand(5, 10).toFixed(1) + "s");
             el.style.setProperty("--sd", "-" + rand(0, 8).toFixed(1) + "s");
